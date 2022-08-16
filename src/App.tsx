@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [counter, setCounter] = React.useState<number>(0);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +20,8 @@ function App() {
         >
           Learn React
         </a>
+        <p>Counter: {counter}</p>
+        <button onClick={() => setCounter(counter + 1)}>Increment</button>
       </header>
     </div>
   );

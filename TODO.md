@@ -1,5 +1,5 @@
 # TODO
 
-1. Execute `npx create-react-app . --template cra-template-pwa-typescript`
-2. Define requirements
-3. Search how to use Firebase + Golang
+- [x] Execute `npx create-react-app . --template cra-template-pwa-typescript`
+- [*] Add Firebase to the project
+- [ ] Define requirements
