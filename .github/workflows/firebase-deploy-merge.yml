@@ -8,7 +8,6 @@ name: Deploy to Firebase on Merge to main
       - 'main'
 jobs:
   build_and_deploy_frontend:
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
