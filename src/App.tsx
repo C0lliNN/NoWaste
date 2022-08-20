@@ -20,7 +20,7 @@ function App() {
         >
           Learn React
         </a>
-        <p>Counter: {counter}</p>
+        <p style={{color: 'red'}}>Counter: {counter}</p>
         <button onClick={() => setCounter(counter + 1)}>Increment</button>
       </header>
     </div>
