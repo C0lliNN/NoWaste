@@ -37,4 +37,4 @@ jobs:
         with:
           args: deploy --only functions
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NOWASTE_7ACDD }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
