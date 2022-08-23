@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const store = configureStore({reducer: {}})
+const store = configureStore({ reducer: {} })
 
 root.render(
   <React.StrictMode>

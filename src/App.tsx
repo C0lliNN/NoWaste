@@ -1,24 +1,14 @@
 import React from 'react';
-import Button from './components/Button';
+import { Routes } from 'react-router'
+import { Route } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 
-function App() {
-  const [counter, setCounter] = React.useState<number>(0);
-
-  function increment() {
-    setCounter((c) => c + 1);
-  }
-
-  function decrement() {
-    setCounter((c) => c - 1);
-  }
-
+export default function App() {
   return (
-    <div>
-      <p>Counter: {counter}</p>
-      <Button onClick={increment}>Increment</Button>
-      <Button onClick={decrement}>Decrement</Button>
-    </div>
+    <Routes>
+      <Route path='/' element={<ProtectedRoute authenticated={false}><p>Home Page</p></ProtectedRoute>} />
+      <Route path='/login' element={<p>Login Page</p>} />
+      <Route path="*" element={<p>404 Not Found</p>} />
+    </Routes>
   );
 }
-
-export default App;
