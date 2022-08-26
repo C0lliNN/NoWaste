@@ -6,13 +6,11 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import store from './store/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-
-const store = configureStore({ reducer: {} })
 
 root.render(
   <React.StrictMode>
