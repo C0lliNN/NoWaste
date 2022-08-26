@@ -1,10 +1,9 @@
-import React, { Suspense } from 'react'
 import { Navigate } from 'react-router';
 import { Outlet } from 'react-router-dom';
 
 interface Props {
-  authenticated: boolean
-  children?: JSX.Element
+  authenticated: boolean;
+  children?: JSX.Element;
 }
 
 export default function ProtectedRoute({ authenticated, children }: Props): JSX.Element {
@@ -12,5 +11,5 @@ export default function ProtectedRoute({ authenticated, children }: Props): JSX.
     return <Navigate to="/login" replace />;
   }
 
-  return children ? children : <Outlet />;
+  return children != null ? children : <Outlet />;
 }

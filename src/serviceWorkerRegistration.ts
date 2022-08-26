@@ -18,10 +18,10 @@ const isLocalhost = Boolean(
     window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
 );
 
-type Config = {
+interface Config {
   onSuccess?: (registration: ServiceWorkerRegistration) => void;
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
-};
+}
 
 export function register(config?: Config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
@@ -68,7 +68,7 @@ function registerValidSW(swUrl: string, config?: Config) {
         }
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
-            if (navigator.serviceWorker.controller) {
+            if (navigator.serviceWorker.controller != null) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
@@ -78,7 +78,7 @@ function registerValidSW(swUrl: string, config?: Config) {
               );
 
               // Execute callback
-              if (config && config.onUpdate) {
+              if (config != null && config.onUpdate != null) {
                 config.onUpdate(registration);
               }
             } else {
@@ -88,7 +88,7 @@ function registerValidSW(swUrl: string, config?: Config) {
               console.log('Content is cached for offline use.');
 
               // Execute callback
-              if (config && config.onSuccess) {
+              if (config != null && config.onSuccess != null) {
                 config.onSuccess(registration);
               }
             }
@@ -104,15 +104,12 @@ function registerValidSW(swUrl: string, config?: Config) {
 function checkValidServiceWorker(swUrl: string, config?: Config) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
-    headers: { 'Service-Worker': 'script' },
+    headers: { 'Service-Worker': 'script' }
   })
     .then((response) => {
       // Ensure service worker exists, and that we really are getting a JS file.
       const contentType = response.headers.get('content-type');
-      if (
-        response.status === 404 ||
-        (contentType != null && contentType.indexOf('javascript') === -1)
-      ) {
+      if (response.status === 404 || (contentType != null && !contentType.includes('javascript'))) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then((registration) => {
           registration.unregister().then(() => {

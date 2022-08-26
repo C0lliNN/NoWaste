@@ -43,7 +43,7 @@ registerRoute(
 
     // If this looks like a URL for a resource, because it contains
     // a file extension, skip.
-    if (url.pathname.match(fileExtensionRegexp)) {
+    if (url.pathname.match(fileExtensionRegexp) != null) {
       return false;
     }
 
@@ -64,8 +64,8 @@ registerRoute(
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
+      new ExpirationPlugin({ maxEntries: 50 })
+    ]
   })
 );
 

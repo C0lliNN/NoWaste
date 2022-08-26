@@ -5,5 +5,5 @@
 - [x] Add push to main deploy workflow
 - [ ] Understand how github actions work, especially secrets and make it work with firebase
 - [ ] Understand Firebase local environment tools
-- [ ] Add project document under /docs in the markdown format 
+- [ ] Add project document under /docs in the markdown format
 - [ ] Define requirements
