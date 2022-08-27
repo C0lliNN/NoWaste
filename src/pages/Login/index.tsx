@@ -13,6 +13,7 @@ import {
 import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
 import { ReactComponent as GoogleIcon } from '../../assets/icons/google.svg';
 import { ReactComponent as GithubIcon } from '../../assets/icons/github.svg';
+import { Trans } from 'react-i18next';
 
 export default function Login(): JSX.Element {
   const navigate = useNavigate();
@@ -34,18 +35,24 @@ export default function Login(): JSX.Element {
         <Logo />
         <h1>No Waste</h1>
       </LogoContainer>
-      <Paragraph>Access or Create your account to start managing your money</Paragraph>
+      <Paragraph>
+        <Trans i18nKey="loginCreateAccount">
+          Access or Create your account to start managing your money
+        </Trans>
+      </Paragraph>
       <SocialMediaContainer>
         <GoogleButton onClick={handleLogin}>
           <GoogleIcon />
-          Continue with Google
+          <Trans i18nKey="loginGoogle">Continue with Google</Trans>
         </GoogleButton>
         <GithubButton onClick={handleLogin}>
           <GithubIcon />
-          Continue with GitHub
+          <Trans i18nKey="loginGithub">Continue with GitHub</Trans>
         </GithubButton>
       </SocialMediaContainer>
-      <Footer>© NoWaste - All Rights Reserved</Footer>
+      <Footer>
+        <Trans i18nKey="loginCopyright">© NoWaste - All Rights Reserved</Trans>
+      </Footer>
     </Container>
   );
 }

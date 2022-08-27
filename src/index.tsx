@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { ThemeProvider } from 'styled-components';
+import './i18n';
 
 const theme = {
   primary: '#073B4C',
