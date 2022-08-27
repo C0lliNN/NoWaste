@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { login } from '../../store/auth';
 import {
@@ -15,12 +15,14 @@ import { ReactComponent as GoogleIcon } from '../../assets/icons/google.svg';
 import { ReactComponent as GithubIcon } from '../../assets/icons/github.svg';
 
 export default function Login(): JSX.Element {
+  const navigate = useNavigate();
   const authenticated = useAppSelector((state) => state.auth.authenticated);
-  const dispatch = useAppDispatch();
 
   if (authenticated) {
-    return <Navigate to="/" />;
+    navigate('/');
   }
+
+  const dispatch = useAppDispatch();
 
   function handleLogin(): void {
     dispatch(login({ token: '' }));
