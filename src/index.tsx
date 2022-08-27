@@ -7,6 +7,16 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { ThemeProvider } from 'styled-components';
+
+const theme = {
+  primary: '#073B4C',
+  secondary: '#118AB2',
+  success: '#06D6A0',
+  warning: '#FFD166',
+  danger: '#EF476F',
+  lgBreakpoint: '1024px'
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -14,7 +24,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>
