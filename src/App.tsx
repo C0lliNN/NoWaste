@@ -2,6 +2,7 @@ import { Routes } from 'react-router';
 import { Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAppSelector } from './hooks/hooks';
+import Home from './pages/Home';
 import Login from './pages/Login';
 
 export default function App(): JSX.Element {
@@ -13,7 +14,7 @@ export default function App(): JSX.Element {
         path="/"
         element={
           <ProtectedRoute authenticated={authenticated}>
-            <p>Home Page</p>
+            <Home />
           </ProtectedRoute>
         }
       />

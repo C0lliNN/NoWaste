@@ -1,6 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { login } from '../../store/auth';
 import {
   Container,
   Footer,
@@ -14,19 +13,33 @@ import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
 import { ReactComponent as GoogleIcon } from '../../assets/icons/google.svg';
 import { ReactComponent as GithubIcon } from '../../assets/icons/github.svg';
 import { Trans } from 'react-i18next';
+import { handleFirebaseGithubLogin, handleFirebaseGoogleLogin } from '../../services/firebase';
+import { login } from '../../store/auth';
 
 export default function Login(): JSX.Element {
-  const navigate = useNavigate();
   const authenticated = useAppSelector((state) => state.auth.authenticated);
-
-  if (authenticated) {
-    navigate('/');
-  }
-
   const dispatch = useAppDispatch();
 
-  function handleLogin(): void {
-    dispatch(login({ token: '' }));
+  if (authenticated) {
+    return <Navigate to="/" />;
+  }
+
+  async function handleGoogleLogin(): Promise<void> {
+    try {
+      const user = await handleFirebaseGoogleLogin();
+      dispatch(login({ user }));
+    } catch (err) {
+      alert('Some weird error');
+    }
+  }
+
+  async function handleGithubLogin(): Promise<void> {
+    try {
+      const user = await handleFirebaseGithubLogin();
+      dispatch(login({ user }));
+    } catch (err) {
+      alert('Some weird error');
+    }
   }
 
   return (
@@ -41,11 +54,11 @@ export default function Login(): JSX.Element {
         </Trans>
       </Paragraph>
       <SocialMediaContainer>
-        <GoogleButton onClick={handleLogin}>
+        <GoogleButton onClick={handleGoogleLogin}>
           <GoogleIcon />
           <Trans i18nKey="loginGoogle">Continue with Google</Trans>
         </GoogleButton>
-        <GithubButton onClick={handleLogin}>
+        <GithubButton onClick={handleGithubLogin}>
           <GithubIcon />
           <Trans i18nKey="loginGithub">Continue with GitHub</Trans>
         </GithubButton>
