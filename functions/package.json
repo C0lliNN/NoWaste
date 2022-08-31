@@ -17,13 +17,15 @@
     "firebase-functions": "^3.21.0"
   },
   "devDependencies": {
+    "firebase-tools": "11.8.0",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "eslint": "^8.23.0",
     "eslint-config-standard-with-typescript": "^22.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.5",
     "eslint-plugin-promise": "^6.0.1",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.2",
+    "husky": "^8.0.1"
   },
   "private": true
 }
