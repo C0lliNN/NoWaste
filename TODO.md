@@ -3,7 +3,9 @@
 - [x] Execute `npx create-react-app . --template cra-template-pwa-typescript`
 - [*] Add Firebase to the project
 - [x] Add push to main deploy workflow
-- [ ] Understand how github actions work, especially secrets and make it work with firebase
-- [ ] Understand Firebase local environment tools
-- [ ] Add project document under /docs in the markdown format
-- [ ] Define requirements
+- [x] Understand how github actions work, especially secrets and make it work with firebase
+- [x] Understand Firebase local environment tools
+- [x] Add project document under /docs in the markdown format
+- [x] Define requirements
+- [ ] Save token to local storage
+- [ ] Handle logout
