@@ -8,9 +8,10 @@
 - [x] Add project document under /docs in the markdown format
 - [x] Define requirements
 - [x] Figure out DI backend
+- [ ] Figure out error handling
+- [ ] Figure out logging
+- [ ] Figure out validation
 - [ ] Figure out CORS backend
 - [ ] Figure out multi-tenancy user-id
-- [ ] Figure out error handling
-- [ ] Figure out validation
 - [ ] Save token to local storage
 - [ ] Handle logout

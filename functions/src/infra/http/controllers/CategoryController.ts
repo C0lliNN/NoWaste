@@ -1,6 +1,7 @@
-import { CategoryService } from '../../../core/categories/CategoryService';
 import * as express from 'express';
+import * as asyncHandler from 'express-async-handler';
 import { Category } from '../../../core/categories/Category';
+import { CategoryService } from '../../../core/categories/CategoryService';
 
 export class CategoryController {
   service: CategoryService;
@@ -9,6 +10,14 @@ export class CategoryController {
   constructor(service: CategoryService, router: express.IRouter) {
     this.service = service;
     this.router = router;
+  }
+
+  public handler(): express.Handler {
+    this.router.get('/categories', asyncHandler(this.getCategories.bind(this)));
+    this.router.post('/categories', asyncHandler(this.createCategory.bind(this)));
+    this.router.put('/categories/:id', asyncHandler(this.updateCategory.bind(this)));
+    this.router.delete('/categories/:id', asyncHandler(this.deleteCategory.bind(this)));
+    return this.router;
   }
 
   private async getCategories(_: express.Request, resp: express.Response) {
@@ -30,13 +39,5 @@ export class CategoryController {
 
   private async deleteCategory(req: express.Request, resp: express.Response) {
     await this.service.deleteCategory(req.params.id);
-  }
-
-  public handler(): express.Handler {
-    this.router.get('/categories', this.getCategories.bind(this));
-    this.router.post('/categories', this.createCategory.bind(this));
-    this.router.put('/categories/:id', this.updateCategory.bind(this));
-    this.router.delete('/categories/:id', this.deleteCategory.bind(this));
-    return this.router;
   }
 }
