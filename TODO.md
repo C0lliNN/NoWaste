@@ -13,5 +13,6 @@
 - [ ] Figure out logging
 - [ ] Figure out CORS backend
 - [ ] Figure out multi-tenancy user-id
+- [ ] Figure out testing
 - [ ] Save token to local storage
 - [ ] Handle logout
