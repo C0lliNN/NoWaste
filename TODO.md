@@ -7,8 +7,10 @@
 - [x] Understand Firebase local environment tools
 - [x] Add project document under /docs in the markdown format
 - [x] Define requirements
-- [ ] Figure out DI backend
+- [x] Figure out DI backend
 - [ ] Figure out CORS backend
 - [ ] Figure out multi-tenancy user-id
+- [ ] Figure out error handling
+- [ ] Figure out validation
 - [ ] Save token to local storage
 - [ ] Handle logout

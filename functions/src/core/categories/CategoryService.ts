@@ -1,6 +1,7 @@
-import { Category } from './category';
+import { Category } from './Category';
 
 interface CategoryRepository {
+  findById(id: string): Promise<Category>;
   findAll(): Promise<Category[]>;
   save(category: Category): Promise<void>;
   delete(id: string): Promise<void>;
@@ -17,8 +18,15 @@ export class CategoryService {
     return await this.categoryRepository.findAll();
   }
 
-  public async saveCategory(category: Category): Promise<void> {
+  public async createCategory(category: Category): Promise<void> {
     return await this.categoryRepository.save(category);
+  }
+
+  public async updateCategory(id: string, newCategory: Category): Promise<void> {
+    const existingCategory = await this.categoryRepository.findById(id);
+    existingCategory.name = newCategory.name;
+
+    return await this.categoryRepository.save(existingCategory);
   }
 
   public async deleteCategory(categoryId: string): Promise<void> {
