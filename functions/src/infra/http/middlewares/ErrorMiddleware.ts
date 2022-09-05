@@ -1,22 +1,32 @@
 import * as express from 'express';
+import { EntityNotFoundError } from '../../../core/errors/EntityNotFoundError';
+import { ValidationError } from '../../../core/errors/ValidationError';
 
 interface ErrorResponse {
   message: string;
   details: string[];
+  status: number;
 }
 
 export class ErrorMiddleware {
   handler(): express.ErrorRequestHandler {
     return function (err: Error, req, res, next) {
-      console.log(`here`);
-      if (err) {
-        const response: ErrorResponse = {
-          message: err.message,
-          details: []
-        };
+      const response: ErrorResponse = {
+        message: err.message,
+        details: [],
+        status: 500
+      };
 
-        res.status(500).send(response);
+      if (err instanceof EntityNotFoundError) {
+        response.message = err.message;
+        response.status = 404;
+      } else if (err instanceof ValidationError) {
+        response.message = err.message;
+        response.details = (err as ValidationError).errors.map((e) => `${e.field}: ${e.message}`);
+        response.status = 400;
       }
+
+      res.status(response.status).send(response);
     };
   }
 }

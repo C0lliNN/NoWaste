@@ -1,5 +1,6 @@
 import { firestore } from 'firebase-admin';
 import { Category } from '../../core/categories/Category';
+import { EntityNotFoundError } from '../../core/errors/EntityNotFoundError';
 
 const collection = 'categories';
 
@@ -13,26 +14,23 @@ export class CategoryRepository {
   async findById(id: string): Promise<Category> {
     const category = await this.db.collection(collection).doc(id).get();
 
-    return {
-      id: category.id,
-      name: category.data['name']
-    };
+    if (!category.exists) {
+      throw new EntityNotFoundError('Category', id);
+    }
+
+    return new Category(category.id, category.data['name']);
   }
 
   async findAll(): Promise<Category[]> {
     const categories = await this.db.collection(collection).get();
-    return categories.docs.map(
-      (doc): Category => ({
-        id: doc.id,
-        name: doc.data()['name']
-      })
-    );
+
+    return categories.docs.map((doc) => new Category(doc.id, doc.data()['name']));
   }
 
   async save(category: Category): Promise<void> {
     const doc = this.db.collection(collection).doc(category.id);
 
-    await doc.set(category);
+    await doc.set(Object.assign({}, category));
   }
 
   async delete(id: string): Promise<void> {

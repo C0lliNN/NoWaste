@@ -19,12 +19,15 @@ export class CategoryService {
   }
 
   public async createCategory(category: Category): Promise<void> {
+    category.validate();
     return await this.categoryRepository.save(category);
   }
 
   public async updateCategory(id: string, newCategory: Category): Promise<void> {
     const existingCategory = await this.categoryRepository.findById(id);
     existingCategory.name = newCategory.name;
+
+    existingCategory.validate();
 
     return await this.categoryRepository.save(existingCategory);
   }
