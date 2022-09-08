@@ -10,7 +10,7 @@
 - [x] Figure out DI backend
 - [x] Figure out error handling
 - [x] Figure out validation
-- [ ] Figure out logging
+- [x] Figure out logging
 - [ ] Figure out CORS backend
 - [ ] Figure out multi-tenancy user-id
 - [ ] Figure out testing
