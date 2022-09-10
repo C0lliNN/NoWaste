@@ -1,9 +1,9 @@
-import * as express from 'express';
-import helmet from 'helmet';
 import * as compression from 'compression';
+import * as express from 'express';
+import * as asyncHandler from 'express-async-handler';
+import helmet from 'helmet';
 import { CategoryController } from './controllers/CategoryController';
 import { ErrorMiddleware } from './middlewares/ErrorMiddleware';
-import * as asyncHandler from 'express-async-handler';
 
 export class Server {
   categoryController: CategoryController;
@@ -17,7 +17,12 @@ export class Server {
   public handler(): express.Express {
     const app = express();
 
-    app.use(helmet());
+    app.use(
+      helmet({
+        crossOriginEmbedderPolicy: false,
+        crossOriginResourcePolicy: false
+      })
+    );
     app.use(express.json());
     app.use(compression());
     app.use(asyncHandler(this.categoryController.handler()));
