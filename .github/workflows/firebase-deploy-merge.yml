@@ -32,6 +32,8 @@ jobs:
         run: |
           npm install
           cd functions
+      - name: Run Tests
+        run: npm test
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
