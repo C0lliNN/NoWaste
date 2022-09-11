@@ -16,6 +16,10 @@ export class Category {
 
   validate() {
     const errors: FieldError[] = [];
+    if (!this.id.trim()) {
+      errors.push({ field: 'name', message: 'this field cannot be empty' });
+    }
+
     if (!this.name.trim()) {
       errors.push({ field: 'name', message: 'this field cannot be empty' });
     }

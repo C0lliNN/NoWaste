@@ -9,6 +9,9 @@
     "target": "es2017",
     "typeRoots": ["./types"]
   },
+  "typeAcquisition": {
+    "include": ["jest"]
+  },
   "compileOnSave": true,
   "include": ["src"]
 }

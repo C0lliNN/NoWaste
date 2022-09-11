@@ -36,14 +36,16 @@ export class CategoryService {
   }
 
   public async updateCategory(req: UpdateCategoryRequest): Promise<void> {
-    this.validateType(req.type);
-
     const category = await this.categoryRepository.findById(req.id);
     if (category.userId !== req.userId) {
       throw new AuthorizationError('The requested action is forbidden');
     }
 
+    this.validateType(req.type);
+
     category.name = req.name;
+    category.type = req.type as CategoryType;
+
     category.validate();
 
     return await this.categoryRepository.save(category);
