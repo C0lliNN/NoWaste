@@ -16,6 +16,7 @@ import { Trans } from 'react-i18next';
 import { handleFirebaseGithubLogin, handleFirebaseGoogleLogin } from '../../services/firebase';
 import { loginSuccess, loginFailed, loginStart } from '../../store/auth';
 import Spinner from '../../components/UI/Spinner';
+import { fireError } from '../../utils/customAlert';
 
 export default function Login(): JSX.Element {
   const authenticated = useAppSelector((state) => state.auth.authenticated);
@@ -33,8 +34,7 @@ export default function Login(): JSX.Element {
       const user = await handleFirebaseGoogleLogin();
       dispatch(loginSuccess({ user }));
     } catch (err) {
-      dispatch(loginFailed());
-      alert('Some weird error');
+      handleLoginError(err);
     }
   }
 
@@ -45,9 +45,14 @@ export default function Login(): JSX.Element {
       const user = await handleFirebaseGithubLogin();
       dispatch(loginSuccess({ user }));
     } catch (err) {
-      dispatch(loginFailed());
-      alert('Some weird error');
+      handleLoginError(err);
     }
+  }
+
+  function handleLoginError(err: unknown): void {
+    dispatch(loginFailed());
+    fireError('It was not possible to login successfully');
+    console.error(err);
   }
 
   return (

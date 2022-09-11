@@ -17,4 +17,5 @@
 - [x] Figure out testing
 - [x] Save token to local storage
 - [x] Handle logout
-- [ ] Add alert library
+- [x] Add alert library
+- [ ] Create Company FE page
