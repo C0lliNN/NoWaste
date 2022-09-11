@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2022-09-11T00:39:37.323Z
+__export_date: 2022-09-11T19:29:31.331Z
 __export_source: insomnia.desktop.app:v2021.5.3
 resources:
   - _id: req_6decbbe7fa9b4e438aece921523f3998
@@ -51,30 +51,21 @@ resources:
     description: ''
     scope: collection
     _type: workspace
-  - _id: req_0ab0060226d6477795bb7ad90f3b2829
+  - _id: req_80596a0bf2b64840b763fff012da06c6
     parentId: fld_9f45a64b68b44d368c2d1c1545a86aae
-    modified: 1662856464058
-    created: 1662856282297
+    modified: 1662902266922
+    created: 1662855318309
     url: '{{ _.baseUrl }}/categories'
-    name: Create Category
+    name: Get Categories
     description: ''
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"id": "{% uuid 'v4' %}",
-        	"name": "Food"
-        }
+    method: GET
+    body: {}
     parameters: []
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_1f94bb253cb04908b4fff61d95fe9502
+    headers: []
     authentication:
       type: bearer
       token: '{{ _.token }}'
-    metaSortKey: -1662856282298
+    metaSortKey: -1662856282348
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
@@ -93,21 +84,85 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1662855312865
     _type: request_group
-  - _id: req_80596a0bf2b64840b763fff012da06c6
+  - _id: req_0ab0060226d6477795bb7ad90f3b2829
     parentId: fld_9f45a64b68b44d368c2d1c1545a86aae
-    modified: 1662856023474
-    created: 1662855318309
+    modified: 1662903661422
+    created: 1662856282297
     url: '{{ _.baseUrl }}/categories'
-    name: Get Categories
+    name: Create Category
     description: ''
-    method: GET
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"id": "{% uuid 'v4' %}",
+        	"name": "Salary",
+        	"type": "INCOME"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1f94bb253cb04908b4fff61d95fe9502
+    authentication:
+      type: bearer
+      token: '{{ _.token }}'
+    metaSortKey: -1662856282298
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_39e41d1736ea40a29d0f9e8a3cfdaffa
+    parentId: fld_9f45a64b68b44d368c2d1c1545a86aae
+    modified: 1662902302386
+    created: 1662902254828
+    url: '{{ _.baseUrl }}/categories/63a5ade3-dd07-48d9-ae16-809f512c555a'
+    name: Update Category
+    description: ''
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Food"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1f94bb253cb04908b4fff61d95fe9502
+    authentication:
+      type: bearer
+      token: '{{ _.token }}'
+    metaSortKey: -1662856025626.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_96e57cea4cad4b549567312771a5ea8f
+    parentId: fld_9f45a64b68b44d368c2d1c1545a86aae
+    modified: 1662903473807
+    created: 1662900819749
+    url: '{{ _.baseUrl }}/categories/63a5ade3-dd07-48d9-ae16-809f512c555a'
+    name: Delete Category
+    description: ''
+    method: DELETE
     body: {}
     parameters: []
     headers: []
     authentication:
       type: bearer
       token: '{{ _.token }}'
-    metaSortKey: -1662855318352
+    metaSortKey: -1662843081165
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
@@ -144,12 +199,12 @@ resources:
     _type: api_spec
   - _id: env_a6ec35dee29a476482939a811bbd3bb2
     parentId: env_16f13012957cf7f39d37c846da700a93f62697be
-    modified: 1662856496784
+    modified: 1662901844937
     created: 1662855278587
     name: Local
     data:
       baseUrl: http://localhost:5001/nowaste-7acdd/us-central1/api
-      token: eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoicmFwaGFlbEB0ZXN0LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiYXV0aF90aW1lIjoxNjYyODU2NDgzLCJ1c2VyX2lkIjoiSUN0YXlSNDdJSlVLc1FWSlNubHRlY0N4WnRmdyIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsicmFwaGFlbEB0ZXN0LmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn0sImlhdCI6MTY2Mjg1NjQ4MywiZXhwIjoxNjYyODYwMDgzLCJhdWQiOiJub3dhc3RlLTdhY2RkIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL25vd2FzdGUtN2FjZGQiLCJzdWIiOiJJQ3RheVI0N0lKVUtzUVZKU25sdGVjQ3hadGZ3In0.
+      token: eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoicmFwaGFlbEB0ZXN0LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiYXV0aF90aW1lIjoxNjYyOTAxODM3LCJ1c2VyX2lkIjoiUWRKSVdPS05Hc1JVSlJHUnFYcHlycHh1ZVJRbCIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsicmFwaGFlbEB0ZXN0LmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn0sImlhdCI6MTY2MjkwMTgzNywiZXhwIjoxNjYyOTA1NDM3LCJhdWQiOiJub3dhc3RlLTdhY2RkIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL25vd2FzdGUtN2FjZGQiLCJzdWIiOiJRZEpJV09LTkdzUlVKUkdScVhweXJweHVlUlFsIn0.
     dataPropertyOrder:
       '&':
         - baseUrl
