@@ -1,0 +1,160 @@
+_type: export
+__export_format: 4
+__export_date: 2022-09-11T00:39:37.323Z
+__export_source: insomnia.desktop.app:v2021.5.3
+resources:
+  - _id: req_6decbbe7fa9b4e438aece921523f3998
+    parentId: fld_4f8e24e3219443f7afd48b63c5108b69
+    modified: 1662855832941
+    created: 1662855768914
+    url: http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=any_key_you_want
+    name: Get Token
+    description: ''
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "raphael@test.com",
+        	"password": "password"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1dbbe83ba55c440d8a8f5fda2237eabf
+    authentication: {}
+    metaSortKey: -1662855768955
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_4f8e24e3219443f7afd48b63c5108b69
+    parentId: wrk_2b56dee014074b2dbfb1da8a32dfd548
+    modified: 1662855755118
+    created: 1662855755118
+    name: Auth
+    description: ''
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1662855755118
+    _type: request_group
+  - _id: wrk_2b56dee014074b2dbfb1da8a32dfd548
+    parentId: null
+    modified: 1661026182768
+    created: 1661026182768
+    name: NoWaste
+    description: ''
+    scope: collection
+    _type: workspace
+  - _id: req_0ab0060226d6477795bb7ad90f3b2829
+    parentId: fld_9f45a64b68b44d368c2d1c1545a86aae
+    modified: 1662856464058
+    created: 1662856282297
+    url: '{{ _.baseUrl }}/categories'
+    name: Create Category
+    description: ''
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"id": "{% uuid 'v4' %}",
+        	"name": "Food"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1f94bb253cb04908b4fff61d95fe9502
+    authentication:
+      type: bearer
+      token: '{{ _.token }}'
+    metaSortKey: -1662856282298
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_9f45a64b68b44d368c2d1c1545a86aae
+    parentId: wrk_2b56dee014074b2dbfb1da8a32dfd548
+    modified: 1662855312865
+    created: 1662855312865
+    name: Categories
+    description: ''
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1662855312865
+    _type: request_group
+  - _id: req_80596a0bf2b64840b763fff012da06c6
+    parentId: fld_9f45a64b68b44d368c2d1c1545a86aae
+    modified: 1662856023474
+    created: 1662855318309
+    url: '{{ _.baseUrl }}/categories'
+    name: Get Categories
+    description: ''
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: '{{ _.token }}'
+    metaSortKey: -1662855318352
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_16f13012957cf7f39d37c846da700a93f62697be
+    parentId: wrk_2b56dee014074b2dbfb1da8a32dfd548
+    modified: 1661026182789
+    created: 1661026182789
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1661026182789
+    _type: environment
+  - _id: jar_16f13012957cf7f39d37c846da700a93f62697be
+    parentId: wrk_2b56dee014074b2dbfb1da8a32dfd548
+    modified: 1661026182791
+    created: 1661026182791
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_a2f4695f005442dca9ea21756099bdde
+    parentId: wrk_2b56dee014074b2dbfb1da8a32dfd548
+    modified: 1661026182778
+    created: 1661026182778
+    fileName: NoWaste
+    contents: ''
+    contentType: yaml
+    _type: api_spec
+  - _id: env_a6ec35dee29a476482939a811bbd3bb2
+    parentId: env_16f13012957cf7f39d37c846da700a93f62697be
+    modified: 1662856496784
+    created: 1662855278587
+    name: Local
+    data:
+      baseUrl: http://localhost:5001/nowaste-7acdd/us-central1/api
+      token: eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoicmFwaGFlbEB0ZXN0LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiYXV0aF90aW1lIjoxNjYyODU2NDgzLCJ1c2VyX2lkIjoiSUN0YXlSNDdJSlVLc1FWSlNubHRlY0N4WnRmdyIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsicmFwaGFlbEB0ZXN0LmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn0sImlhdCI6MTY2Mjg1NjQ4MywiZXhwIjoxNjYyODYwMDgzLCJhdWQiOiJub3dhc3RlLTdhY2RkIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL25vd2FzdGUtN2FjZGQiLCJzdWIiOiJJQ3RheVI0N0lKVUtzUVZKU25sdGVjQ3hadGZ3In0.
+    dataPropertyOrder:
+      '&':
+        - baseUrl
+        - token
+    color: null
+    isPrivate: false
+    metaSortKey: 1662855278587
+    _type: environment
