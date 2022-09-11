@@ -1,32 +1,19 @@
-import * as compression from 'compression';
 import * as express from 'express';
-import * as asyncHandler from 'express-async-handler';
-import helmet from 'helmet';
-import { CategoryController } from './controllers/CategoryController';
-import { ErrorMiddleware } from './middlewares/ErrorMiddleware';
 
 export class Server {
-  categoryController: CategoryController;
-  errorMiddleware: ErrorMiddleware;
+  errorHandler: express.ErrorRequestHandler;
+  handlers: express.Handler[];
 
-  constructor(categoryController: CategoryController, errorMiddleware: ErrorMiddleware) {
-    this.categoryController = categoryController;
-    this.errorMiddleware = errorMiddleware;
+  constructor(errorHandler: express.ErrorRequestHandler, ...handlers: express.Handler[]) {
+    this.errorHandler = errorHandler;
+    this.handlers = handlers;
   }
 
   public handler(): express.Express {
     const app = express();
 
-    app.use(
-      helmet({
-        crossOriginEmbedderPolicy: false,
-        crossOriginResourcePolicy: false
-      })
-    );
-    app.use(express.json());
-    app.use(compression());
-    app.use(asyncHandler(this.categoryController.handler()));
-    app.use(this.errorMiddleware.handler());
+    this.handlers.forEach((h) => app.use(h));
+    app.use(this.errorHandler);
 
     return app;
   }
