@@ -1,11 +1,11 @@
+import { AuthorizationError } from '../errors/AuthorizationError';
 import { Category } from './Category';
-
-interface CategoryRepository {
-  findById(id: string): Promise<Category>;
-  findAll(): Promise<Category[]>;
-  save(category: Category): Promise<void>;
-  delete(id: string): Promise<void>;
-}
+import { CategoryRepository } from './CategoryRepository';
+import { CategoryResponse } from './CategoryResponse';
+import { CreateCategoryRequest } from './CreateCategoryRequest';
+import { DeleteCategoryRequest } from './DeleteCategoryRequest';
+import { GetCategoriesRequest } from './GetCategoriesRequest';
+import { UpdateCategoryRequest } from './UpdateCategoryRequest';
 
 export class CategoryService {
   categoryRepository: CategoryRepository;
@@ -14,25 +14,40 @@ export class CategoryService {
     this.categoryRepository = repository;
   }
 
-  public async getCategories(): Promise<Category[]> {
-    return await this.categoryRepository.findAll();
+  public async getCategories(req: GetCategoriesRequest): Promise<CategoryResponse[]> {
+    const categories = await this.categoryRepository.findAllByUserId(req.userId);
+
+    return categories.map((c) => ({
+      id: c.id,
+      name: c.name
+    }));
   }
 
-  public async createCategory(category: Category): Promise<void> {
+  public async createCategory(req: CreateCategoryRequest): Promise<void> {
+    const category = new Category(req.id, req.name, req.userId);
     category.validate();
+
     return await this.categoryRepository.save(category);
   }
 
-  public async updateCategory(id: string, newCategory: Category): Promise<void> {
-    const existingCategory = await this.categoryRepository.findById(id);
-    existingCategory.name = newCategory.name;
+  public async updateCategory(req: UpdateCategoryRequest): Promise<void> {
+    const category = await this.categoryRepository.findById(req.id);
+    if (category.userId !== req.userId) {
+      throw new AuthorizationError('The requested action is forbidden');
+    }
 
-    existingCategory.validate();
+    category.name = req.name;
+    category.validate();
 
-    return await this.categoryRepository.save(existingCategory);
+    return await this.categoryRepository.save(category);
   }
 
-  public async deleteCategory(categoryId: string): Promise<void> {
-    return await this.categoryRepository.delete(categoryId);
+  public async deleteCategory(req: DeleteCategoryRequest): Promise<void> {
+    const category = await this.categoryRepository.findById(req.categoryId);
+    if (category.userId !== req.userId) {
+      throw new AuthorizationError('The requested action is forbidden');
+    }
+
+    return await this.categoryRepository.delete(req.categoryId);
   }
 }

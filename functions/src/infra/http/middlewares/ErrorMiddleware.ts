@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { AuthenticationError } from '../../../core/errors/AuthenticationError';
+import { AuthorizationError } from '../../../core/errors/AuthorizationError';
 import { EntityNotFoundError } from '../../../core/errors/EntityNotFoundError';
 import { ValidationError } from '../../../core/errors/ValidationError';
 
@@ -38,6 +39,9 @@ export class ErrorMiddleware {
       } else if (err instanceof AuthenticationError) {
         response.message = err.message;
         response.status = 401;
+      } else if (err instanceof AuthorizationError) {
+        response.message = err.message;
+        response.status = 403;
       }
 
       that.logger.error('There was an error when processing the request.', response);

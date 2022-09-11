@@ -1,6 +1,5 @@
 import * as express from 'express';
 import * as asyncHandler from 'express-async-handler';
-import { Category } from '../../../core/categories/Category';
 import { CategoryService } from '../../../core/categories/CategoryService';
 
 export class CategoryController {
@@ -20,26 +19,33 @@ export class CategoryController {
     return this.router;
   }
 
-  private async getCategories(_: express.Request, resp: express.Response) {
-    const categories = await this.service.getCategories();
+  private async getCategories(req: express.Request, resp: express.Response) {
+    const categories = await this.service.getCategories({ userId: req.userId });
     resp.send(categories);
   }
 
   private async createCategory(req: express.Request, resp: express.Response) {
-    const category = new Category(req.body.id, req.body.name, req.userId);
+    await this.service.createCategory({
+      id: req.body.id,
+      name: req.body.name,
+      userId: req.userId
+    });
 
-    await this.service.createCategory(category);
-    resp.status(201).send(category);
+    resp.sendStatus(201);
   }
 
   private async updateCategory(req: express.Request, resp: express.Response) {
-    const category = new Category(req.body.id, req.body.name, req.userId);
+    await this.service.updateCategory({
+      id: req.params.id,
+      name: req.body.name,
+      userId: req.userId
+    });
 
-    await this.service.updateCategory(req.params.id, category);
-    resp.status(200);
+    resp.sendStatus(200);
   }
 
   private async deleteCategory(req: express.Request, resp: express.Response) {
-    await this.service.deleteCategory(req.params.id);
+    await this.service.deleteCategory({ categoryId: req.params.id, userId: req.userId });
+    resp.sendStatus(200);
   }
 }

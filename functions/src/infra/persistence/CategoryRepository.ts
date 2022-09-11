@@ -11,6 +11,12 @@ export class CategoryRepository {
     this.db = db;
   }
 
+  async findAllByUserId(userId: string): Promise<Category[]> {
+    const categories = await this.db.collection(collection).where('userId', '==', userId).get();
+
+    return categories.docs.map((doc) => new Category(doc.id, doc.data()?.name, doc.data()?.userId));
+  }
+
   async findById(id: string): Promise<Category> {
     const category = await this.db.collection(collection).doc(id).get();
 
@@ -19,12 +25,6 @@ export class CategoryRepository {
     }
 
     return new Category(category.id, category.data()?.name, category.data()?.userId);
-  }
-
-  async findAll(): Promise<Category[]> {
-    const categories = await this.db.collection(collection).get();
-
-    return categories.docs.map((doc) => new Category(doc.id, doc.data()?.name, doc.data()?.userId));
   }
 
   async save(category: Category): Promise<void> {

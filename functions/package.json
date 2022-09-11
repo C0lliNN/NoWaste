@@ -3,7 +3,7 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "start": "concurrently \"npm run build:watch\" \"firebase emulators:start --inspect-functions\"",
+    "start": "concurrently \"npm run build:watch\" \"firebase emulators:start --inspect-functions --import=./.data --export-on-exit\"",
     "shell": "npm run build && firebase functions:shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
