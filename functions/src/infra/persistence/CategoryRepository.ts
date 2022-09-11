@@ -18,13 +18,13 @@ export class CategoryRepository {
       throw new EntityNotFoundError('Category', id);
     }
 
-    return new Category(category.id, category.data['name']);
+    return new Category(category.id, category.data()?.name, category.data()?.userId);
   }
 
   async findAll(): Promise<Category[]> {
     const categories = await this.db.collection(collection).get();
 
-    return categories.docs.map((doc) => new Category(doc.id, doc.data()['name']));
+    return categories.docs.map((doc) => new Category(doc.id, doc.data()?.name, doc.data()?.userId));
   }
 
   async save(category: Category): Promise<void> {

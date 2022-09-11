@@ -12,7 +12,8 @@
 - [x] Figure out validation
 - [x] Figure out logging
 - [x] Figure out CORS backend
-- [ ] Figure out multi-tenancy user-id
+- [x] Figure out multi-tenancy user-id
+- [ ] Add Interfaces in the Service
 - [ ] Figure out testing
 - [ ] Save token to local storage
 - [ ] Handle logout

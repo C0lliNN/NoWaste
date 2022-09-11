@@ -26,14 +26,14 @@ export class CategoryController {
   }
 
   private async createCategory(req: express.Request, resp: express.Response) {
-    const category = new Category(req.body.id, req.body.name);
+    const category = new Category(req.body.id, req.body.name, req.userId);
 
     await this.service.createCategory(category);
     resp.status(201).send(category);
   }
 
   private async updateCategory(req: express.Request, resp: express.Response) {
-    const category = new Category(req.body.id, req.body.name);
+    const category = new Category(req.body.id, req.body.name, req.userId);
 
     await this.service.updateCategory(req.params.id, category);
     resp.status(200);

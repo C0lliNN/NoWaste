@@ -3,9 +3,8 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "npm run build && firebase emulators:start --inspect-functions",
-    "serve:functions": "npm run build && firebase emulators:start --only functions",
-    "start": "npm run build && firebase functions:shell",
+    "start": "concurrently \"npm run build:watch\" \"firebase emulators:start --inspect-functions\"",
+    "shell": "npm run build && firebase functions:shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
@@ -24,6 +23,7 @@
   "devDependencies": {
     "@types/compression": "^1.7.2",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "concurrently": "^7.4.0",
     "eslint": "^8.23.0",
     "eslint-config-standard-with-typescript": "^22.0.0",
     "eslint-plugin-import": "^2.26.0",

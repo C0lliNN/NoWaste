@@ -2,7 +2,7 @@ import { auth } from 'firebase-admin';
 import * as express from 'express';
 import { AuthenticationError } from '../../../core/errors/AuthenticationError';
 
-const AUTHORIZATION_REGEX = 'Bearers[d|a-f]{8}-([d|a-f]{4}-){3}[d|a-f]{12}';
+const AUTHORIZATION_REGEX = /Bearer \w+/i;
 
 interface Logger {
   error: (...args: any[]) => void;
@@ -31,11 +31,12 @@ export class AuthMiddleware {
         );
       }
 
-      const token = header.split(' ')[0];
+      const token = header.split(' ')[1];
 
       try {
         const decodedToken = await that.auth.verifyIdToken(token);
         req.userId = decodedToken.uid;
+        next();
       } catch (e) {
         that.logger.error('Error when trying to decode a token.', e);
         throw new AuthenticationError('The provided token is not valid.');
