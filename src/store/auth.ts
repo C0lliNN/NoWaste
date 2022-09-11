@@ -4,10 +4,12 @@ import User from '../models/user';
 interface Auth {
   user?: User;
   authenticated: boolean;
+  loading: boolean;
 }
 
 const initialAuth: Auth = {
-  authenticated: false
+  authenticated: false,
+  loading: false
 };
 
 interface LoginPayload {
@@ -28,10 +30,17 @@ const authSlice = createSlice({
         state.authenticated = true;
       }
     },
-    login: (state: Auth, action: PayloadAction<LoginPayload>) => {
+    loginStart: (state: Auth) => {
+      state.loading = true;
+    },
+    loginSuccess: (state: Auth, action: PayloadAction<LoginPayload>) => {
       state.user = action.payload.user;
       state.authenticated = true;
+      state.loading = false;
       localStorage.setItem('user', JSON.stringify(state.user));
+    },
+    loginFailed: (state: Auth) => {
+      state.loading = false;
     },
     logout: (state: Auth) => {
       state.user = undefined;
@@ -43,4 +52,4 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { initAuth, login, logout } = authSlice.actions;
+export const { initAuth, loginSuccess, loginStart, loginFailed, logout } = authSlice.actions;

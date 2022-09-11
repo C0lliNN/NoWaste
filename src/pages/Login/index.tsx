@@ -14,10 +14,12 @@ import { ReactComponent as GoogleIcon } from '../../assets/icons/google.svg';
 import { ReactComponent as GithubIcon } from '../../assets/icons/github.svg';
 import { Trans } from 'react-i18next';
 import { handleFirebaseGithubLogin, handleFirebaseGoogleLogin } from '../../services/firebase';
-import { login } from '../../store/auth';
+import { loginSuccess, loginFailed, loginStart } from '../../store/auth';
+import Spinner from '../../components/UI/Spinner';
 
 export default function Login(): JSX.Element {
   const authenticated = useAppSelector((state) => state.auth.authenticated);
+  const loading = useAppSelector((state) => state.auth.loading);
   const dispatch = useAppDispatch();
 
   if (authenticated) {
@@ -25,19 +27,25 @@ export default function Login(): JSX.Element {
   }
 
   async function handleGoogleLogin(): Promise<void> {
+    dispatch(loginStart());
+
     try {
       const user = await handleFirebaseGoogleLogin();
-      dispatch(login({ user }));
+      dispatch(loginSuccess({ user }));
     } catch (err) {
+      dispatch(loginFailed());
       alert('Some weird error');
     }
   }
 
   async function handleGithubLogin(): Promise<void> {
+    dispatch(loginStart());
+
     try {
       const user = await handleFirebaseGithubLogin();
-      dispatch(login({ user }));
+      dispatch(loginSuccess({ user }));
     } catch (err) {
+      dispatch(loginFailed());
       alert('Some weird error');
     }
   }
@@ -48,21 +56,29 @@ export default function Login(): JSX.Element {
         <Logo />
         <h1>No Waste</h1>
       </LogoContainer>
-      <Paragraph>
-        <Trans i18nKey="loginCreateAccount">
-          Access or Create your account to start managing your money
-        </Trans>
-      </Paragraph>
-      <SocialMediaContainer>
-        <GoogleButton onClick={handleGoogleLogin}>
-          <GoogleIcon />
-          <Trans i18nKey="loginGoogle">Continue with Google</Trans>
-        </GoogleButton>
-        <GithubButton onClick={handleGithubLogin}>
-          <GithubIcon />
-          <Trans i18nKey="loginGithub">Continue with GitHub</Trans>
-        </GithubButton>
-      </SocialMediaContainer>
+      {loading ? (
+        <div style={{ margin: '0 auto' }}>
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          <Paragraph>
+            <Trans i18nKey="loginCreateAccount">
+              Access or Create your account to start managing your money
+            </Trans>
+          </Paragraph>
+          <SocialMediaContainer>
+            <GoogleButton onClick={handleGoogleLogin}>
+              <GoogleIcon />
+              <Trans i18nKey="loginGoogle">Continue with Google</Trans>
+            </GoogleButton>
+            <GithubButton onClick={handleGithubLogin}>
+              <GithubIcon />
+              <Trans i18nKey="loginGithub">Continue with GitHub</Trans>
+            </GithubButton>
+          </SocialMediaContainer>
+        </>
+      )}
       <Footer>
         <Trans i18nKey="loginCopyright">© NoWaste - All Rights Reserved</Trans>
       </Footer>

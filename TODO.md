@@ -15,5 +15,6 @@
 - [x] Figure out multi-tenancy user-id
 - [x] Add Interfaces in the Service
 - [x] Figure out testing
-- [ ] Save token to local storage
-- [ ] Handle logout
+- [x] Save token to local storage
+- [x] Handle logout
+- [ ] Add alert library
