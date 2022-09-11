@@ -18,17 +18,29 @@ const authSlice = createSlice({
   name: 'Auth',
   initialState: initialAuth,
   reducers: {
-    login: (state, action: PayloadAction<LoginPayload>) => {
+    initAuth: (state: Auth) => {
+      const user = localStorage.getItem('user');
+      if (user == null) {
+        state.authenticated = false;
+        state.user = undefined;
+      } else {
+        state.user = JSON.parse(user);
+        state.authenticated = true;
+      }
+    },
+    login: (state: Auth, action: PayloadAction<LoginPayload>) => {
       state.user = action.payload.user;
       state.authenticated = true;
+      localStorage.setItem('user', JSON.stringify(state.user));
     },
-    logout: (state) => {
+    logout: (state: Auth) => {
       state.user = undefined;
       state.authenticated = false;
+      localStorage.removeItem('user');
     }
   }
 });
 
 export default authSlice.reducer;
 
-export const { login, logout } = authSlice.actions;
+export const { initAuth, login, logout } = authSlice.actions;

@@ -13,11 +13,20 @@ import { ReactComponent as CategoriesIcon } from '../../assets/icons/categories.
 import { ReactComponent as AccountsIcon } from '../../assets/icons/accounts.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/logout.svg';
 import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
+import profilePictureIcon from '../../assets/icons/profile_picture.svg';
 import { Trans } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { logout } from '../../store/auth';
 
 export default function Navigation(): JSX.Element {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const photoUrl = useAppSelector((state) => state.auth.user?.photoUrl);
+
+  function handleLogout(): void {
+    dispatch(logout());
+  }
 
   return (
     <Container>
@@ -55,8 +64,8 @@ export default function Navigation(): JSX.Element {
           </span>
         </Link>
       </LinkContainer>
-      <LogoutContainer>
-        <img src="https://picsum.photos/100" alt="Profile Picture" />
+      <LogoutContainer onClick={handleLogout}>
+        <img src={photoUrl?.trim() ? photoUrl : profilePictureIcon} alt="Profile Picture" />
         <LogoutIcon />
         <span>
           <Trans key="logout">Logout</Trans>

@@ -141,10 +141,16 @@ export const LogoutContainer = styled.button`
     font-weight: 600;
   }
 
-  img {
+  img,
+  svg:first-child {
     width: 64px;
     height: 64px;
     margin-left: 20px;
     border-radius: 100%;
+  }
+
+  svg:first-child {
+    display: flex;
+    align-items: center;
   }
 `;

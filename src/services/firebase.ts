@@ -9,8 +9,6 @@ import {
 } from 'firebase/auth';
 import User from '../models/user';
 
-console.log(process.env);
-
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -40,6 +38,7 @@ async function handleFirebaseGithubLogin(): Promise<User> {
 
 async function handleLogin(provider: AuthProvider): Promise<User> {
   const userCredential = await signInWithPopup(auth, provider);
+
   const token = await userCredential.user.getIdToken(true);
 
   return {
