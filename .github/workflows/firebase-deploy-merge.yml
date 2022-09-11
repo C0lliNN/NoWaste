@@ -33,7 +33,7 @@ jobs:
           npm install
           cd functions
       - name: Run Tests
-        run: npm test
+        run: cd functions && npm test
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
