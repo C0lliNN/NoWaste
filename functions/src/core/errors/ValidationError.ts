@@ -8,7 +8,7 @@ export interface FieldError {
 export class ValidationError extends Error {
   errors: FieldError[];
 
-  constructor(errors: FieldError[]) {
+  constructor(...errors: FieldError[]) {
     super(message);
     this.errors = errors;
   }

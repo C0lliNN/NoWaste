@@ -28,6 +28,7 @@ export class CategoryController {
     await this.service.createCategory({
       id: req.body.id,
       name: req.body.name,
+      type: req.body.type,
       userId: req.userId
     });
 
@@ -38,6 +39,7 @@ export class CategoryController {
     await this.service.updateCategory({
       id: req.params.id,
       name: req.body.name,
+      type: req.body.type,
       userId: req.userId
     });
 

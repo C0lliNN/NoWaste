@@ -1,5 +1,6 @@
 import { firestore } from 'firebase-admin';
 import { Category } from '../../core/categories/Category';
+import { CategoryType } from '../../core/categories/CategoryType';
 import { EntityNotFoundError } from '../../core/errors/EntityNotFoundError';
 
 const collection = 'categories';
@@ -14,7 +15,7 @@ export class CategoryRepository {
   async findAllByUserId(userId: string): Promise<Category[]> {
     const categories = await this.db.collection(collection).where('userId', '==', userId).get();
 
-    return categories.docs.map((doc) => new Category(doc.id, doc.data()?.name, doc.data()?.userId));
+    return categories.docs.map(this.mapDocumentToCategory);
   }
 
   async findById(id: string): Promise<Category> {
@@ -24,7 +25,7 @@ export class CategoryRepository {
       throw new EntityNotFoundError('Category', id);
     }
 
-    return new Category(category.id, category.data()?.name, category.data()?.userId);
+    return this.mapDocumentToCategory(category);
   }
 
   async save(category: Category): Promise<void> {
@@ -35,5 +36,14 @@ export class CategoryRepository {
 
   async delete(id: string): Promise<void> {
     await this.db.collection(collection).doc(id).delete();
+  }
+
+  private mapDocumentToCategory(doc: firestore.DocumentSnapshot): Category {
+    return new Category(
+      doc.id,
+      doc.data()?.name,
+      doc.data()?.type as CategoryType,
+      doc.data()?.userId
+    );
   }
 }

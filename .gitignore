@@ -23,3 +23,6 @@ yarn-error.log*
 
 # vs code
 .vscode
+
+# Local Data
+.data

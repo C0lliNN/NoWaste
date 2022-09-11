@@ -1,7 +1,9 @@
 import { AuthorizationError } from '../errors/AuthorizationError';
+import { ValidationError } from '../errors/ValidationError';
 import { Category } from './Category';
 import { CategoryRepository } from './CategoryRepository';
 import { CategoryResponse } from './CategoryResponse';
+import { CategoryType, isCategoryType } from './CategoryType';
 import { CreateCategoryRequest } from './CreateCategoryRequest';
 import { DeleteCategoryRequest } from './DeleteCategoryRequest';
 import { GetCategoriesRequest } from './GetCategoriesRequest';
@@ -19,18 +21,23 @@ export class CategoryService {
 
     return categories.map((c) => ({
       id: c.id,
-      name: c.name
+      name: c.name,
+      type: c.type
     }));
   }
 
   public async createCategory(req: CreateCategoryRequest): Promise<void> {
-    const category = new Category(req.id, req.name, req.userId);
+    this.validateType(req.type);
+
+    const category = new Category(req.id, req.name, req.type as CategoryType, req.userId);
     category.validate();
 
     return await this.categoryRepository.save(category);
   }
 
   public async updateCategory(req: UpdateCategoryRequest): Promise<void> {
+    this.validateType(req.type);
+
     const category = await this.categoryRepository.findById(req.id);
     if (category.userId !== req.userId) {
       throw new AuthorizationError('The requested action is forbidden');
@@ -49,5 +56,14 @@ export class CategoryService {
     }
 
     return await this.categoryRepository.delete(req.categoryId);
+  }
+
+  private validateType(type: string) {
+    if (!isCategoryType(type)) {
+      throw new ValidationError({
+        field: 'type',
+        message: 'The value must be either "INCOME" or "EXPENSE"'
+      });
+    }
   }
 }

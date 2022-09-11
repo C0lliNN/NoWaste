@@ -1,13 +1,16 @@
 import { FieldError, ValidationError } from '../errors/ValidationError';
+import { CategoryType } from './CategoryType';
 
 export class Category {
   id: string;
   name: string;
+  type: CategoryType;
   userId: string;
 
-  constructor(id: string, name: string, userId: string) {
+  constructor(id: string, name: string, type: CategoryType, userId: string) {
     this.id = id;
     this.name = name;
+    this.type = type;
     this.userId = userId;
   }
 
@@ -22,7 +25,7 @@ export class Category {
     }
 
     if (errors.length) {
-      throw new ValidationError(errors);
+      throw new ValidationError(...errors);
     }
   }
 }
