@@ -18,6 +18,8 @@ const theme = {
   success: '#06D6A0',
   warning: '#FFD166',
   danger: '#EF476F',
+  gray: '#dddddd',
+  darkgray: '#303030',
   lgBreakpoint: '1024px'
 };
 
