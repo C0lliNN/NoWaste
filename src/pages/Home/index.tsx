@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import FormGroup from '../../components/UI/FormGroup';
 import Modal from '../../components/UI/Modal';
 import Table from '../../components/UI/Table';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -56,6 +57,23 @@ export default function Home(): JSX.Element {
           </tr>
         </Table.Body>
       </Table>
+      <form style={{ padding: '20px' }}>
+        <FormGroup>
+          <FormGroup.Label htmlFor="input1">Label 1</FormGroup.Label>
+          <FormGroup.Input id="input1" placeholder="Some test" />
+        </FormGroup>
+        <FormGroup>
+          <FormGroup.Label htmlFor="input2">Label 1</FormGroup.Label>
+          <FormGroup.Select id="input2">
+            <option>1</option>
+            <option>2</option>
+          </FormGroup.Select>
+        </FormGroup>
+        <FormGroup>
+          <FormGroup.Label htmlFor="input3">Label 1</FormGroup.Label>
+          <FormGroup.Textarea id="input3"></FormGroup.Textarea>
+        </FormGroup>
+      </form>
     </Main>
   );
 }

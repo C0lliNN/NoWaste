@@ -6,8 +6,8 @@ interface Props {
 }
 
 interface SubComponents {
-  Header: StyledComponent<'div', any, {}, never>;
-  Body: StyledComponent<'div', any, {}, never>;
+  Header: StyledComponent<'thead', any, {}, never>;
+  Body: StyledComponent<'tbody', any, {}, never>;
 }
 
 const Table: React.FC<Props> & SubComponents = (props: Props) => {
