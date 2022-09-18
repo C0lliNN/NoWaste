@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Modal from '../../components/UI/Modal';
+import Table from '../../components/UI/Table';
 import { useAppDispatch } from '../../hooks/hooks';
 import { logout } from '../../store/auth';
 import { Main } from './styles';
@@ -25,6 +26,36 @@ export default function Home(): JSX.Element {
         <Modal.Header>New Category</Modal.Header>
         <Modal.Body>Test</Modal.Body>
       </Modal>
+      <Table>
+        <Table.Header>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Col 1</th>
+            <th scope="col">Col 2</th>
+            <th scope="col">Col 3</th>
+            <th scope="col">Col 4</th>
+            <th scope="col">Col 5</th>
+          </tr>
+        </Table.Header>
+        <Table.Body>
+          <tr>
+            <th scope="row">1</th>
+            <td>Raphael</td>
+            <td>Dev</td>
+            <td>Dev</td>
+            <td>Dev</td>
+            <td>Dev</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Philippe</td>
+            <td>Industry</td>
+            <td>Industry</td>
+            <td>Industry</td>
+            <td>Industry</td>
+          </tr>
+        </Table.Body>
+      </Table>
     </Main>
   );
 }
