@@ -25,8 +25,8 @@ export default function App(): JSX.Element {
           <ProtectedRoute authenticated={authenticated}>
             <>
               <Navigation />
-              <Home />
               <Routes>
+                <Route path="/home" element={<Home />} />
                 <Route path="*" element={<p>404 Not Found</p>} />
               </Routes>
             </>
