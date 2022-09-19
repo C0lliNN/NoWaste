@@ -4,13 +4,15 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
+import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
 import './i18n';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import store from './store/store';
+import store, { persistor } from './store/store';
+import Spinner from './components/UI/Spinner';
 
 const theme = {
   primary: '#073B4C',
@@ -29,10 +31,12 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <ToastContainer />
-          <App />
-        </ThemeProvider>
+        <PersistGate persistor={persistor} loading={<Spinner />}>
+          <ThemeProvider theme={theme}>
+            <ToastContainer />
+            <App />
+          </ThemeProvider>
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

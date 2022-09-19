@@ -4,7 +4,6 @@ import Modal from '../../components/UI/Modal';
 import Table from '../../components/UI/Table';
 import { useAppDispatch } from '../../hooks/hooks';
 import { logout } from '../../store/auth';
-import { Main } from './styles';
 
 export default function Home(): JSX.Element {
   const [showModal, setShowModal] = useState(false);
@@ -15,7 +14,7 @@ export default function Home(): JSX.Element {
   }
 
   return (
-    <Main>
+    <div>
       <h1>Home Page</h1>
       <button onClick={handleLogout}>Logout</button>
       <button onClick={() => setShowModal(true)}>Show Modal</button>
@@ -74,6 +73,6 @@ export default function Home(): JSX.Element {
           <FormGroup.Textarea id="input3"></FormGroup.Textarea>
         </FormGroup>
       </form>
-    </Main>
+    </div>
   );
 }
