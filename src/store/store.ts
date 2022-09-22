@@ -1,8 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { AnyAction, configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth';
+import categoriesReducer from './categories';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import thunk from 'redux-thunk';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
@@ -11,7 +12,8 @@ const persistConfig = {
 
 const store = configureStore({
   reducer: {
-    auth: persistReducer(persistConfig, authReducer)
+    auth: persistReducer(persistConfig, authReducer),
+    categories: categoriesReducer
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: [thunk]
@@ -19,7 +21,7 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch;
+export type AppThunkDispatch = ThunkDispatch<RootState, any, AnyAction>;
 
 export const persistor = persistStore(store);
 

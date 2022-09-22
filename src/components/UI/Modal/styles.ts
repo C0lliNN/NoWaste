@@ -38,7 +38,7 @@ export const ModalContainer = styled.div<ModalProps>`
   background-color: #fff;
   z-index: 100;
   width: 85%;
-  height: 80%;
+  min-height: 450px;
   max-width: 850px;
   border-radius: 12px;
   transition: all 0.2s ease-in-out;

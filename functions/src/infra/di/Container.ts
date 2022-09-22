@@ -11,6 +11,7 @@ import { AuthMiddleware } from '../http/middlewares/AuthMiddleware';
 import helmet from 'helmet';
 import compression = require('compression');
 import * as asyncHandler from 'express-async-handler';
+import * as cors from 'cors';
 
 export class Container {
   NewServer(): Server {
@@ -31,6 +32,7 @@ export class Container {
         crossOriginEmbedderPolicy: false,
         crossOriginResourcePolicy: false
       }),
+      cors(),
       express.json(),
       compression(),
       asyncHandler(authMiddleware.handler()),
