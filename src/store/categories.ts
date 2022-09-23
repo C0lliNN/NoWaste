@@ -1,7 +1,7 @@
 import { uuidv4 } from '@firebase/util';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Category from '../models/category';
-import { createNewCategory, getCategories } from '../services/api';
+import { createNewCategory, getCategories, updateExistingCategory } from '../services/api';
 
 interface CategoryState {
   categories: Category[];
@@ -25,6 +25,14 @@ export const createCategory = createAsyncThunk(
     const createdCategory = { ...category, id: uuidv4() };
     await createNewCategory(createdCategory);
     return createdCategory;
+  }
+);
+
+export const updateCategory = createAsyncThunk(
+  'category/updateCategory',
+  async (category: Category) => {
+    await updateExistingCategory(category);
+    return category;
   }
 );
 
@@ -59,6 +67,23 @@ const categorySlice = createSlice({
       state.error = undefined;
     },
     [createCategory.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    },
+    [updateCategory.pending.type]: (state) => {
+      state.loading = true;
+      state.error = undefined;
+    },
+    [updateCategory.fulfilled.type]: (state, action) => {
+      state.loading = false;
+
+      const category: Category = action.payload;
+      const i = state.categories.findIndex((c) => c.id === category.id);
+
+      state.categories[i] = category;
+      state.error = undefined;
+    },
+    [updateCategory.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     }

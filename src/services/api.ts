@@ -29,3 +29,7 @@ export async function createNewCategory(category: Category): Promise<Category> {
   const response = await api.post('/categories', category);
   return response.data as Category;
 }
+
+export async function updateExistingCategory(category: Category): Promise<void> {
+  await api.put(`/categories/${category.id}`, category);
+}

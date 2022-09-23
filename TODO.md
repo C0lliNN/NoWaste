@@ -19,7 +19,11 @@
 - [x] Handle logout
 - [x] Add alert library
 - [x] Handle Category Listing
-- [ ] Handle Category Update
+- [x] Handle Category Update
 - [ ] Handle Category Deletion
 - [ ] Log stack trace
 - [ ] Handle Token Refresh
+
+# Nice to Have
+
+- [ ] Frontend validation

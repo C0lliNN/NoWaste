@@ -8,8 +8,10 @@ import ErrorMessage from '../../components/UI/ErrorMessage';
 import Spinner from '../../components/UI/Spinner';
 import Table from '../../components/UI/Table';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import Category from '../../models/category';
 import { fetchCategories } from '../../store/categories';
 import CreateCategoryModal from './CreateCategoryModal';
+import EditCategoryModal from './EditCategoryModal';
 import { Container, DeleteButton, EditButton, Header, Title } from './styles';
 
 export default function Categories(): JSX.Element {
@@ -18,6 +20,9 @@ export default function Categories(): JSX.Element {
   const theme: any = useTheme();
 
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
   function handleShowCreateModal(): void {
     setShowCreateModal(true);
@@ -25,6 +30,16 @@ export default function Categories(): JSX.Element {
 
   function handleCloseCreateModal(): void {
     setShowCreateModal(false);
+  }
+
+  function handleShowEditModal(category: Category): void {
+    setShowEditModal(true);
+    setSelectedCategory(category);
+  }
+
+  function handleCloseEditModal(): void {
+    setShowEditModal(false);
+    setSelectedCategory(null);
   }
 
   useEffect(() => {
@@ -64,7 +79,7 @@ export default function Categories(): JSX.Element {
               <td>{c.name}</td>
               <td>{c.type}</td>
               <td style={{ textAlign: 'center' }}>
-                <EditButton>
+                <EditButton onClick={() => handleShowEditModal(c)}>
                   <EditIcon fill={theme.secondary} />
                 </EditButton>
                 <DeleteButton>
@@ -79,6 +94,12 @@ export default function Categories(): JSX.Element {
       {loading && <Spinner style={{ marginTop: '20px' }} />}
 
       <CreateCategoryModal show={showCreateModal} onClose={handleCloseCreateModal} />
+
+      <EditCategoryModal
+        show={showEditModal}
+        onClose={handleCloseEditModal}
+        category={selectedCategory}
+      />
     </Container>
   );
 }
