@@ -19,10 +19,17 @@ const Button = styled.button<Props>`
   color: #fff;
   font-size: 1em;
   font-weight: 500;
-  padding: 15px 20px;
+  padding: 10px 15px;
   border: none;
   outline: none;
-  border-radius: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
+    font-size: 1em;
+    font-weight: 500;
+    padding: 15px 20px;
+    border-radius: 8px;
+  }
 `;
 
 export default Button;

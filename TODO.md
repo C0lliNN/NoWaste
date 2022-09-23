@@ -18,8 +18,7 @@
 - [x] Save token to local storage
 - [x] Handle logout
 - [x] Add alert library
-- [ ] Create Company FE page
-- [ ] Handle Category Listing
+- [x] Handle Category Listing
 - [ ] Handle Category Update
 - [ ] Handle Category Deletion
 - [ ] Log stack trace
