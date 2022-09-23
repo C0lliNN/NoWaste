@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import Category from '../../models/category';
 import { fetchCategories } from '../../store/categories';
 import CreateCategoryModal from './CreateCategoryModal';
+import DeleteCategoryModal from './DeleteCategoryModal';
 import EditCategoryModal from './EditCategoryModal';
 import { Container, DeleteButton, EditButton, Header, Title } from './styles';
 
@@ -21,6 +22,7 @@ export default function Categories(): JSX.Element {
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
@@ -39,6 +41,16 @@ export default function Categories(): JSX.Element {
 
   function handleCloseEditModal(): void {
     setShowEditModal(false);
+    setSelectedCategory(null);
+  }
+
+  function handleShowDeleteModal(category: Category): void {
+    setShowDeleteModal(true);
+    setSelectedCategory(category);
+  }
+
+  function handleCloseDeleteModal(): void {
+    setShowDeleteModal(false);
     setSelectedCategory(null);
   }
 
@@ -82,7 +94,7 @@ export default function Categories(): JSX.Element {
                 <EditButton onClick={() => handleShowEditModal(c)}>
                   <EditIcon fill={theme.secondary} />
                 </EditButton>
-                <DeleteButton>
+                <DeleteButton onClick={() => handleShowDeleteModal(c)}>
                   <DeleteIcon fill={theme.danger} />
                 </DeleteButton>
               </td>
@@ -98,6 +110,12 @@ export default function Categories(): JSX.Element {
       <EditCategoryModal
         show={showEditModal}
         onClose={handleCloseEditModal}
+        category={selectedCategory}
+      />
+
+      <DeleteCategoryModal
+        show={showDeleteModal}
+        onClose={handleCloseDeleteModal}
         category={selectedCategory}
       />
     </Container>

@@ -33,3 +33,7 @@ export async function createNewCategory(category: Category): Promise<Category> {
 export async function updateExistingCategory(category: Category): Promise<void> {
   await api.put(`/categories/${category.id}`, category);
 }
+
+export async function deleteExistingCategory(category: Category): Promise<void> {
+  await api.delete(`/categories/${category.id}`);
+}

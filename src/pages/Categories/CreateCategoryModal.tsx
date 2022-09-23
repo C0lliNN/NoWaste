@@ -33,7 +33,7 @@ export default function CreateCategoryModal(props: Props): JSX.Element {
   }
 
   return (
-    <Modal show={props.show} onClose={props.onClose}>
+    <Modal show={props.show} onClose={props.onClose} size="md">
       <Modal.Header>
         <Trans i18nKey="newCategory">New Category</Trans>
       </Modal.Header>

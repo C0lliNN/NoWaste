@@ -20,9 +20,11 @@
 - [x] Add alert library
 - [x] Handle Category Listing
 - [x] Handle Category Update
-- [ ] Handle Category Deletion
-- [ ] Log stack trace
+- [x] Handle Category Deletion
+- [ ] Restyle modal
 - [ ] Handle Token Refresh
+- [ ] Log stack trace
+- [ ] Start Accounting
 
 # Nice to Have
 

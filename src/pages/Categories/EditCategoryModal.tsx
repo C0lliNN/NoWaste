@@ -44,7 +44,7 @@ export default function EditCategoryModal(props: Props): JSX.Element {
   }, [props.category]);
 
   return (
-    <Modal show={props.show} onClose={props.onClose}>
+    <Modal show={props.show} onClose={props.onClose} size="md">
       <Modal.Header>
         <Trans i18nKey="editCategory">Edit Category</Trans>
       </Modal.Header>

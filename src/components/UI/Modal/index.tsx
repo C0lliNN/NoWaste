@@ -4,6 +4,7 @@ import { Backdrop, Container, ModalBody, ModalContainer, ModalHeader } from './s
 interface Props {
   onClose: () => void;
   show: boolean;
+  size: 'sm' | 'md';
   children?: JSX.Element | JSX.Element[];
 }
 
@@ -16,7 +17,9 @@ const Modal: React.FC<Props> & SubComponents = (props: Props) => {
   return (
     <Container show={props.show}>
       <Backdrop onClick={props.onClose} show={props.show} />
-      <ModalContainer show={props.show}>{props.children}</ModalContainer>
+      <ModalContainer show={props.show} size={props.size}>
+        {props.children}
+      </ModalContainer>
     </Container>
   );
 };

@@ -31,6 +31,7 @@ export const Backdrop = styled.div<BackdropProps>`
 
 interface ModalProps {
   show: boolean;
+  size: 'sm' | 'md';
 }
 
 export const ModalContainer = styled.div<ModalProps>`

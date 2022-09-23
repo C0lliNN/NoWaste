@@ -20,6 +20,7 @@ export default function Home(): JSX.Element {
       <button onClick={() => setShowModal(true)}>Show Modal</button>
       <Modal
         show={showModal}
+        size="md"
         onClose={() => {
           setShowModal(false);
         }}>
