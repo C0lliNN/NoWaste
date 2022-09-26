@@ -38,9 +38,19 @@ export const ModalContainer = styled.div<ModalProps>`
   position: relative;
   background-color: #fff;
   z-index: 100;
-  width: 85%;
-  min-height: 450px;
-  max-width: 850px;
+  ${(props) => {
+    switch (props.size) {
+      case 'sm':
+        return `width: 60%;
+                min-height: 100px;
+                max-width: 500px;`;
+      default:
+        return `width: 85%;
+                min-height: 450px;
+                max-width: 850px;`;
+    }
+  }}
+
   border-radius: 12px;
   transition: all 0.2s ease-in-out;
   transform: translateY(${(props) => (props.show ? '0' : '-100vh')});
@@ -52,11 +62,15 @@ export const ModalHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 2em;
-  color: ${(props) => props.theme.darkgray};
+  font-size: 1.5em;
   font-weight: 600;
+  color: ${(props) => props.theme.darkgray};
   font-family: 'Open Sans', sans-serif;
-  border-bottom: 1px solid ${(props) => props.theme.gray}; ;
+  border-bottom: 1px solid ${(props) => props.theme.gray};
+  @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
+    font-size: 2em;
+    font-weight: 600;
+  }
 `;
 
 export const ModalBody = styled.div`

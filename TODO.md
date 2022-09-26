@@ -21,7 +21,7 @@
 - [x] Handle Category Listing
 - [x] Handle Category Update
 - [x] Handle Category Deletion
-- [ ] Restyle modal
+- [x] Restyle modal
 - [ ] Handle Token Refresh
 - [ ] Log stack trace
 - [ ] Start Accounting

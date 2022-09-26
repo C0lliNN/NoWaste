@@ -71,37 +71,45 @@ export default function Categories(): JSX.Element {
 
       {error && <ErrorMessage message={error} />}
 
-      <Table>
-        <Table.Header>
-          <tr>
-            <th>
-              <Trans i18nKey="name">Name</Trans>
-            </th>
-            <th>
-              <Trans i18nKey="type">Type</Trans>
-            </th>
-            <th>
-              <Trans i18nKey="actions">Actions</Trans>
-            </th>
-          </tr>
-        </Table.Header>
-        <Table.Body>
-          {categories.map((c) => (
-            <tr key={c.id}>
-              <td>{c.name}</td>
-              <td>{c.type}</td>
-              <td style={{ textAlign: 'center' }}>
-                <EditButton onClick={() => handleShowEditModal(c)}>
-                  <EditIcon fill={theme.secondary} />
-                </EditButton>
-                <DeleteButton onClick={() => handleShowDeleteModal(c)}>
-                  <DeleteIcon fill={theme.danger} />
-                </DeleteButton>
-              </td>
+      {categories.length > 0 && (
+        <Table>
+          <Table.Header>
+            <tr>
+              <th>
+                <Trans i18nKey="name">Name</Trans>
+              </th>
+              <th>
+                <Trans i18nKey="type">Type</Trans>
+              </th>
+              <th>
+                <Trans i18nKey="actions">Actions</Trans>
+              </th>
             </tr>
-          ))}
-        </Table.Body>
-      </Table>
+          </Table.Header>
+          <Table.Body>
+            {categories.map((c) => (
+              <tr key={c.id}>
+                <td>{c.name}</td>
+                <td>{c.type}</td>
+                <td style={{ textAlign: 'center' }}>
+                  <EditButton onClick={() => handleShowEditModal(c)}>
+                    <EditIcon fill={theme.secondary} />
+                  </EditButton>
+                  <DeleteButton onClick={() => handleShowDeleteModal(c)}>
+                    <DeleteIcon fill={theme.danger} />
+                  </DeleteButton>
+                </td>
+              </tr>
+            ))}
+          </Table.Body>
+        </Table>
+      )}
+
+      {!categories.length && (
+        <p>
+          <Trans i18nKey="noCategories">No categories registered</Trans>
+        </p>
+      )}
 
       {loading && <Spinner style={{ marginTop: '20px' }} />}
 

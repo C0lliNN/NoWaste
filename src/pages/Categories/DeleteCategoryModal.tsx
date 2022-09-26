@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const ConfirmationText = styled.h4`
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-weight: 500;
   margin-bottom: 20px;
   text-align: center;
