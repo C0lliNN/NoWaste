@@ -28,11 +28,11 @@ export class Container {
     const server = new Server(
       errorMiddleware.handler(),
       loggerMiddleware.handler(),
+      cors({ origin: true }),
       helmet({
         crossOriginEmbedderPolicy: false,
         crossOriginResourcePolicy: false
       }),
-      cors(),
       express.json(),
       compression(),
       asyncHandler(authMiddleware.handler()),
