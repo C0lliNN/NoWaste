@@ -23,10 +23,6 @@ export default function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  if (authenticated) {
-    return <Navigate to="/" />;
-  }
-
   async function handleGoogleLogin(): Promise<void> {
     void dispatch(login('GOOGLE'));
   }
@@ -41,6 +37,10 @@ export default function Login(): JSX.Element {
       console.error(error);
     }
   }, [error]);
+
+  if (authenticated) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Container>
