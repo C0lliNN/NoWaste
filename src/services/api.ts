@@ -1,14 +1,16 @@
 import axios from 'axios';
+import { browserLocalPersistence } from 'firebase/auth';
 import Category from '../models/category';
+import { auth } from './firebase';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL
 });
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(async (config) => {
   try {
-    const data = localStorage.getItem('persist:root') as string;
-    const token = JSON.parse(JSON.parse(data).user).accessToken as string;
+    await auth.setPersistence(browserLocalPersistence);
+    const token = (await auth.currentUser?.getIdToken(true)) as string;
 
     if (config.headers) {
       config.headers.Authorization = `Bearer ${token}`;

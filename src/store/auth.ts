@@ -1,43 +1,59 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import User from '../models/user';
+import { handleFirebaseGithubLogin, handleFirebaseGoogleLogin } from '../services/firebase';
 
 interface Auth {
   user?: User;
   authenticated: boolean;
+  error: string | null;
   loading: boolean;
 }
 
 const initialAuth: Auth = {
   authenticated: false,
-  loading: false
+  loading: false,
+  error: null
 };
 
-interface LoginPayload {
-  user: User;
-}
+type Provider = 'GOOGLE' | 'GITHUB';
+
+export const login = createAsyncThunk('auth/login', async (provider: Provider) => {
+  switch (provider) {
+    case 'GOOGLE':
+      return await handleFirebaseGoogleLogin();
+    case 'GITHUB':
+      return await handleFirebaseGithubLogin();
+  }
+});
 
 const authSlice = createSlice({
   name: 'Auth',
   initialState: initialAuth,
   reducers: {
-    loginStart: (state: Auth) => {
+    logout: (state: Auth) => {
+      state.user = undefined;
+      state.error = null;
+      state.authenticated = false;
+    }
+  },
+  extraReducers: {
+    [login.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
-    loginSuccess: (state: Auth, action: PayloadAction<LoginPayload>) => {
+    [login.fulfilled.type]: (state, action) => {
       state.user = action.payload.user;
       state.authenticated = true;
       state.loading = false;
+      state.error = null;
     },
-    loginFailed: (state: Auth) => {
+    [login.rejected.type]: (state, action) => {
       state.loading = false;
-    },
-    logout: (state: Auth) => {
-      state.user = undefined;
-      state.authenticated = false;
+      state.error = action.error.message;
     }
   }
 });
 
 export default authSlice.reducer;
 
-export const { loginSuccess, loginStart, loginFailed, logout } = authSlice.actions;
+export const { logout } = authSlice.actions;

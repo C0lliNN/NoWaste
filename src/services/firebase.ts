@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { FirebaseOptions, initializeApp } from 'firebase/app';
 import {
   AuthProvider,
   connectAuthEmulator,
@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth';
 import User from '../models/user';
 
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
@@ -20,7 +20,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 if (process.env.NODE_ENV !== 'production') {
   connectAuthEmulator(auth, process.env.REACT_APP_FIREBASE_AUTH_EMULATOR_URL ?? '', {
@@ -39,14 +39,11 @@ async function handleFirebaseGithubLogin(): Promise<User> {
 async function handleLogin(provider: AuthProvider): Promise<User> {
   const userCredential = await signInWithPopup(auth, provider);
 
-  const token = await userCredential.user.getIdToken(true);
-
   return {
     id: userCredential.user.uid,
     name: userCredential.user.displayName ?? '',
     email: userCredential.user.providerData[0].email ?? '',
-    photoUrl: userCredential.user.photoURL ?? '',
-    accessToken: token
+    photoUrl: userCredential.user.photoURL ?? ''
   };
 }
 

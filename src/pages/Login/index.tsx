@@ -1,5 +1,13 @@
+import { useEffect } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
+import { ReactComponent as GithubIcon } from '../../assets/icons/github.svg';
+import { ReactComponent as GoogleIcon } from '../../assets/icons/google.svg';
+import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
+import Spinner from '../../components/UI/Spinner';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { login } from '../../store/auth';
+import { fireError } from '../../utils/customAlert';
 import {
   Container,
   Footer,
@@ -9,51 +17,30 @@ import {
   Paragraph,
   SocialMediaContainer
 } from './styles';
-import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
-import { ReactComponent as GoogleIcon } from '../../assets/icons/google.svg';
-import { ReactComponent as GithubIcon } from '../../assets/icons/github.svg';
-import { Trans } from 'react-i18next';
-import { handleFirebaseGithubLogin, handleFirebaseGoogleLogin } from '../../services/firebase';
-import { loginSuccess, loginFailed, loginStart } from '../../store/auth';
-import Spinner from '../../components/UI/Spinner';
-import { fireError } from '../../utils/customAlert';
 
 export default function Login(): JSX.Element {
-  const authenticated = useAppSelector((state) => state.auth.authenticated);
-  const loading = useAppSelector((state) => state.auth.loading);
+  const { authenticated, loading, error } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   if (authenticated) {
     return <Navigate to="/" />;
   }
 
   async function handleGoogleLogin(): Promise<void> {
-    dispatch(loginStart());
-
-    try {
-      const user = await handleFirebaseGoogleLogin();
-      dispatch(loginSuccess({ user }));
-    } catch (err) {
-      handleLoginError(err);
-    }
+    void dispatch(login('GOOGLE'));
   }
 
   async function handleGithubLogin(): Promise<void> {
-    dispatch(loginStart());
+    void dispatch(login('GITHUB'));
+  }
 
-    try {
-      const user = await handleFirebaseGithubLogin();
-      dispatch(loginSuccess({ user }));
-    } catch (err) {
-      handleLoginError(err);
+  useEffect(() => {
+    if (error) {
+      fireError(t('It was not possible to login successfully'));
+      console.error(error);
     }
-  }
-
-  function handleLoginError(err: unknown): void {
-    dispatch(loginFailed());
-    fireError('It was not possible to login successfully');
-    console.error(err);
-  }
+  }, [error]);
 
   return (
     <Container>

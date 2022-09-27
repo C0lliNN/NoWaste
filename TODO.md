@@ -22,7 +22,7 @@
 - [x] Handle Category Update
 - [x] Handle Category Deletion
 - [x] Restyle modal
-- [ ] Handle Token Refresh
+- [x] Handle Token Refresh
 - [ ] Log stack trace
 - [ ] Start Accounting
 

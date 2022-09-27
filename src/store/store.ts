@@ -13,7 +13,7 @@ const persistConfig = {
 const store = configureStore({
   reducer: {
     auth: persistReducer(persistConfig, authReducer),
-    categories: categoriesReducer
+    categories: persistReducer(persistConfig, categoriesReducer)
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: [thunk]
