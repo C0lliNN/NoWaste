@@ -23,7 +23,7 @@
 - [x] Handle Category Deletion
 - [x] Restyle modal
 - [x] Handle Token Refresh
-- [ ] Log stack trace
+- [x] Log stack trace
 - [ ] Start Accounting
 
 # Nice to Have

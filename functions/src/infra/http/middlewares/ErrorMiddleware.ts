@@ -45,6 +45,7 @@ export class ErrorMiddleware {
       }
 
       that.logger.error('There was an error when processing the request.', response);
+      that.logger.error(err.stack);
 
       res.status(response.status).send(response);
     };
