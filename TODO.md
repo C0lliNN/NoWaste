@@ -26,6 +26,8 @@
 - [x] Log stack trace
 - [x] Start Accounting
 - [x] Create Accounts Page
+- [x] Fix auth issues
+- [ ] Fix Cors
 
 # Nice to Have
 

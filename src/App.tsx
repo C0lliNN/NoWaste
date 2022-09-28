@@ -19,6 +19,7 @@ const Main = styled.main`
 
 export default function App(): JSX.Element {
   const authenticated = useAppSelector((state) => state.auth.authenticated);
+  console.log(authenticated);
 
   return (
     <Routes>
