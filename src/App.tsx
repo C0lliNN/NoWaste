@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAppSelector } from './hooks/hooks';
+import Accounts from './pages/Accounts';
 import Categories from './pages/Categories';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -32,6 +33,7 @@ export default function App(): JSX.Element {
                 <Routes>
                   <Route path="/home" element={<Home />} />
                   <Route path="/categories" element={<Categories />} />
+                  <Route path="/accounts" element={<Accounts />} />
                   <Route path="*" element={<p>404 Not Found</p>} />
                 </Routes>
               </Main>

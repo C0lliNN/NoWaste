@@ -1,25 +1,33 @@
-import { CategoryService } from '../../core/categories/CategoryService';
-import { db, auth } from '../firebase/firebase';
-import { CategoryController } from '../http/controllers/CategoryController';
-import { Server } from '../http/Server';
-import { CategoryRepository } from '../persistence/CategoryRepository';
-import * as express from 'express';
-import { ErrorMiddleware } from '../http/middlewares/ErrorMiddleware';
-import { Logger } from '../logger/Logger';
-import { LoggerMiddleware } from '../http/middlewares/LoggerMiddleware';
-import { AuthMiddleware } from '../http/middlewares/AuthMiddleware';
-import helmet from 'helmet';
-import compression = require('compression');
-import * as asyncHandler from 'express-async-handler';
 import * as cors from 'cors';
+import * as express from 'express';
+import helmet from 'helmet';
+import { AccountService } from '../../core/accounts/AccountService';
+import { CategoryService } from '../../core/categories/CategoryService';
+import { auth, db } from '../firebase/firebase';
+import { AccountController } from '../http/controllers/AccountController';
+import { CategoryController } from '../http/controllers/CategoryController';
+import { AuthMiddleware } from '../http/middlewares/AuthMiddleware';
+import { ErrorMiddleware } from '../http/middlewares/ErrorMiddleware';
+import { LoggerMiddleware } from '../http/middlewares/LoggerMiddleware';
+import { Server } from '../http/Server';
+import { Logger } from '../logger/Logger';
+import { AccountRepository } from '../persistence/AccountRepository';
+import { CategoryRepository } from '../persistence/CategoryRepository';
+import compression = require('compression');
 
 export class Container {
   NewServer(): Server {
     const logger = new Logger();
 
+    const router = express.Router();
+
     const categoryRepository = new CategoryRepository(db);
     const categoryService = new CategoryService(categoryRepository);
-    const categoryController = new CategoryController(categoryService, express.Router());
+    const categoryController = new CategoryController(categoryService, router);
+
+    const accountRepository = new AccountRepository(db);
+    const accountService = new AccountService(accountRepository);
+    const accountController = new AccountController(accountService, router);
 
     const loggerMiddleware = new LoggerMiddleware(logger);
     const authMiddleware = new AuthMiddleware(auth, logger);
@@ -35,8 +43,9 @@ export class Container {
       }),
       express.json(),
       compression(),
-      asyncHandler(authMiddleware.handler()),
-      asyncHandler(categoryController.handler())
+      authMiddleware.handler(),
+      categoryController.handler(),
+      accountController.handler()
     );
     return server;
   }

@@ -86,7 +86,7 @@ describe('CategoryService', () => {
       expect(service.createCategory(req)).rejects.toStrictEqual(new Error('some error'));
     });
 
-    it('should should throw any error if the data is valid and the repository succeeds', () => {
+    it('should should not throw any error if the data is valid and the repository succeeds', () => {
       const req: CreateCategoryRequest = {
         id: 'some-id',
         name: 'Food',

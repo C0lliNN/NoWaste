@@ -1,21 +1,19 @@
 import { FieldError, ValidationError } from '../errors/ValidationError';
-import { CategoryType } from './CategoryType';
 
-export class Category {
+export class Account {
   id: string;
   name: string;
-  type: CategoryType;
   userId: string;
 
-  constructor(id: string, name: string, type: CategoryType, userId: string) {
+  constructor(id: string, name: string, userId: string) {
     this.id = id;
     this.name = name;
-    this.type = type;
     this.userId = userId;
   }
 
   validate() {
     const errors: FieldError[] = [];
+
     if (!this.id || !this.id.trim()) {
       errors.push({ field: 'id', message: 'this field cannot be empty' });
     }

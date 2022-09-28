@@ -24,7 +24,8 @@
 - [x] Restyle modal
 - [x] Handle Token Refresh
 - [x] Log stack trace
-- [ ] Start Accounting
+- [x] Start Accounting
+- [x] Create Accounts Page
 
 # Nice to Have
 

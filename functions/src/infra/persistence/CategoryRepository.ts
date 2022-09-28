@@ -1,11 +1,12 @@
 import { firestore } from 'firebase-admin';
 import { Category } from '../../core/categories/Category';
+import { CategoryRepository as Repository } from '../../core/categories/CategoryRepository';
 import { CategoryType } from '../../core/categories/CategoryType';
 import { EntityNotFoundError } from '../../core/errors/EntityNotFoundError';
 
 const collection = 'categories';
 
-export class CategoryRepository {
+export class CategoryRepository implements Repository {
   db: firestore.Firestore;
 
   constructor(db: firestore.Firestore) {
@@ -13,7 +14,11 @@ export class CategoryRepository {
   }
 
   async findAllByUserId(userId: string): Promise<Category[]> {
-    const categories = await this.db.collection(collection).where('userId', '==', userId).get();
+    const categories = await this.db
+      .collection(collection)
+      .where('userId', '==', userId)
+      .orderBy('name')
+      .get();
 
     return categories.docs.map(this.mapDocumentToCategory);
   }

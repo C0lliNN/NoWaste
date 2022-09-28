@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserLocalPersistence } from 'firebase/auth';
+import { Account } from '../models/account';
 import Category from '../models/category';
 import { auth } from './firebase';
 
@@ -27,9 +28,8 @@ export async function getCategories(): Promise<Category[]> {
   return response.data as Category[];
 }
 
-export async function createNewCategory(category: Category): Promise<Category> {
-  const response = await api.post('/categories', category);
-  return response.data as Category;
+export async function createNewCategory(category: Category): Promise<void> {
+  await api.post('/categories', category);
 }
 
 export async function updateExistingCategory(category: Category): Promise<void> {
@@ -38,4 +38,21 @@ export async function updateExistingCategory(category: Category): Promise<void> 
 
 export async function deleteExistingCategory(category: Category): Promise<void> {
   await api.delete(`/categories/${category.id}`);
+}
+
+export async function getAccounts(): Promise<Account[]> {
+  const response = await api.get('/accounts');
+  return response.data as Account[];
+}
+
+export async function createNewAccount(account: Account): Promise<void> {
+  await api.post('/accounts', account);
+}
+
+export async function updateExistingAccount(account: Account): Promise<void> {
+  await api.put(`/accounts/${account.id}`, account);
+}
+
+export async function deleteExistingAccount(account: Account): Promise<void> {
+  await api.delete(`/accounts/${account.id}`);
 }

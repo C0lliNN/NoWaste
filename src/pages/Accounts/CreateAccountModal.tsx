@@ -5,8 +5,7 @@ import FormGroup from '../../components/UI/FormGroup';
 import Modal from '../../components/UI/Modal';
 import Spinner from '../../components/UI/Spinner';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { CategoryType } from '../../models/category';
-import { createCategory } from '../../store/categories';
+import { createAccount } from '../../store/accounts';
 import { fireError } from '../../utils/customAlert';
 
 interface Props {
@@ -14,20 +13,18 @@ interface Props {
   onClose: () => void;
 }
 
-export default function CreateCategoryModal(props: Props): JSX.Element {
+export default function CreateAccountModal(props: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const nameRef = useRef<HTMLInputElement>(null);
-  const typeRef = useRef<HTMLSelectElement>(null);
-  const { loading } = useAppSelector((state) => state.categories);
+  const { loading } = useAppSelector((state) => state.accounts);
   const { t } = useTranslation();
 
   function handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
 
     const name = nameRef.current?.value as string;
-    const type = typeRef.current?.value as CategoryType;
 
-    dispatch(createCategory({ name, type }))
+    dispatch(createAccount({ name }))
       .then(props.onClose)
       .catch((err: Error) => fireError(err.message));
   }
@@ -41,7 +38,7 @@ export default function CreateCategoryModal(props: Props): JSX.Element {
   return (
     <Modal show={props.show} onClose={props.onClose} size="md">
       <Modal.Header>
-        <Trans i18nKey="newCategory">New Category</Trans>
+        <Trans i18nKey="newAccount">New Account</Trans>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit}>
@@ -49,20 +46,7 @@ export default function CreateCategoryModal(props: Props): JSX.Element {
             <FormGroup.Label>
               <Trans i18nKey="name">Name</Trans>
             </FormGroup.Label>
-            <FormGroup.Input placeholder={t('Category Name')} ref={nameRef} />
-          </FormGroup>
-          <FormGroup>
-            <FormGroup.Label>
-              <Trans i18nKey="type">Type</Trans>
-            </FormGroup.Label>
-            <FormGroup.Select ref={typeRef}>
-              <option value="EXPENSE">
-                <Trans i18nKey="expense">Expense</Trans>
-              </option>
-              <option value="INCOME">
-                <Trans i18nKey="income">Income</Trans>
-              </option>
-            </FormGroup.Select>
+            <FormGroup.Input placeholder={t('Account Name')} ref={nameRef} />
           </FormGroup>
           <div style={{ textAlign: 'center', marginTop: '20px' }}>
             <Button variant="primary" type="submit">
