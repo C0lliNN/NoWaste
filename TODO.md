@@ -27,7 +27,8 @@
 - [x] Start Accounting
 - [x] Create Accounts Page
 - [x] Fix auth issues
-- [ ] Fix Cors
+- [x] Fix Cors
+- [ ] Tackle Firestore rules
 
 # Nice to Have
 
