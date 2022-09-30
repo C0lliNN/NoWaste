@@ -28,7 +28,8 @@
 - [x] Create Accounts Page
 - [x] Fix auth issues
 - [x] Fix Cors
-- [ ] Tackle Firestore rules
+- [x] Tackle Firestore rules
+- [x] Tackle Firestore index
 
 # Nice to Have
 
