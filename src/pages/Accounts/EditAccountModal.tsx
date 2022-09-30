@@ -18,6 +18,7 @@ interface Props {
 export default function EditAccountModal(props: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const nameRef = useRef<HTMLInputElement>(null);
+  const balanceRef = useRef<HTMLInputElement>(null);
   const { loading } = useAppSelector((state) => state.accounts);
   const { t } = useTranslation();
 
@@ -25,10 +26,12 @@ export default function EditAccountModal(props: Props): JSX.Element {
     e.preventDefault();
 
     const name = nameRef.current?.value as string;
+    const balance = parseFloat(balanceRef.current?.value as string);
 
     const account: Account = {
       id: props.account?.id as string,
-      name
+      name,
+      balance
     };
 
     dispatch(updateAccount(account))
@@ -39,6 +42,9 @@ export default function EditAccountModal(props: Props): JSX.Element {
   useEffect(() => {
     if (nameRef.current && props.account) {
       nameRef.current.value = props.account.name;
+    }
+    if (balanceRef.current && props.account) {
+      balanceRef.current.value = props.account.balance.toString();
     }
   }, [props.account]);
 
@@ -57,6 +63,17 @@ export default function EditAccountModal(props: Props): JSX.Element {
               placeholder={t('Account Name')}
               ref={nameRef}
               defaultValue={props.account?.name ?? ''}
+            />
+          </FormGroup>
+          <FormGroup>
+            <FormGroup.Label>
+              <Trans i18nKey="balance">Balance</Trans>
+            </FormGroup.Label>
+            <FormGroup.Input
+              type="number"
+              step="0.01"
+              placeholder={t('Account Balance')}
+              ref={balanceRef}
             />
           </FormGroup>
           <div style={{ textAlign: 'center', marginTop: '20px' }}>

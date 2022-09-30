@@ -16,6 +16,7 @@ export function newTransaction(): Transaction {
       name: faker.commerce.productName()
     },
     faker.datatype.number(1),
+    faker.date.past(4),
     faker.date.soon(4),
     faker.date.soon(4),
     faker.lorem.words(4)

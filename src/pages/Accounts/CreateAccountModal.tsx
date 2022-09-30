@@ -16,6 +16,7 @@ interface Props {
 export default function CreateAccountModal(props: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const nameRef = useRef<HTMLInputElement>(null);
+  const balanceRef = useRef<HTMLInputElement>(null);
   const { loading } = useAppSelector((state) => state.accounts);
   const { t } = useTranslation();
 
@@ -23,8 +24,9 @@ export default function CreateAccountModal(props: Props): JSX.Element {
     e.preventDefault();
 
     const name = nameRef.current?.value as string;
+    const balance = parseFloat(balanceRef.current?.value as string);
 
-    dispatch(createAccount({ name }))
+    dispatch(createAccount({ name, balance }))
       .then(props.onClose)
       .catch((err: Error) => fireError(err.message));
   }
@@ -32,6 +34,9 @@ export default function CreateAccountModal(props: Props): JSX.Element {
   useEffect(() => {
     if (props.show && nameRef.current) {
       nameRef.current.value = '';
+    }
+    if (props.show && balanceRef.current) {
+      balanceRef.current.value = '';
     }
   }, [props.show]);
 
@@ -47,6 +52,17 @@ export default function CreateAccountModal(props: Props): JSX.Element {
               <Trans i18nKey="name">Name</Trans>
             </FormGroup.Label>
             <FormGroup.Input placeholder={t('Account Name')} ref={nameRef} />
+          </FormGroup>
+          <FormGroup>
+            <FormGroup.Label>
+              <Trans i18nKey="balance">Balance</Trans>
+            </FormGroup.Label>
+            <FormGroup.Input
+              type="number"
+              step="0.01"
+              placeholder={t('Account Balance')}
+              ref={balanceRef}
+            />
           </FormGroup>
           <div style={{ textAlign: 'center', marginTop: '20px' }}>
             <Button variant="primary" type="submit">

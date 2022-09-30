@@ -30,7 +30,10 @@
 - [x] Fix Cors
 - [x] Tackle Firestore rules
 - [x] Tackle Firestore index
+- [ ] Continue Creating new use cases
 
 # Nice to Have
 
 - [ ] Frontend validation
+- [ ] Generate Transaction when account balance is updated
+- [ ] Use a custom type for currency amounts

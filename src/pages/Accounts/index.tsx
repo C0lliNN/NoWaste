@@ -79,19 +79,25 @@ export default function Accounts(): JSX.Element {
                 <Trans i18nKey="name">Name</Trans>
               </th>
               <th>
+                <Trans i18nKey="balance">Balance</Trans>
+              </th>
+              <th>
                 <Trans i18nKey="actions">Actions</Trans>
               </th>
             </tr>
           </Table.Header>
           <Table.Body>
-            {accounts.map((c) => (
-              <tr key={c.id}>
-                <td>{c.name}</td>
+            {accounts.map((account) => (
+              <tr key={account.id}>
+                <td>{account.name}</td>
+                <td>
+                  <Trans i18nKey="currency">$</Trans> {account.balance.toFixed(2)}
+                </td>
                 <td style={{ textAlign: 'center' }}>
-                  <EditButton onClick={() => handleShowEditModal(c)}>
+                  <EditButton onClick={() => handleShowEditModal(account)}>
                     <EditIcon fill={theme.secondary} />
                   </EditButton>
-                  <DeleteButton onClick={() => handleShowDeleteModal(c)}>
+                  <DeleteButton onClick={() => handleShowDeleteModal(account)}>
                     <DeleteIcon fill={theme.danger} />
                   </DeleteButton>
                 </td>
