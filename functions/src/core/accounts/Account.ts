@@ -3,11 +3,13 @@ import { FieldError, ValidationError } from '../errors/ValidationError';
 export class Account {
   id: string;
   name: string;
+  balance: number;
   userId: string;
 
-  constructor(id: string, name: string, userId: string) {
+  constructor(id: string, name: string, balance: number, userId: string) {
     this.id = id;
     this.name = name;
+    this.balance = balance;
     this.userId = userId;
   }
 

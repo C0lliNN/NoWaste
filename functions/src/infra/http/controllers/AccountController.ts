@@ -28,6 +28,7 @@ export class AccountController {
     await this.accountService.createAccount({
       id: req.body.id,
       name: req.body.name,
+      balance: req.body.balance,
       userId: req.userId
     });
 
@@ -38,6 +39,7 @@ export class AccountController {
     await this.accountService.updateAccount({
       id: req.params.id,
       name: req.body.name,
+      balance: req.body.balance,
       userId: req.userId
     });
 

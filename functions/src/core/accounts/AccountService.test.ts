@@ -26,7 +26,11 @@ describe('AccountService', () => {
       repoMock.findAllByUserId.mockReturnValue(Promise.resolve(accounts));
 
       const service = new AccountService(repoMock);
-      const expectedAccounts = accounts.map((c) => ({ id: c.id, name: c.name }));
+      const expectedAccounts = accounts.map((c) => ({
+        id: c.id,
+        name: c.name,
+        balance: c.balance
+      }));
 
       expect(service.getAccounts({ userId: 'user-id' })).resolves.toStrictEqual(expectedAccounts);
     });
@@ -47,6 +51,7 @@ describe('AccountService', () => {
       const req: CreateAccountRequest = {
         id: 'some-id',
         name: '',
+        balance: 14,
         userId: 'user-id'
       };
 
@@ -59,6 +64,7 @@ describe('AccountService', () => {
       const req: CreateAccountRequest = {
         id: 'some-id',
         name: 'Nubank',
+        balance: 14,
         userId: 'user-id'
       };
 
@@ -73,6 +79,7 @@ describe('AccountService', () => {
       const req: CreateAccountRequest = {
         id: 'some-id',
         name: 'NuBank',
+        balance: 14,
         userId: 'user-id'
       };
       const service = new AccountService(newRepositoryMock());
@@ -85,6 +92,7 @@ describe('AccountService', () => {
       const req: UpdateAccountRequest = {
         id: 'some-id',
         name: 'Nubank',
+        balance: 14,
         userId: 'user-id'
       };
 
@@ -102,6 +110,7 @@ describe('AccountService', () => {
       const req: UpdateAccountRequest = {
         id: 'some-id',
         name: '',
+        balance: 14,
         userId: 'user-id'
       };
 
@@ -120,6 +129,7 @@ describe('AccountService', () => {
       const req: UpdateAccountRequest = {
         id: 'some-id',
         name: 'new name',
+        balance: 14,
         userId: 'user-id'
       };
 

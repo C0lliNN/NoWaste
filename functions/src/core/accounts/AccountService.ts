@@ -19,12 +19,13 @@ export class AccountService {
 
     return accounts.map((c) => ({
       id: c.id,
-      name: c.name
+      name: c.name,
+      balance: c.balance
     }));
   }
 
   public async createAccount(req: CreateAccountRequest): Promise<void> {
-    const account = new Account(req.id, req.name, req.userId);
+    const account = new Account(req.id, req.name, req.balance, req.userId);
     account.validate();
 
     return await this.accountRepository.save(account);
@@ -37,6 +38,7 @@ export class AccountService {
     }
 
     account.name = req.name;
+    account.balance = req.balance;
     account.validate();
 
     return await this.accountRepository.save(account);
