@@ -2,7 +2,15 @@ import { FieldError, ValidationError } from '../errors/ValidationError';
 
 export type TransactionType = 'EXPENSE' | 'INCOME';
 
+export function isTransactionType(type: string): type is TransactionType {
+  return ['INCOME', 'EXPENSE'].includes(type);
+}
+
 export type TransactionRecurrence = 'ONE_TIME' | 'MONTHLY';
+
+export function isTransactionRecurrence(recurrence: string): recurrence is TransactionRecurrence {
+  return ['ONE_TIME', 'MONTHLY'].includes(recurrence);
+}
 
 export interface Category {
   id: string;
@@ -72,5 +80,17 @@ export class Transaction {
     if (errors.length) {
       throw new ValidationError(...errors);
     }
+  }
+
+  getAccountAmountToBeIncremented(): number {
+    if (this.type == 'EXPENSE') {
+      return -this.amount;
+    }
+
+    if (this.type == 'INCOME') {
+      return this.amount;
+    }
+
+    throw new Error('Invalid type');
   }
 }

@@ -15,7 +15,7 @@ export function newTransaction(): Transaction {
       id: faker.datatype.uuid(),
       name: faker.commerce.productName()
     },
-    faker.datatype.number(1),
+    faker.datatype.number({ min: 1 }),
     faker.date.past(4),
     faker.date.soon(4),
     faker.date.soon(4),
