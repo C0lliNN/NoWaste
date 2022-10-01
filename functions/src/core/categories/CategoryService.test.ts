@@ -44,6 +44,40 @@ describe('CategoryService', () => {
     });
   });
 
+  describe('getCategory', () => {
+    it('should throw an error if category is not found', () => {
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const service = new CategoryService(repoMock);
+      expect(
+        service.getCategory({ categoryId: 'categor-id', userId: 'user-id' })
+      ).rejects.toThrowError();
+    });
+
+    it('should throw an error if user is not the owner category', () => {
+      const category = newCategory();
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.resolve(category));
+
+      const service = new CategoryService(repoMock);
+      expect(
+        service.getCategory({ categoryId: 'categor-id', userId: 'user-id' })
+      ).rejects.toThrowError(AuthorizationError);
+    });
+
+    it('should not throw any error if user is the owner category', () => {
+      const category = newCategory();
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.resolve(category));
+
+      const service = new CategoryService(repoMock);
+      expect(
+        service.getCategory({ categoryId: 'categor-id', userId: category.userId })
+      ).resolves.not.toThrowError();
+    });
+  });
+
   describe('createCategory', () => {
     it('should throw a ValidationError if the type is invalid', () => {
       const req: CreateCategoryRequest = {

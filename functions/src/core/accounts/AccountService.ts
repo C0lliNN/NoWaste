@@ -4,8 +4,10 @@ import { AccountResponse } from './AccountReponse';
 import { AccountRepository } from './AccountRepository';
 import { CreateAccountRequest } from './CreateAccountRequest';
 import { DeleteAccountRequest } from './DeleteAccountRequest';
+import { GetAccountRequest } from './GetAccountRequest';
 import { GetAccountsRequest } from './GetAccountsRequest';
 import { UpdateAccountRequest } from './UpdateAccountRequest';
+import { UpdateAmountRequest } from './UpdateAmountRequest';
 
 export class AccountService {
   accountRepository: AccountRepository;
@@ -22,6 +24,19 @@ export class AccountService {
       name: c.name,
       balance: c.balance
     }));
+  }
+
+  public async getAccount(req: GetAccountRequest): Promise<AccountResponse> {
+    const account = await this.accountRepository.findById(req.accountId);
+    if (account.userId !== req.userId) {
+      throw new AuthorizationError('The requested action is forbidden');
+    }
+
+    return {
+      id: account.id,
+      name: account.name,
+      balance: account.balance
+    };
   }
 
   public async createAccount(req: CreateAccountRequest): Promise<void> {
@@ -42,6 +57,16 @@ export class AccountService {
     account.validate();
 
     return await this.accountRepository.save(account);
+  }
+
+  public async updateAmount(req: UpdateAmountRequest): Promise<void> {
+    const account = await this.accountRepository.findById(req.accountId);
+    if (account.userId !== req.userId) {
+      throw new AuthorizationError('The requested action is forbidden');
+    }
+
+    account.balance += req.amountToBeUpdated;
+    await this.accountRepository.save(account);
   }
 
   public async deleteAccount(req: DeleteAccountRequest): Promise<void> {

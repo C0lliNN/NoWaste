@@ -14,6 +14,10 @@ import { Logger } from '../logger/Logger';
 import { AccountRepository } from '../persistence/AccountRepository';
 import { CategoryRepository } from '../persistence/CategoryRepository';
 import compression = require('compression');
+import { TransactionRepository } from '../persistence/TransactionRepository';
+import { Clock } from '../utils/Clock';
+import { TransactionService } from '../../core/transactions/TransactionService';
+import { TransactionController } from '../http/controllers/TransactionController';
 
 export class Container {
   NewServer(): Server {
@@ -28,6 +32,16 @@ export class Container {
     const accountRepository = new AccountRepository(db);
     const accountService = new AccountService(accountRepository);
     const accountController = new AccountController(accountService, router);
+
+    const transactionRepository = new TransactionRepository(db);
+    const clock = new Clock();
+    const transactionService = new TransactionService(
+      transactionRepository,
+      accountService,
+      categoryService,
+      clock
+    );
+    const transactionController = new TransactionController(transactionService, router);
 
     const loggerMiddleware = new LoggerMiddleware(logger);
     const authMiddleware = new AuthMiddleware(auth, logger);
@@ -45,7 +59,8 @@ export class Container {
       compression(),
       authMiddleware.handler(),
       categoryController.handler(),
-      accountController.handler()
+      accountController.handler(),
+      transactionController.handler()
     );
     return server;
   }

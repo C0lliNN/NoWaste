@@ -7,6 +7,7 @@ import { CategoryType, isCategoryType } from './CategoryType';
 import { CreateCategoryRequest } from './CreateCategoryRequest';
 import { DeleteCategoryRequest } from './DeleteCategoryRequest';
 import { GetCategoriesRequest } from './GetCategoriesRequest';
+import { GetCategoryRequest } from './GetCategoryRequest';
 import { UpdateCategoryRequest } from './UpdateCategoryRequest';
 
 export class CategoryService {
@@ -24,6 +25,19 @@ export class CategoryService {
       name: c.name,
       type: c.type
     }));
+  }
+
+  public async getCategory(req: GetCategoryRequest): Promise<CategoryResponse> {
+    const category = await this.categoryRepository.findById(req.categoryId);
+    if (category.userId !== req.userId) {
+      throw new AuthorizationError('The requested action is forbidden');
+    }
+
+    return {
+      id: category.id,
+      name: category.name,
+      type: category.type
+    };
   }
 
   public async createCategory(req: CreateCategoryRequest): Promise<void> {

@@ -46,6 +46,40 @@ describe('AccountService', () => {
     });
   });
 
+  describe('getAccount', () => {
+    it('should throw an error if account is not found', () => {
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const service = new AccountService(repoMock);
+      expect(
+        service.getAccount({ accountId: 'categor-id', userId: 'user-id' })
+      ).rejects.toThrowError();
+    });
+
+    it('should throw an error if user is not the owner account', () => {
+      const account = newAccount();
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.resolve(account));
+
+      const service = new AccountService(repoMock);
+      expect(
+        service.getAccount({ accountId: 'categor-id', userId: 'user-id' })
+      ).rejects.toThrowError(AuthorizationError);
+    });
+
+    it('should not throw any error if user is the owner account', () => {
+      const account = newAccount();
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.resolve(account));
+
+      const service = new AccountService(repoMock);
+      expect(
+        service.getAccount({ accountId: 'categor-id', userId: account.userId })
+      ).resolves.not.toThrowError();
+    });
+  });
+
   describe('createAccount', () => {
     it('should throw a ValidationError if the data is not invalid', () => {
       const req: CreateAccountRequest = {
@@ -143,6 +177,45 @@ describe('AccountService', () => {
       const service = new AccountService(mockRepo);
       expect(service.updateAccount(req)).resolves.not.toThrow();
       expect(mockRepo.findById).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('updateAmount', () => {
+    it('should throw an error if account is not found', () => {
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const service = new AccountService(repoMock);
+      expect(
+        service.updateAmount({ accountId: 'account-id', userId: 'user-id', amountToBeUpdated: 2 })
+      ).rejects.toThrowError();
+    });
+
+    it('should throw an error if user is not the owner account', () => {
+      const account = newAccount();
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.resolve(account));
+
+      const service = new AccountService(repoMock);
+      expect(
+        service.updateAmount({ accountId: 'account-id', userId: 'user-id', amountToBeUpdated: 2 })
+      ).rejects.toThrowError(AuthorizationError);
+    });
+
+    it('should not throw any error if account is updated successfully', () => {
+      const account = newAccount();
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.resolve(account));
+
+      const service = new AccountService(repoMock);
+
+      expect(
+        service.updateAmount({
+          accountId: 'account-id',
+          userId: account.userId,
+          amountToBeUpdated: 2
+        })
+      ).resolves.not.toThrowError();
     });
   });
 

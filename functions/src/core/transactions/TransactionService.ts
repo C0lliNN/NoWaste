@@ -12,14 +12,9 @@ import {
   TransactionType
 } from './Transaction';
 import { TransactionQuery } from './TransactionQuery';
+import { TransactionRepository } from './TransactionRepository';
 import { TransactionResponse } from './TransactionResponse';
 import { UpdateTransactionRequest } from './UpdateTransactionRequest';
-
-interface TransactionRepository {
-  findByQuery(query: TransactionQuery): Promise<Transaction[]>;
-  findById(id: string): Promise<Transaction>;
-  save(transaction: Transaction): Promise<void>;
-}
 
 interface GetCategoryRequest {
   categoryId: string;
@@ -51,6 +46,12 @@ interface Clock {
 }
 
 export class TransactionService {
+  updateCategory(arg0: { id: string; name: any; type: any; userId: string }) {
+    throw new Error('Method not implemented.');
+  }
+  deleteCategory(arg0: { categoryId: string; userId: string }) {
+    throw new Error('Method not implemented.');
+  }
   transactionRepository: TransactionRepository;
   accountService: AccountService;
   categoryService: CategoryService;

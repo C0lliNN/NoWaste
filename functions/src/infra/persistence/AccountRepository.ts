@@ -26,7 +26,7 @@ export class AccountRepository implements Repository {
     const account = await this.db.collection(collection).doc(id).get();
 
     if (!account.exists) {
-      throw new EntityNotFoundError('Category', id);
+      throw new EntityNotFoundError('Account', id);
     }
 
     return this.mapDocumentToAccount(account);
