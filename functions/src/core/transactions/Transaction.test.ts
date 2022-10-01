@@ -30,19 +30,42 @@ describe('Validate', () => {
 });
 
 describe('getAccountAmountToBeIncremented', () => {
-  it('should return the negative amount when type is EXPENSE', () => {
-    const transaction = newTransaction();
-    transaction.amount = 1000;
-    transaction.type = 'EXPENSE';
+  describe('with newAmount', () => {
+    it('should return the correct amount when type is EXPENSE', () => {
+      const transaction = newTransaction();
+      transaction.type = 'EXPENSE';
+      transaction.amount = 1000;
 
-    expect(transaction.getAccountAmountToBeIncremented()).toBe(-1000);
+      expect(transaction.calculateAccountAmountToBeUpdated(1200)).toBe(-200);
+      expect(transaction.calculateAccountAmountToBeUpdated(800)).toBe(200);
+    });
+
+    it('should return the correct amount when type is INCOME', () => {
+      const transaction = newTransaction();
+      transaction.amount = 5000;
+      transaction.type = 'INCOME';
+
+      expect(transaction.calculateAccountAmountToBeUpdated(5500)).toBe(500);
+      expect(transaction.calculateAccountAmountToBeUpdated(4500)).toBe(-500);
+    });
   });
-  it('should return the positive amount when type is INCOME', () => {
-    const transaction = newTransaction();
-    transaction.amount = 5000;
-    transaction.type = 'INCOME';
 
-    expect(transaction.getAccountAmountToBeIncremented()).toBe(5000);
+  describe('without newAmount', () => {
+    it('should return the negative amount when type is EXPENSE', () => {
+      const transaction = newTransaction();
+      transaction.amount = 1000;
+      transaction.type = 'EXPENSE';
+
+      expect(transaction.calculateAccountAmountToBeUpdated()).toBe(-1000);
+    });
+
+    it('should return the positive amount when type is INCOME', () => {
+      const transaction = newTransaction();
+      transaction.amount = 5000;
+      transaction.type = 'INCOME';
+
+      expect(transaction.calculateAccountAmountToBeUpdated()).toBe(5000);
+    });
   });
 });
 

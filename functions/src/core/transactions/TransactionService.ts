@@ -13,6 +13,7 @@ import {
 } from './Transaction';
 import { TransactionQuery } from './TransactionQuery';
 import { TransactionResponse } from './TransactionResponse';
+import { UpdateTransactionRequest } from './UpdateTransactionRequest';
 
 interface TransactionRepository {
   findByQuery(query: TransactionQuery): Promise<Transaction[]>;
@@ -37,7 +38,7 @@ interface GetAccountRequest {
 interface UpdateAmountRequest {
   userId: string;
   accountId: string;
-  amountToBeIncremented: number;
+  amountToBeUpdated: number;
 }
 
 interface AccountService {
@@ -111,11 +112,13 @@ export class TransactionService {
       req.description
     );
 
-    const amountToBeIncremented = transaction.getAccountAmountToBeIncremented();
+    transaction.validate();
+
+    const amountToBeUpdated = transaction.calculateAccountAmountToBeUpdated();
     await this.accountService.updateAmount({
       accountId: req.accountId,
       userId: req.userId,
-      amountToBeIncremented: amountToBeIncremented
+      amountToBeUpdated: amountToBeUpdated
     });
 
     await this.transactionRepository.save(transaction);
@@ -156,7 +159,7 @@ export class TransactionService {
     }
 
     if (req.amount <= 0) {
-      errors.push({ field: 'balance', message: 'this field must greater than 0' });
+      errors.push({ field: 'amount', message: 'this field must greater than 0' });
     }
 
     if (errors.length) {
@@ -164,7 +167,62 @@ export class TransactionService {
     }
   }
 
-  updateTransaction() {}
+  async updateTransaction(req: UpdateTransactionRequest): Promise<void> {
+    this.validateUpdateRequest(req);
+
+    const transaction = await this.transactionRepository.findById(req.transactionId);
+    if (transaction.userId !== req.userId) {
+      throw new AuthorizationError('The requested action is forbidden');
+    }
+
+    if (req.categoryId !== transaction.category.id) {
+      const newCategory = await this.categoryService.getCategory({
+        userId: req.userId,
+        categoryId: req.categoryId
+      });
+      transaction.category = newCategory;
+    }
+
+    if (req.amount !== transaction.amount) {
+      const amountToBeUpdated = transaction.calculateAccountAmountToBeUpdated(req.amount);
+      await this.accountService.updateAmount({
+        accountId: transaction.account.id,
+        userId: req.userId,
+        amountToBeUpdated: amountToBeUpdated
+      });
+    }
+
+    transaction.date = req.date as Date;
+    await this.transactionRepository.save(transaction);
+  }
+
+  private validateUpdateRequest(req: UpdateTransactionRequest) {
+    const errors: FieldError[] = [];
+
+    if (!req.transactionId || !req.transactionId.trim()) {
+      errors.push({ field: 'transactionId', message: 'this field cannot be empty' });
+    }
+
+    if (!req.userId || !req.userId.trim()) {
+      errors.push({ field: 'userId', message: 'this field cannot be empty' });
+    }
+
+    if (!req.categoryId || !req.categoryId.trim()) {
+      errors.push({ field: 'categoryId', message: 'this field cannot be empty' });
+    }
+
+    if (req.amount <= 0) {
+      errors.push({ field: 'amount', message: 'this field must greater than 0' });
+    }
+
+    if (!req.date) {
+      errors.push({ field: 'date', message: 'this field cannot be empty' });
+    }
+
+    if (errors.length) {
+      throw new ValidationError(...errors);
+    }
+  }
 
   private mapEntityToResponse(transaction: Transaction): TransactionResponse {
     return {

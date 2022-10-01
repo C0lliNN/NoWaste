@@ -82,13 +82,15 @@ export class Transaction {
     }
   }
 
-  getAccountAmountToBeIncremented(): number {
+  calculateAccountAmountToBeUpdated(newAmount?: number): number {
+    const amount = newAmount ? newAmount - this.amount : this.amount;
+
     if (this.type == 'EXPENSE') {
-      return -this.amount;
+      return -amount;
     }
 
     if (this.type == 'INCOME') {
-      return this.amount;
+      return amount;
     }
 
     throw new Error('Invalid type');

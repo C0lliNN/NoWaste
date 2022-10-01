@@ -6,6 +6,7 @@ import { CreateTransactionRequest } from './CreateTransactionRequest';
 import { Transaction, Category, Account } from './Transaction';
 import { TransactionQuery } from './TransactionQuery';
 import { TransactionService } from './TransactionService';
+import { UpdateTransactionRequest } from './UpdateTransactionRequest';
 
 function newTransactionRepositoryMock() {
   return {
@@ -272,6 +273,198 @@ describe('TransactionService', () => {
       const service = newTransactionService();
 
       expect(service.createTransaction(req)).resolves.not.toThrowError(ValidationError);
+    });
+  });
+
+  describe('updateTransaction', () => {
+    let req: UpdateTransactionRequest;
+
+    beforeEach(() => {
+      req = {
+        transactionId: 'transaction-id',
+        userId: 'user-id',
+        categoryId: 'category-id',
+        amount: 100,
+        date: new Date('2022-05-05')
+      };
+    });
+
+    it('should throw an ValidationError when data is not valid', () => {
+      req.transactionId = '';
+
+      const transactionService = newTransactionService();
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw an error when transaction is not found', () => {
+      const transactionRepository = newTransactionRepositoryMock();
+      transactionRepository.findById.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const transactionService = newTransactionService();
+      transactionService.setTransactionRepository(transactionRepository);
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError();
+    });
+
+    it('should throw an error when transaction is not found', () => {
+      const transactionRepository = newTransactionRepositoryMock();
+      transactionRepository.findById.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const transactionService = newTransactionService();
+      transactionService.setTransactionRepository(transactionRepository);
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError();
+    });
+
+    it('should throw an Authorization error user is not the owner of the transaction', () => {
+      const transaction = newTransaction();
+      const transactionRepository = newTransactionRepositoryMock();
+      transactionRepository.findById.mockReturnValue(Promise.resolve(transaction));
+
+      const transactionService = newTransactionService();
+      transactionService.setTransactionRepository(transactionRepository);
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError(AuthorizationError);
+    });
+
+    it('should throw an Error when category is not found', () => {
+      const transaction = newTransaction();
+      req.userId = transaction.userId;
+
+      const transactionRepository = newTransactionRepositoryMock();
+      transactionRepository.findById.mockReturnValue(Promise.resolve(transaction));
+
+      const categoryService = newCategoryServiceMock();
+      categoryService.getCategory.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const transactionService = newTransactionService();
+      transactionService.setTransactionRepository(transactionRepository);
+      transactionService.setCategoryService(categoryService);
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError();
+    });
+
+    it('should throw an Error when amount cannot be updated', () => {
+      const transaction = newTransaction();
+      req.userId = transaction.userId;
+
+      const transactionRepository = newTransactionRepositoryMock();
+      transactionRepository.findById.mockReturnValue(Promise.resolve(transaction));
+
+      const categoryService = newCategoryServiceMock();
+      categoryService.getCategory.mockReturnValue(Promise.resolve(transaction.category));
+
+      const accountService = newAccountServiceMock();
+      accountService.updateAmount.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const transactionService = newTransactionService();
+      transactionService.setTransactionRepository(transactionRepository);
+      transactionService.setCategoryService(categoryService);
+      transactionService.setAccountService(accountService);
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError();
+    });
+
+    it('should throw an Error when transaction cannot be updated', () => {
+      const transaction = newTransaction();
+      req.userId = transaction.userId;
+
+      const transactionRepository = newTransactionRepositoryMock();
+      transactionRepository.findById.mockReturnValue(Promise.resolve(transaction));
+      transactionRepository.save.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const categoryService = newCategoryServiceMock();
+      categoryService.getCategory.mockReturnValue(Promise.resolve(transaction.category));
+
+      const accountService = newAccountServiceMock();
+
+      const transactionService = newTransactionService();
+      transactionService.setTransactionRepository(transactionRepository);
+      transactionService.setCategoryService(categoryService);
+      transactionService.setAccountService(accountService);
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError();
+    });
+
+    it('should not throw any Error when transaction saved successfully', () => {
+      const transaction = newTransaction();
+      req.userId = transaction.userId;
+
+      const transactionRepository = newTransactionRepositoryMock();
+      transactionRepository.findById.mockReturnValue(Promise.resolve(transaction));
+
+      const categoryService = newCategoryServiceMock();
+      categoryService.getCategory.mockReturnValue(Promise.resolve(transaction.category));
+
+      const accountService = newAccountServiceMock();
+
+      const transactionService = newTransactionService();
+      transactionService.setTransactionRepository(transactionRepository);
+      transactionService.setCategoryService(categoryService);
+      transactionService.setAccountService(accountService);
+
+      expect(transactionService.updateTransaction(req)).resolves.not.toThrowError();
+    });
+  });
+
+  describe('validateUpdateTransaction', () => {
+    let req: UpdateTransactionRequest;
+
+    beforeEach(() => {
+      req = {
+        transactionId: 'transaction-id',
+        userId: 'user-id',
+        categoryId: 'category-id',
+        amount: 100,
+        date: new Date('2022-05-05')
+      };
+    });
+
+    it('should throw an error when transactionId is empty', () => {
+      req.transactionId = '';
+
+      const transactionService = newTransactionService();
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw an error when userId is empty', () => {
+      req.userId = '';
+
+      const transactionService = newTransactionService();
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw an error when categoryId is empty', () => {
+      req.categoryId = '';
+
+      const transactionService = newTransactionService();
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw an error when amount is negative', () => {
+      req.amount = -1;
+
+      const transactionService = newTransactionService();
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw an error when date is not present', () => {
+      req.date = undefined;
+
+      const transactionService = newTransactionService();
+
+      expect(transactionService.updateTransaction(req)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should not throw any error when data is valid', () => {
+      const transactionService = newTransactionService();
+
+      expect(transactionService.updateTransaction(req)).rejects.not.toThrowError(ValidationError);
     });
   });
 });
