@@ -1,3 +1,4 @@
+import { AuthorizationError } from '../errors/AuthorizationError';
 import { GetTransactionsRequest } from './GetTransactionsRequest';
 import { Transaction } from './Transaction';
 import { TransactionQuery } from './TransactionQuery';
@@ -5,6 +6,7 @@ import { TransactionResponse } from './TransactionResponse';
 
 interface TransactionRepository {
   findByQuery(query: TransactionQuery): Promise<Transaction[]>;
+  findById(id: string): Promise<Transaction>;
 }
 
 interface AccountService {}
@@ -40,7 +42,14 @@ export class TransactionService {
     return transactions.map(this.mapEntityToResponse);
   }
 
-  getTransaction() {}
+  async getTransaction(req: GetTransactionRequest): Promise<TransactionResponse> {
+    const transaction = await this.transactionRepository.findById(req.transactionId);
+    if (transaction.userId !== req.userId) {
+      throw new AuthorizationError('The requested action is forbidden');
+    }
+
+    return this.mapEntityToResponse(transaction);
+  }
 
   createTransaction() {}
 
