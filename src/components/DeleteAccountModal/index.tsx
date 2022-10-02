@@ -1,42 +1,23 @@
 import { Trans } from 'react-i18next';
-import styled from 'styled-components';
-import Button from '../../components/UI/Button';
-import Modal from '../../components/UI/Modal';
 import { useAppDispatch } from '../../hooks/hooks';
-import Category from '../../models/category';
-import { deleteCategory } from '../../store/categories';
+import { Account } from '../../models/account';
+import { deleteAccount } from '../../store/accounts';
 import { fireError } from '../../utils/customAlert';
+import Button from '../UI/Button';
+import Modal from '../UI/Modal';
+import { ButtonContainer, ConfirmationText } from './styles';
 
 interface Props {
   show: boolean;
-  category: Category | null;
+  account: Account | null;
   onClose: () => void;
 }
 
-export const ConfirmationText = styled.h4`
-  font-size: 1.4em;
-  font-weight: 500;
-  margin-bottom: 20px;
-  text-align: center;
-
-  @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
-    font-size: 1.8em;
-  }
-`;
-
-export const ButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-`;
-
-export default function DeleteCategoryModal(props: Props): JSX.Element {
+export default function DeleteAccountModal(props: Props): JSX.Element {
   const dispatch = useAppDispatch();
 
   function handleConfirmDelete(): void {
-    dispatch(deleteCategory(props.category as Category))
+    dispatch(deleteAccount(props.account as Account))
       .then(props.onClose)
       .catch((err: Error) => fireError(err.message));
   }
@@ -45,8 +26,8 @@ export default function DeleteCategoryModal(props: Props): JSX.Element {
     <Modal show={props.show} onClose={props.onClose} size="sm">
       <Modal.Body>
         <ConfirmationText>
-          <Trans i18nKey="deleteCategoryConfirmation">
-            Are you sure you want to delete the category {props.category?.name}?
+          <Trans i18nKey="deleteAccountConfirmation">
+            Are you sure you want to delete the account {props.account?.name}?
           </Trans>
         </ConfirmationText>
         <ButtonContainer>

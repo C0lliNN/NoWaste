@@ -1,24 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
-import { useTheme } from 'styled-components';
-import { ReactComponent as DeleteIcon } from '../../assets/icons/delete.svg';
-import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg';
 import Button from '../../components/UI/Button';
+import DeleteButton from '../../components/UI/DeleteButton';
+import EditButton from '../../components/UI/EditButton';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import Spinner from '../../components/UI/Spinner';
 import Table from '../../components/UI/Table';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Account } from '../../models/account';
 import { fetchAccounts } from '../../store/accounts';
-import CreateAccountModal from './CreateAccountModal';
-import DeleteAccountModal from './DeleteAccountModal';
-import EditAccountModal from './EditAccountModal';
-import { Container, DeleteButton, EditButton, Header, Title } from './styles';
+import CreateAccountModal from '../../components/CreateAccountModal';
+import DeleteAccountModal from '../../components/DeleteAccountModal';
+import EditAccountModal from '../../components/EditAccountModal';
+import { Container, Header, Title } from './styles';
 
 export default function Accounts(): JSX.Element {
   const { accounts, loading, error } = useAppSelector((state) => state.accounts);
   const dispatch = useAppDispatch();
-  const theme: any = useTheme();
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -94,12 +92,8 @@ export default function Accounts(): JSX.Element {
                   <Trans i18nKey="currency">$</Trans> {account.balance.toFixed(2)}
                 </td>
                 <td style={{ textAlign: 'center' }}>
-                  <EditButton onClick={() => handleShowEditModal(account)}>
-                    <EditIcon fill={theme.secondary} />
-                  </EditButton>
-                  <DeleteButton onClick={() => handleShowDeleteModal(account)}>
-                    <DeleteIcon fill={theme.danger} />
-                  </DeleteButton>
+                  <EditButton onClick={() => handleShowEditModal(account)} />
+                  <DeleteButton onClick={() => handleShowDeleteModal(account)} />
                 </td>
               </tr>
             ))}

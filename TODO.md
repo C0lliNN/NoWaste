@@ -32,7 +32,8 @@
 - [x] Tackle Firestore index
 - [x] Continue Creating new use cases
 - [x] Create Transactions Page
-- [ ] Refactor Components
+- [x] Refactor Components
+- [ ] Handle Create Transaction Button
 - [ ] Create Report Module
 - [ ] Create Home Page
 

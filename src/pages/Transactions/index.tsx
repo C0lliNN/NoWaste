@@ -2,11 +2,14 @@ import { AxiosError } from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 import { Trans } from 'react-i18next';
+import { useTheme } from 'styled-components';
 import Button from '../../components/UI/Button';
+import EditButton from '../../components/UI/EditButton';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import FormGroup from '../../components/UI/FormGroup';
 import Spinner from '../../components/UI/Spinner';
 import Table from '../../components/UI/Table';
+import useMediaQuery from '../../hooks/media-query';
 import { Transaction } from '../../models/transaction';
 import {
   createTransaction,
@@ -16,12 +19,9 @@ import {
   UpdateTransactionRequest
 } from '../../services/api';
 import { fireError } from '../../utils/customAlert';
-import CreateTransactionModal from './CreateTransactionModal';
-import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg';
-import { Container, EditButton, FilterContainer, Header, LoadingContainer, Title } from './styles';
-import { useTheme } from 'styled-components';
-import useMediaQuery from '../../hooks/media-query';
-import EditTransactionModal from './EditTransactionModal';
+import CreateTransactionModal from '../../components/CreateTransactionModal';
+import EditTransactionModal from '../../components/EditTransactionModal';
+import { Container, FilterContainer, Header, LoadingContainer, Title } from './styles';
 
 export default function Transactions(): JSX.Element {
   const now = useMemo(() => dayjs(), []);
@@ -216,9 +216,7 @@ export default function Transactions(): JSX.Element {
                   </>
                 )}
                 <td>
-                  <EditButton onClick={() => handleShowEditModal(t)}>
-                    <EditIcon fill={theme.secondary} />
-                  </EditButton>
+                  <EditButton onClick={() => handleShowEditModal(t)} />
                 </td>
               </tr>
             ))}

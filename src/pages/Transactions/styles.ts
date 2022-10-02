@@ -53,15 +53,3 @@ export const FilterContainer = styled.div`
     margin: 0;
   }
 `;
-
-const iconButtonStyles = `
-  border: none;
-  outline: none;
-  background: transparent;
-  cursor: pointer;
-`;
-
-export const EditButton = styled.button`
-  ${iconButtonStyles}
-  margin-right: 10px;
-`;

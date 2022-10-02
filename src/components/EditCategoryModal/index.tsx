@@ -1,13 +1,14 @@
 import { SyntheticEvent, useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import Button from '../../components/UI/Button';
-import FormGroup from '../../components/UI/FormGroup';
-import Modal from '../../components/UI/Modal';
-import Spinner from '../../components/UI/Spinner';
+import Button from '../UI/Button';
+import FormGroup from '../UI/FormGroup';
+import Modal from '../UI/Modal';
+import Spinner from '../UI/Spinner';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import Category, { CategoryType } from '../../models/category';
 import { updateCategory } from '../../store/categories';
 import { fireError } from '../../utils/customAlert';
+import { ButtonContainer, SpinnerContainer } from './styles';
 
 interface Props {
   show: boolean;
@@ -73,14 +74,14 @@ export default function EditCategoryModal(props: Props): JSX.Element {
               </option>
             </FormGroup.Select>
           </FormGroup>
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <ButtonContainer>
             <Button variant="secondary" type="submit">
               <Trans i18nKey="update">Update</Trans>
             </Button>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          </ButtonContainer>
+          <SpinnerContainer>
             <Spinner style={{ visibility: loading ? 'visible' : 'hidden', margin: '20px 0' }} />
-          </div>
+          </SpinnerContainer>
         </form>
       </Modal.Body>
     </Modal>

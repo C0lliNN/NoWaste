@@ -27,18 +27,9 @@ export const Title = styled.h2`
   }
 `;
 
-const iconButtonStyles = `
+export const DeleteButton = styled.button`
   border: none;
   outline: none;
   background: transparent;
   cursor: pointer;
-`;
-
-export const EditButton = styled.button`
-  ${iconButtonStyles}
-  margin-right: 10px;
-`;
-
-export const DeleteButton = styled.button`
-  ${iconButtonStyles}
 `;

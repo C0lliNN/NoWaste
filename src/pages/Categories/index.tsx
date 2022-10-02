@@ -1,24 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
-import { useTheme } from 'styled-components';
-import { ReactComponent as DeleteIcon } from '../../assets/icons/delete.svg';
-import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg';
 import Button from '../../components/UI/Button';
+import DeleteButton from '../../components/UI/DeleteButton';
+import EditButton from '../../components/UI/EditButton';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import Spinner from '../../components/UI/Spinner';
 import Table from '../../components/UI/Table';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import Category from '../../models/category';
 import { fetchCategories } from '../../store/categories';
-import CreateCategoryModal from './CreateCategoryModal';
-import DeleteCategoryModal from './DeleteCategoryModal';
-import EditCategoryModal from './EditCategoryModal';
-import { Container, DeleteButton, EditButton, Header, Title } from './styles';
+import CreateCategoryModal from '../../components/CreateCategoryModal';
+import DeleteCategoryModal from '../../components/DeleteCategoryModal';
+import EditCategoryModal from '../../components/EditCategoryModal';
+import { Container, Header, Title } from './styles';
 
 export default function Categories(): JSX.Element {
   const { categories, loading, error } = useAppSelector((state) => state.categories);
   const dispatch = useAppDispatch();
-  const theme: any = useTheme();
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -92,12 +90,8 @@ export default function Categories(): JSX.Element {
                 <td>{c.name}</td>
                 <td>{c.type}</td>
                 <td style={{ textAlign: 'center' }}>
-                  <EditButton onClick={() => handleShowEditModal(c)}>
-                    <EditIcon fill={theme.secondary} />
-                  </EditButton>
-                  <DeleteButton onClick={() => handleShowDeleteModal(c)}>
-                    <DeleteIcon fill={theme.danger} />
-                  </DeleteButton>
+                  <EditButton onClick={() => handleShowEditModal(c)} />
+                  <DeleteButton onClick={() => handleShowDeleteModal(c)} />
                 </td>
               </tr>
             ))}

@@ -26,19 +26,3 @@ export const Title = styled.h2`
     font-size: 2em;
   }
 `;
-
-const iconButtonStyles = `
-  border: none;
-  outline: none;
-  background: transparent;
-  cursor: pointer;
-`;
-
-export const EditButton = styled.button`
-  ${iconButtonStyles}
-  margin-right: 10px;
-`;
-
-export const DeleteButton = styled.button`
-  ${iconButtonStyles}
-`;
