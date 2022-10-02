@@ -45,8 +45,9 @@ export default function Navigation(): JSX.Element {
           <TransactionsIcon />
           <Trans key="transactions">Transactions</Trans>
         </Link>
-        <NewTransactionButton>
-          <Plus onClick={() => navigate('/transactions/create')} />
+        <NewTransactionButton
+          onClick={() => navigate('/transactions', { state: { showCreateModal: true } })}>
+          <Plus />
           <span>
             <Trans key="transactions">Transaction</Trans>
           </span>

@@ -33,7 +33,7 @@
 - [x] Continue Creating new use cases
 - [x] Create Transactions Page
 - [x] Refactor Components
-- [ ] Handle Create Transaction Button
+- [x] Handle Create Transaction Button
 - [ ] Create Report Module
 - [ ] Create Home Page
 

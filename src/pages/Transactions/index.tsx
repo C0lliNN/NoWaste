@@ -22,9 +22,12 @@ import { fireError } from '../../utils/customAlert';
 import CreateTransactionModal from '../../components/CreateTransactionModal';
 import EditTransactionModal from '../../components/EditTransactionModal';
 import { Container, FilterContainer, Header, LoadingContainer, Title } from './styles';
+import { useLocation } from 'react-router-dom';
 
 export default function Transactions(): JSX.Element {
   const now = useMemo(() => dayjs(), []);
+
+  const { state } = useLocation();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -33,7 +36,7 @@ export default function Transactions(): JSX.Element {
   const [endDate, setEndDate] = useState<Dayjs>(now);
   const theme: any = useTheme();
 
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState((state as any)?.showCreateModal);
   const [showEditModal, setShowEditModal] = useState(false);
 
   const [transaction, setTransaction] = useState<Transaction | null>(null);
