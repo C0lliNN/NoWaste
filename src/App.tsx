@@ -8,6 +8,7 @@ import Accounts from './pages/Accounts';
 import Categories from './pages/Categories';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Transactions from './pages/Transactions';
 
 const Main = styled.main`
   background-color: #f4f4f4;
@@ -19,7 +20,6 @@ const Main = styled.main`
 
 export default function App(): JSX.Element {
   const authenticated = useAppSelector((state) => state.auth.authenticated);
-  console.log(authenticated);
 
   return (
     <Routes>
@@ -35,6 +35,7 @@ export default function App(): JSX.Element {
                   <Route path="/home" element={<Home />} />
                   <Route path="/categories" element={<Categories />} />
                   <Route path="/accounts" element={<Accounts />} />
+                  <Route path="/transactions" element={<Transactions />} />
                   <Route path="*" element={<p>404 Not Found</p>} />
                 </Routes>
               </Main>

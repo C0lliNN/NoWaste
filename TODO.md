@@ -30,10 +30,16 @@
 - [x] Fix Cors
 - [x] Tackle Firestore rules
 - [x] Tackle Firestore index
-- [ ] Continue Creating new use cases
+- [x] Continue Creating new use cases
+- [x] Create Transactions Page
+- [ ] Refactor Components
+- [ ] Create Report Module
+- [ ] Create Home Page
 
 # Nice to Have
 
 - [ ] Frontend validation
 - [ ] Generate Transaction when account balance is updated
 - [ ] Use a custom type for currency amounts
+- [ ] Add ability to update the account of a transaction
+- [ ] Investigate double request problem

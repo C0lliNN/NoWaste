@@ -2,6 +2,7 @@ import axios from 'axios';
 import { browserLocalPersistence } from 'firebase/auth';
 import { Account } from '../models/account';
 import Category from '../models/category';
+import { Transaction } from '../models/transaction';
 import { auth } from './firebase';
 
 const api = axios.create({
@@ -55,4 +56,44 @@ export async function updateExistingAccount(account: Account): Promise<void> {
 
 export async function deleteExistingAccount(account: Account): Promise<void> {
   await api.delete(`/accounts/${account.id}`);
+}
+
+interface GetTransactionsRequest {
+  startDate: Date;
+  endDate?: Date;
+}
+
+export async function getTransactions(req: GetTransactionsRequest): Promise<Transaction[]> {
+  const response = await api.get('/transactions', {
+    params: {
+      ...req
+    }
+  });
+  return response.data as Transaction[];
+}
+
+export interface CreateTransactionRequest {
+  id: string;
+  type: string;
+  recurrence: string;
+  categoryId: string;
+  accountId: string;
+  amount: number;
+  date?: Date;
+  description?: string;
+}
+
+export async function createTransaction(req: CreateTransactionRequest): Promise<void> {
+  await api.post('/transactions', req);
+}
+
+export interface UpdateTransactionRequest {
+  transactionId: string;
+  categoryId: string;
+  amount: number;
+  date: Date;
+}
+
+export async function updateTransaction(req: UpdateTransactionRequest): Promise<void> {
+  await api.put(`/transactions/${req.transactionId}`, req);
 }

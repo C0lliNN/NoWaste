@@ -46,12 +46,6 @@ interface Clock {
 }
 
 export class TransactionService {
-  updateCategory(arg0: { id: string; name: any; type: any; userId: string }) {
-    throw new Error('Method not implemented.');
-  }
-  deleteCategory(arg0: { categoryId: string; userId: string }) {
-    throw new Error('Method not implemented.');
-  }
   transactionRepository: TransactionRepository;
   accountService: AccountService;
   categoryService: CategoryService;
@@ -191,6 +185,7 @@ export class TransactionService {
         userId: req.userId,
         amountToBeUpdated: amountToBeUpdated
       });
+      transaction.amount = req.amount;
     }
 
     transaction.date = req.date as Date;

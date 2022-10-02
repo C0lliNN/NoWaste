@@ -22,8 +22,8 @@ export class TransactionController {
   private async getTransactions(req: express.Request, resp: express.Response) {
     const transactions = await this.service.getTransactions({
       userId: req.userId,
-      startDate: req.body.startDate,
-      endDate: req.body.endDate
+      startDate: new Date(req.query.startDate as string),
+      endDate: req.query.endDate ? new Date(req.query.endDate as string) : undefined
     });
 
     resp.send(transactions);
@@ -43,10 +43,12 @@ export class TransactionController {
       id: req.body.id,
       userId: req.userId,
       type: req.body.type,
+      date: new Date(req.body.date),
       recurrence: req.body.recurrence,
       categoryId: req.body.categoryId,
       accountId: req.body.accountId,
-      amount: req.body.amount
+      amount: req.body.amount,
+      description: req.body.description
     });
 
     resp.sendStatus(201);
@@ -57,6 +59,7 @@ export class TransactionController {
       transactionId: req.params.id,
       userId: req.userId,
       categoryId: req.body.categoryId,
+      date: new Date(req.body.date),
       amount: req.body.amount
     });
 

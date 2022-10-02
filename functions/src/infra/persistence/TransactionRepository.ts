@@ -20,7 +20,7 @@ export class TransactionRepository implements Repository {
   }
 
   async findByQuery(query: TransactionQuery): Promise<Transaction[]> {
-    let q = this.db.collection(collection).select();
+    let q = this.db.collection(collection).orderBy('date', 'desc');
     if (query.userId) {
       q = q.where('userId', '==', query.userId);
     }
@@ -32,8 +32,6 @@ export class TransactionRepository implements Repository {
     if (query.endDate) {
       q = q.where('date', '<=', query.endDate);
     }
-
-    q = q.orderBy('date');
 
     const transactions = await q.get();
     return transactions.docs.map(this.mapDocumentToTransaction);
@@ -52,7 +50,16 @@ export class TransactionRepository implements Repository {
   async save(transaction: Transaction): Promise<void> {
     const doc = this.db.collection(collection).doc(transaction.id);
 
-    await doc.set(Object.assign({}, transaction));
+    await doc.set(
+      Object.assign(
+        {
+          date: firestore.Timestamp.fromDate(transaction.date),
+          createdAt: firestore.Timestamp.fromDate(transaction.date),
+          updatedAt: firestore.Timestamp.fromDate(transaction.date)
+        },
+        transaction
+      )
+    );
   }
 
   private mapDocumentToTransaction(doc: firestore.DocumentSnapshot): Transaction {
@@ -64,9 +71,9 @@ export class TransactionRepository implements Repository {
       doc.data()?.category as Category,
       doc.data()?.account as Account,
       doc.data()?.amount as number,
-      doc.data()?.date as Date,
-      doc.data()?.createdAt as Date,
-      doc.data()?.updatedAt as Date,
+      (doc.data()?.date as firestore.Timestamp).toDate(),
+      (doc.data()?.createdAt as firestore.Timestamp).toDate(),
+      (doc.data()?.updatedAt as firestore.Timestamp).toDate(),
       doc.data()?.description
     );
   }
