@@ -36,6 +36,7 @@
 - [x] Handle Create Transaction Button
 - [ ] Create Report Module
 - [ ] Create Home Page
+- [ ] Generate Translation
 
 # Nice to Have
 
@@ -44,3 +45,4 @@
 - [ ] Use a custom type for currency amounts
 - [ ] Add ability to update the account of a transaction
 - [ ] Investigate double request problem
+- [ ] Make GetUserStatusReport be able to traverse previous years

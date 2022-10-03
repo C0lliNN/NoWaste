@@ -18,6 +18,8 @@ import { TransactionRepository } from '../persistence/TransactionRepository';
 import { Clock } from '../utils/Clock';
 import { TransactionService } from '../../core/transactions/TransactionService';
 import { TransactionController } from '../http/controllers/TransactionController';
+import { ReportController } from '../http/controllers/ReportController';
+import { ReportService } from '../../core/reports/ReportService';
 
 export class Container {
   NewServer(): Server {
@@ -43,6 +45,9 @@ export class Container {
     );
     const transactionController = new TransactionController(transactionService, router);
 
+    const reportService = new ReportService(accountService, transactionService, clock);
+    const reportController = new ReportController(reportService, router);
+
     const loggerMiddleware = new LoggerMiddleware(logger);
     const authMiddleware = new AuthMiddleware(auth, logger);
     const errorMiddleware = new ErrorMiddleware(logger);
@@ -60,7 +65,8 @@ export class Container {
       authMiddleware.handler(),
       categoryController.handler(),
       accountController.handler(),
-      transactionController.handler()
+      transactionController.handler(),
+      reportController.handler()
     );
     return server;
   }
