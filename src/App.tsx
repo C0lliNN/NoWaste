@@ -1,5 +1,5 @@
 import { Routes } from 'react-router';
-import { Route } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -8,6 +8,7 @@ import Accounts from './pages/Accounts';
 import Categories from './pages/Categories';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 import Transactions from './pages/Transactions';
 
 const Main = styled.main`
@@ -34,11 +35,12 @@ export default function App(): JSX.Element {
               <Navigation />
               <Main>
                 <Routes>
+                  <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/categories" element={<Categories />} />
                   <Route path="/accounts" element={<Accounts />} />
                   <Route path="/transactions" element={<Transactions />} />
-                  <Route path="*" element={<p>404 Not Found</p>} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Main>
             </>
