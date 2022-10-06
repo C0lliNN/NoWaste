@@ -7,9 +7,13 @@ export const Container = styled.nav`
   width: 100%;
   position: fixed;
   bottom: 0;
+
+  z-index: 50;
   @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
     width: 340px;
     height: 100%;
+
+    z-index: 0;
   }
 `;
 

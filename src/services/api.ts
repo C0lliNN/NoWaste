@@ -2,6 +2,7 @@ import axios from 'axios';
 import { browserLocalPersistence } from 'firebase/auth';
 import { Account } from '../models/account';
 import Category from '../models/category';
+import { Status } from '../models/status';
 import { Transaction } from '../models/transaction';
 import { auth } from './firebase';
 
@@ -96,4 +97,23 @@ export interface UpdateTransactionRequest {
 
 export async function updateTransaction(req: UpdateTransactionRequest): Promise<void> {
   await api.put(`/transactions/${req.transactionId}`, req);
+}
+
+export type Month =
+  | 'JANUARY'
+  | 'FEBRUARY'
+  | 'MARCH'
+  | 'APRIL'
+  | 'MAY'
+  | 'JUNE'
+  | 'JULY'
+  | 'AUGUST'
+  | 'SEPTEMBER'
+  | 'OCTOBER'
+  | 'NOVEMBER'
+  | 'DECEMBER';
+
+export async function getStatus(month: Month): Promise<Status> {
+  const response = await api.get('/status', { params: { month } });
+  return response.data as Status;
 }

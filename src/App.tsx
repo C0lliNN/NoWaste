@@ -13,8 +13,10 @@ import Transactions from './pages/Transactions';
 const Main = styled.main`
   background-color: #f4f4f4;
   min-height: 100vh;
+  margin-bottom: 72px;
   @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
     margin-left: 340px;
+    margin-bottom: 0px;
   }
 `;
 

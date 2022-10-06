@@ -12,16 +12,10 @@ export interface Clock {
 export class ReportService {
   accountService: AccountService;
   transactionService: TransactionService;
-  clock: Clock;
 
-  constructor(
-    accountService: AccountService,
-    transactionService: TransactionService,
-    clock: Clock
-  ) {
+  constructor(accountService: AccountService, transactionService: TransactionService) {
     this.accountService = accountService;
     this.transactionService = transactionService;
-    this.clock = clock;
   }
 
   async getUserStatus(req: GetUserStatusRequest): Promise<UserStatusResponse> {
@@ -80,34 +74,13 @@ export class ReportService {
 
   private async getTransactions(req: GetUserStatusRequest) {
     const month = req.month as Month;
-    const currentDate = dayjs(this.clock.newDate());
-
-    const startDate = this.getStartDate(month, currentDate);
-    const endDate = this.getEndDate(month, currentDate);
+    const date = dayjs().month(getMonthNumber(month));
 
     return await this.transactionService.getTransactions({
       userId: req.userId,
-      startDate,
-      endDate
+      startDate: date.startOf('month').toDate(),
+      endDate: date.endOf('month').toDate()
     });
-  }
-
-  private getStartDate(month: Month, currentDate: dayjs.Dayjs): Date {
-    const startDate = currentDate.clone();
-    startDate.set('month', getMonthNumber(month));
-    startDate.set('day', 1);
-    startDate.set('hour', 4);
-
-    return startDate.toDate();
-  }
-
-  private getEndDate(month: Month, currentDate: dayjs.Dayjs): Date {
-    const endDate = currentDate.clone();
-    endDate.set('month', getMonthNumber(month));
-    endDate.set('day', 30);
-    endDate.set('hour', 20);
-
-    return endDate.toDate();
   }
 
   private getMonthIncome(transactions: TransactionResponse[]): number {
@@ -142,6 +115,6 @@ export class ReportService {
       }
     }
 
-    return filteredTransactions;
+    return filteredTransactions.sort((a, b) => b.expense - a.expense);
   }
 }

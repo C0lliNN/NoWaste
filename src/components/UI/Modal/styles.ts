@@ -11,7 +11,7 @@ export const Container = styled.div<ContainerProps>`
   justify-content: center;
   position: fixed;
   display: flex;
-  width: 100%;
+  width: 100% !important;
   height: 100vh;
   top: 0;
   left: 0;

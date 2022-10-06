@@ -2,7 +2,7 @@ import { describe, expect, it, jest } from '@jest/globals';
 import { ValidationError } from '../errors/ValidationError';
 import { AccountResponse, AccountService } from './AccountService';
 import { GetUserStatusRequest } from './GetUserStatusRequest';
-import { Clock, ReportService } from './ReportService';
+import { ReportService } from './ReportService';
 import { TransactionResponse, TransactionService } from './TransactionService';
 
 function newTransactionServiceMock() {
@@ -19,23 +19,15 @@ function newAccountServiceMock() {
   };
 }
 
-function newClockMock() {
-  return {
-    newDate: jest.fn(() => new Date())
-  };
-}
-
 interface CreateReportService {
   accountService?: AccountService;
   transactionService?: TransactionService;
-  clock?: Clock;
 }
 
 function newReportServiceMock(req?: CreateReportService): ReportService {
   return new ReportService(
     req?.accountService ?? newAccountServiceMock(),
-    req?.transactionService ?? newTransactionServiceMock(),
-    req?.clock ?? newClockMock()
+    req?.transactionService ?? newTransactionServiceMock()
   );
 }
 

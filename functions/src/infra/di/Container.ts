@@ -45,7 +45,7 @@ export class Container {
     );
     const transactionController = new TransactionController(transactionService, router);
 
-    const reportService = new ReportService(accountService, transactionService, clock);
+    const reportService = new ReportService(accountService, transactionService);
     const reportController = new ReportController(reportService, router);
 
     const loggerMiddleware = new LoggerMiddleware(logger);

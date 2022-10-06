@@ -1,79 +1,114 @@
-import { useState } from 'react';
-import FormGroup from '../../components/UI/FormGroup';
-import Modal from '../../components/UI/Modal';
-import Table from '../../components/UI/Table';
-import { useAppDispatch } from '../../hooks/hooks';
-import { logout } from '../../store/auth';
+import { AxiosError } from 'axios';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import AccountBalances from '../../components/AccountBalances';
+import ExpensesByCategoryChart from '../../components/ExpensesByCategoryChart';
+import MonthBalanceChart from '../../components/MonthBalanceChart';
+import MonthBalanceStats from '../../components/MonthBalanceStats';
+import ErrorMessage from '../../components/UI/ErrorMessage';
+import Spinner from '../../components/UI/Spinner';
+import { Status } from '../../models/status';
+import { getStatus, Month } from '../../services/api';
+import {
+  Container,
+  Header,
+  MonthContainer,
+  MonthSelect,
+  SpinnerContainer,
+  StatsContainer,
+  Title
+} from './styles';
+
+const months = [
+  { text: 'Jan', value: 'JANUARY' },
+  { text: 'Feb', value: 'FEBRUARY' },
+  { text: 'Mar', value: 'MARCH' },
+  { text: 'Apr', value: 'APRIL' },
+  { text: 'May', value: 'MAY' },
+  { text: 'Jun', value: 'JUNE' },
+  { text: 'Jul', value: 'JULY' },
+  { text: 'Aug', value: 'AUGUST' },
+  { text: 'Sep', value: 'SEPTEMBER' },
+  { text: 'Oct', value: 'OCTOBER' },
+  { text: 'Nov', value: 'NOVEMBER' },
+  { text: 'Dec', value: 'DECEMBER' }
+];
+
+const initialStatus: Status = {
+  monthIncome: 0,
+  monthExpense: 0,
+  monthBalance: 0,
+  totalBalance: 0,
+  expensesByCategory: [],
+  balancesByAccount: []
+};
 
 export default function Home(): JSX.Element {
-  const [showModal, setShowModal] = useState(false);
-  const dispatch = useAppDispatch();
+  const currentDate = dayjs();
+  const [month, setMonth] = useState<Month>(months[currentDate.month()].value as Month);
+  const [status, setStatus] = useState<Status>(initialStatus);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
-  function handleLogout(): void {
-    dispatch(logout());
+  async function fetchStatus(): Promise<void> {
+    setLoading(true);
+    try {
+      const response = await getStatus(month);
+      setStatus(response);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        setError(err.message);
+      } else {
+        setError(t('Unexpected Error'));
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
+  useEffect(() => {
+    void fetchStatus();
+  }, [month]);
+
   return (
-    <div>
-      <h1>Home Page</h1>
-      <button onClick={handleLogout}>Logout</button>
-      <button onClick={() => setShowModal(true)}>Show Modal</button>
-      <Modal
-        show={showModal}
-        size="md"
-        onClose={() => {
-          setShowModal(false);
-        }}>
-        <Modal.Header>New Category</Modal.Header>
-        <Modal.Body>Test</Modal.Body>
-      </Modal>
-      <Table>
-        <Table.Header>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Col 1</th>
-            <th scope="col">Col 2</th>
-            <th scope="col">Col 3</th>
-            <th scope="col">Col 4</th>
-            <th scope="col">Col 5</th>
-          </tr>
-        </Table.Header>
-        <Table.Body>
-          <tr>
-            <th scope="row">1</th>
-            <td>Raphael</td>
-            <td>Dev</td>
-            <td>Dev</td>
-            <td>Dev</td>
-            <td>Dev</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Philippe</td>
-            <td>Industry</td>
-            <td>Industry</td>
-            <td>Industry</td>
-            <td>Industry</td>
-          </tr>
-        </Table.Body>
-      </Table>
-      <form style={{ padding: '20px' }}>
-        <FormGroup>
-          <FormGroup.Label htmlFor="input1">Label 1</FormGroup.Label>
-          <FormGroup.Input id="input1" placeholder="Some test" />
-        </FormGroup>
-        <FormGroup>
-          <FormGroup.Label htmlFor="input2">Label 1</FormGroup.Label>
-          <FormGroup.Select id="input2">
-            <option>1</option>
-            <option>2</option>
-          </FormGroup.Select>
-        </FormGroup>
-        <FormGroup>
-          <FormGroup.Label htmlFor="input3">Label 1</FormGroup.Label>
-          <FormGroup.Textarea id="input3"></FormGroup.Textarea>
-        </FormGroup>
-      </form>
-    </div>
+    <Container>
+      <Header>
+        <Title>
+          <Trans i18nKey="home">Home</Trans>
+        </Title>
+      </Header>
+      <MonthContainer>
+        <MonthSelect value={month} onChange={(e) => setMonth(e.target.value as Month)}>
+          {months.map((month) => (
+            <option value={month.value} key={month.value}>
+              <Trans i18nKey={month.text}>{month.text}</Trans>
+            </option>
+          ))}
+        </MonthSelect>
+      </MonthContainer>
+      {error && <ErrorMessage message={error} />}
+      {loading ? (
+        <SpinnerContainer>
+          <Spinner />
+        </SpinnerContainer>
+      ) : (
+        <StatsContainer>
+          <MonthBalanceStats
+            totalBalance={status.totalBalance}
+            monthExpense={status.monthExpense}
+            monthIncome={status.monthIncome}
+          />
+          <ExpensesByCategoryChart expensesByCategory={status.expensesByCategory} />
+          <MonthBalanceChart
+            income={status.monthIncome}
+            expense={status.monthExpense}
+            balance={status.monthBalance}
+          />
+          <AccountBalances accounts={status.balancesByAccount} />
+        </StatsContainer>
+      )}
+    </Container>
   );
 }

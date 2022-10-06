@@ -34,9 +34,10 @@
 - [x] Create Transactions Page
 - [x] Refactor Components
 - [x] Handle Create Transaction Button
-- [ ] Create Report Module
-- [ ] Create Home Page
+- [x] Create Report Module
+- [x] Create Home Page
 - [ ] Generate Translation
+- [ ] Investigate Reloading Problem
 
 # Nice to Have
 
@@ -46,3 +47,11 @@
 - [ ] Add ability to update the account of a transaction
 - [ ] Investigate double request problem
 - [ ] Make GetUserStatusReport be able to traverse previous years
+- [ ] Add ability to traverse previous years in the UI
+- [ ] Handle Currency Presentation gracefully
+- [ ] Filter out categories by type in the Create Transaction Form
+- [ ] Add Category and Account Colors
+- [ ] Add Logout Option in the modals
+- [ ] Reduce Model Duplication
+- [ ] Consider using Grid in the dashboard
+- [ ] Improve Home Design, make all cards the same size
