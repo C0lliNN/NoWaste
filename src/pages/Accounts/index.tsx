@@ -14,6 +14,7 @@ import DeleteAccountModal from '../../components/DeleteAccountModal';
 import EditAccountModal from '../../components/EditAccountModal';
 import { Container, Header, Title } from './styles';
 import useAppDispatch from '../../hooks/useAppDispatch';
+import useFormatCurrency from '../../hooks/useFormatCurrency';
 
 export default function Accounts(): JSX.Element {
   const { accounts, loading, error } = useAppSelector((state) => state.accounts);
@@ -24,6 +25,8 @@ export default function Accounts(): JSX.Element {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
+
+  const formatCurrency = useFormatCurrency();
 
   function handleShowCreateModal(): void {
     setShowCreateModal(true);
@@ -89,9 +92,7 @@ export default function Accounts(): JSX.Element {
             {accounts.map((account) => (
               <tr key={account.id}>
                 <td>{account.name}</td>
-                <td>
-                  <Trans i18nKey="currency">$</Trans> {account.balance.toFixed(2)}
-                </td>
+                <td>{formatCurrency(account.balance)}</td>
                 <td style={{ textAlign: 'center' }}>
                   <EditButton onClick={() => handleShowEditModal(account)} />
                   <DeleteButton onClick={() => handleShowDeleteModal(account)} />

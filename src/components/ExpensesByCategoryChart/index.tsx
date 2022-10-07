@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { useTheme } from 'styled-components';
+import useFormatCurrency from '../../hooks/useFormatCurrency';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import NoDataCard from '../NoDataCard';
 import Card from '../UI/Card';
@@ -13,14 +14,11 @@ interface Props {
 
 const colors = ['#EF476F', '#06D6A0', '#FFD166', '#6694FF', '#118AB2'];
 
-const renderCustomLegend = (category: string, expense: number): JSX.Element => {
+const renderCustomLegend = (category: string, formattedExpense: string): JSX.Element => {
   return (
     <span style={{ color: '#000' }}>
       <span style={{ display: 'inline-block', margin: '4px 10px' }}>{category}</span>
-      <span>
-        <Trans i18nKey="currency">$</Trans>
-        {expense.toFixed(2)}
-      </span>
+      <span>{formattedExpense}</span>
     </span>
   );
 };
@@ -54,6 +52,8 @@ export default function ExpensesByCategoryChart(props: Props): JSX.Element {
 
   const [showModal, setShowModal] = useState(false);
 
+  const formatCurrency = useFormatCurrency();
+
   function handleShowModal(): void {
     setShowModal(true);
   }
@@ -83,7 +83,10 @@ export default function ExpensesByCategoryChart(props: Props): JSX.Element {
               layout="vertical"
               iconType="circle"
               formatter={(_, __, index) =>
-                renderCustomLegend(filteredData[index].name, filteredData[index].value)
+                renderCustomLegend(
+                  filteredData[index].name,
+                  formatCurrency(filteredData[index].value)
+                )
               }
             />
           </PieChart>
@@ -103,7 +106,7 @@ export default function ExpensesByCategoryChart(props: Props): JSX.Element {
                 layout="horizontal"
                 iconType="circle"
                 formatter={(_, __, index) =>
-                  renderCustomLegend(data[index].name, data[index].value)
+                  renderCustomLegend(data[index].name, formatCurrency(data[index].value))
                 }
               />
             </PieChart>

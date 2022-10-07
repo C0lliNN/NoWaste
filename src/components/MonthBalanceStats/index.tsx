@@ -4,6 +4,7 @@ import { ReactComponent as ArrowUp } from '../../assets/icons/arrow_up.svg';
 import { ReactComponent as ArrowDown } from '../../assets/icons/arrow_down.svg';
 import { MonthContainer, MonthExpense, MonthIncome, TotalBalance, Text, Container } from './styles';
 import { useTheme } from 'styled-components';
+import useFormatCurrency from '../../hooks/useFormatCurrency';
 
 interface Props {
   monthExpense: number;
@@ -17,13 +18,12 @@ export default function MonthBalanceStats({
   totalBalance
 }: Props): JSX.Element {
   const theme: any = useTheme();
+  const formatCurrency = useFormatCurrency();
 
   return (
     <Card>
       <Container>
-        <TotalBalance>
-          <Trans i18nKey="currency">$</Trans> {totalBalance.toFixed(2)}
-        </TotalBalance>
+        <TotalBalance>{formatCurrency(totalBalance)}</TotalBalance>
         <MonthContainer>
           <MonthIncome>
             <ArrowUp fill={theme.success} />
@@ -31,9 +31,7 @@ export default function MonthBalanceStats({
               <Text>
                 <Trans i18nKey="income">Income</Trans>
               </Text>
-              <h4>
-                <Trans i18nKey="currency">$</Trans> {monthIncome.toFixed(2)}
-              </h4>
+              <h4>{formatCurrency(monthIncome)}</h4>
             </div>
           </MonthIncome>
           <MonthExpense>
@@ -42,9 +40,7 @@ export default function MonthBalanceStats({
               <Text>
                 <Trans i18nKey="expense">Expense</Trans>
               </Text>
-              <h4>
-                <Trans i18nKey="currency">$</Trans> {monthExpense.toFixed(2)}
-              </h4>
+              <h4>{formatCurrency(monthExpense)}</h4>
             </div>
           </MonthExpense>
         </MonthContainer>

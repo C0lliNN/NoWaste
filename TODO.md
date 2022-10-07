@@ -38,8 +38,9 @@
 - [x] Create Home Page
 - [x] Generate Translation (finish it)
 - [x] Investigate Reloading Problem
-- [ ] Handle Currency Amounts
+- [x] Handle Currency Amounts
 - [ ] Filter out categories by type in the Create Transaction Form
+- [ ] Add Logout for Mobile
 - [ ] Add Category and Account Colors
 
 # Nice to Have
@@ -49,7 +50,6 @@
 - [ ] Add ability to update the account of a transaction
 - [ ] Make GetUserStatusReport be able to traverse previous years
 - [ ] Add ability to traverse previous years in the UI
-- [ ] Add Logout Option in the modals
 - [ ] Reduce Model Duplication
 - [ ] Consider using Grid in the dashboard
 - [ ] Improve Home Design, make all cards the same size

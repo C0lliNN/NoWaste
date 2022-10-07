@@ -1,6 +1,7 @@
 {
   "accounts": "Contas",
   "currency": "R$",
+  "currencyCode": "BRL",
   "newAccount": "Nova Conta",
   "name": "Nome",
   "balance": "Saldo",

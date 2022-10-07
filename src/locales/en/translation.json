@@ -1,6 +1,7 @@
 {
   "accounts": "Accounts",
   "currency": "$",
+  "currencyCode": "USD",
   "newAccount": "New Account",
   "name": "Name",
   "balance": "Balance",

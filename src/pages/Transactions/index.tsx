@@ -2,13 +2,17 @@ import { AxiosError } from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 import { Trans } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { useTheme } from 'styled-components';
+import CreateTransactionModal from '../../components/CreateTransactionModal';
+import EditTransactionModal from '../../components/EditTransactionModal';
 import Button from '../../components/UI/Button';
 import EditButton from '../../components/UI/EditButton';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import FormGroup from '../../components/UI/FormGroup';
 import Spinner from '../../components/UI/Spinner';
 import Table from '../../components/UI/Table';
+import useFormatCurrency from '../../hooks/useFormatCurrency';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { Transaction } from '../../models/transaction';
 import {
@@ -19,10 +23,7 @@ import {
   UpdateTransactionRequest
 } from '../../services/api';
 import { fireError } from '../../utils/customAlert';
-import CreateTransactionModal from '../../components/CreateTransactionModal';
-import EditTransactionModal from '../../components/EditTransactionModal';
 import { Container, FilterContainer, Header, LoadingContainer, Title } from './styles';
-import { useLocation } from 'react-router-dom';
 
 export default function Transactions(): JSX.Element {
   const now = useMemo(() => dayjs(), []);
@@ -43,6 +44,8 @@ export default function Transactions(): JSX.Element {
 
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   const mediaQuery = useMediaQuery(`(min-width: ${theme.lgBreakpoint})`);
+
+  const formatCurrency = useFormatCurrency();
 
   function handleShowCreateModal(): void {
     setShowCreateModal(true);
@@ -204,8 +207,7 @@ export default function Transactions(): JSX.Element {
                 <td>{dayjs(t.date).format('DD/DD/YY')}</td>
                 <td>{t.category.name}</td>
                 <td style={{ color: t.type === 'EXPENSE' ? theme.danger : theme.success }}>
-                  <Trans i18nKey="currency">$</Trans>
-                  {t.amount.toFixed(2)}
+                  {formatCurrency(t.amount)}
                 </td>
                 {mediaQuery && (
                   <>
