@@ -4,11 +4,12 @@ import Button from '../UI/Button';
 import FormGroup from '../UI/FormGroup';
 import Modal from '../UI/Modal';
 import Spinner from '../UI/Spinner';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import useAppSelector from '../../hooks/useAppSelector';
 import { Account } from '../../models/account';
 import { updateAccount } from '../../store/accounts';
 import { fireError } from '../../utils/customAlert';
 import { ButtonContainer, SpinnerContainer } from './styles';
+import useAppDispatch from '../../hooks/useAppDispatch';
 
 interface Props {
   show: boolean;

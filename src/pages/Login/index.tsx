@@ -5,7 +5,8 @@ import { ReactComponent as GithubIcon } from '../../assets/icons/github.svg';
 import { ReactComponent as GoogleIcon } from '../../assets/icons/google.svg';
 import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
 import Spinner from '../../components/UI/Spinner';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 import { login } from '../../store/auth';
 import { fireError } from '../../utils/customAlert';
 import {

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { useTheme } from 'styled-components';
-import useMediaQuery from '../../hooks/media-query';
+import useMediaQuery from '../../hooks/useMediaQuery';
 import NoDataCard from '../NoDataCard';
 import Card from '../UI/Card';
 import Modal from '../UI/Modal';

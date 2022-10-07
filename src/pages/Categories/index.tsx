@@ -6,13 +6,14 @@ import EditButton from '../../components/UI/EditButton';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import Spinner from '../../components/UI/Spinner';
 import Table from '../../components/UI/Table';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import useAppSelector from '../../hooks/useAppSelector';
 import Category from '../../models/category';
 import { fetchCategories } from '../../store/categories';
 import CreateCategoryModal from '../../components/CreateCategoryModal';
 import DeleteCategoryModal from '../../components/DeleteCategoryModal';
 import EditCategoryModal from '../../components/EditCategoryModal';
 import { Container, Header, Title } from './styles';
+import useAppDispatch from '../../hooks/useAppDispatch';
 
 export default function Categories(): JSX.Element {
   const { categories, loading, error } = useAppSelector((state) => state.categories);

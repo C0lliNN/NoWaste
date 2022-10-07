@@ -6,7 +6,7 @@ import Button from '../UI/Button';
 import FormGroup from '../UI/FormGroup';
 import Modal from '../UI/Modal';
 import Spinner from '../UI/Spinner';
-import { useAppSelector } from '../../hooks/hooks';
+import useAppSelector from '../../hooks/useAppSelector';
 import { CreateTransactionRequest } from '../../services/api';
 import { ButtonContainer, SpinnerContainer } from './styles';
 

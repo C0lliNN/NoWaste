@@ -37,20 +37,18 @@
 - [x] Create Report Module
 - [x] Create Home Page
 - [x] Generate Translation (finish it)
-- [ ] Investigate Reloading Problem
+- [x] Investigate Reloading Problem
+- [ ] Handle Currency Amounts
+- [ ] Filter out categories by type in the Create Transaction Form
+- [ ] Add Category and Account Colors
 
 # Nice to Have
 
 - [ ] Frontend validation
 - [ ] Generate Transaction when account balance is updated
-- [ ] Use a custom type for currency amounts
 - [ ] Add ability to update the account of a transaction
-- [ ] Investigate double request problem
 - [ ] Make GetUserStatusReport be able to traverse previous years
 - [ ] Add ability to traverse previous years in the UI
-- [ ] Handle Currency Presentation gracefully
-- [ ] Filter out categories by type in the Create Transaction Form
-- [ ] Add Category and Account Colors
 - [ ] Add Logout Option in the modals
 - [ ] Reduce Model Duplication
 - [ ] Consider using Grid in the dashboard

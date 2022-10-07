@@ -3,7 +3,7 @@ import { Navigate, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
-import { useAppSelector } from './hooks/hooks';
+import useAppSelector from './hooks/useAppSelector';
 import Accounts from './pages/Accounts';
 import Categories from './pages/Categories';
 import Home from './pages/Home';

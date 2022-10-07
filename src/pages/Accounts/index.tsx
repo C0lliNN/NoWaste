@@ -6,13 +6,14 @@ import EditButton from '../../components/UI/EditButton';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import Spinner from '../../components/UI/Spinner';
 import Table from '../../components/UI/Table';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import useAppSelector from '../../hooks/useAppSelector';
 import { Account } from '../../models/account';
 import { fetchAccounts } from '../../store/accounts';
 import CreateAccountModal from '../../components/CreateAccountModal';
 import DeleteAccountModal from '../../components/DeleteAccountModal';
 import EditAccountModal from '../../components/EditAccountModal';
 import { Container, Header, Title } from './styles';
+import useAppDispatch from '../../hooks/useAppDispatch';
 
 export default function Accounts(): JSX.Element {
   const { accounts, loading, error } = useAppSelector((state) => state.accounts);

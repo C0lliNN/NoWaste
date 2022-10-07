@@ -16,8 +16,9 @@ import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
 import profilePictureIcon from '../../assets/icons/profile_picture.svg';
 import { Trans } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import useAppSelector from '../../hooks/useAppSelector';
 import { logout } from '../../store/auth';
+import useAppDispatch from '../../hooks/useAppDispatch';
 
 export default function Navigation(): JSX.Element {
   const navigate = useNavigate();

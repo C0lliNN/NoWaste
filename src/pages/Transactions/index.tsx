@@ -9,7 +9,7 @@ import ErrorMessage from '../../components/UI/ErrorMessage';
 import FormGroup from '../../components/UI/FormGroup';
 import Spinner from '../../components/UI/Spinner';
 import Table from '../../components/UI/Table';
-import useMediaQuery from '../../hooks/media-query';
+import useMediaQuery from '../../hooks/useMediaQuery';
 import { Transaction } from '../../models/transaction';
 import {
   createTransaction,

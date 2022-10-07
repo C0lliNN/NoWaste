@@ -1,5 +1,5 @@
 import { Trans } from 'react-i18next';
-import { useAppDispatch } from '../../hooks/hooks';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import Category from '../../models/category';
 import { deleteCategory } from '../../store/categories';
 import { fireError } from '../../utils/customAlert';

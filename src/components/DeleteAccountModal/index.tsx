@@ -1,5 +1,5 @@
 import { Trans } from 'react-i18next';
-import { useAppDispatch } from '../../hooks/hooks';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import { Account } from '../../models/account';
 import { deleteAccount } from '../../store/accounts';
 import { fireError } from '../../utils/customAlert';

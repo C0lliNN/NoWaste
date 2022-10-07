@@ -1,6 +1,7 @@
 import { SyntheticEvent, useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 import { createAccount } from '../../store/accounts';
 import { fireError } from '../../utils/customAlert';
 import Button from '../UI/Button';
