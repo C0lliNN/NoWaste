@@ -27,8 +27,9 @@ export default function DeleteAccountModal(props: Props): JSX.Element {
       <Modal.Body>
         <ConfirmationText>
           <Trans i18nKey="deleteAccountConfirmation">
-            Are you sure you want to delete the account {props.account?.name}?
+            Are you sure you want to delete the account
           </Trans>
+          {props.account?.name}?
         </ConfirmationText>
         <ButtonContainer>
           <Button variant="darkgray" onClick={props.onClose}>

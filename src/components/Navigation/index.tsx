@@ -38,30 +38,30 @@ export default function Navigation(): JSX.Element {
         <Link to="/home">
           <HomeIcon />
           <span>
-            <Trans key="home">Home</Trans>
+            <Trans i18nKey="home">Home</Trans>
           </span>
         </Link>
         <Link to="/transactions">
           <TransactionsIcon />
-          <Trans key="transactions">Transactions</Trans>
+          <Trans i18nKey="transactions">Transactions</Trans>
         </Link>
         <NewTransactionButton
           onClick={() => navigate('/transactions', { state: { showCreateModal: true } })}>
           <Plus />
           <span>
-            <Trans key="transactions">Transaction</Trans>
+            <Trans i18nKey="transaction">Transaction</Trans>
           </span>
         </NewTransactionButton>
         <Link to="/categories">
           <CategoriesIcon />
           <span>
-            <Trans key="categories">Categories</Trans>
+            <Trans i18nKey="categories">Categories</Trans>
           </span>
         </Link>
         <Link to="/accounts">
           <AccountsIcon />
           <span>
-            <Trans key="accounts">Accounts</Trans>
+            <Trans i18nKey="accounts">Accounts</Trans>
           </span>
         </Link>
       </LinkContainer>
@@ -69,7 +69,7 @@ export default function Navigation(): JSX.Element {
         <img src={photoUrl?.trim() ? photoUrl : profilePictureIcon} alt="Profile Picture" />
         <LogoutIcon />
         <span>
-          <Trans key="logout">Logout</Trans>
+          <Trans i18nKey="logout">Logout</Trans>
         </span>
       </LogoutContainer>
     </Container>

@@ -36,7 +36,7 @@
 - [x] Handle Create Transaction Button
 - [x] Create Report Module
 - [x] Create Home Page
-- [ ] Generate Translation
+- [x] Generate Translation (finish it)
 - [ ] Investigate Reloading Problem
 
 # Nice to Have

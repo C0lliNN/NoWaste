@@ -163,7 +163,7 @@ export default function Transactions(): JSX.Element {
 
       {!transactions.length && (
         <p>
-          <Trans i18nKey="noCategories">No transactions registered</Trans>
+          <Trans i18nKey="noTransactions">No transactions registered</Trans>
         </p>
       )}
 
@@ -212,10 +212,10 @@ export default function Transactions(): JSX.Element {
                     <td>
                       <Trans i18nKey={t.type}>{t.type}</Trans>
                     </td>
+                    <td>{t.account.name}</td>
                     <td>
                       <Trans i18nKey={t.recurrence}>{t.recurrence}</Trans>
                     </td>
-                    <td>{t.account.name}</td>
                   </>
                 )}
                 <td>

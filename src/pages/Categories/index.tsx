@@ -88,7 +88,9 @@ export default function Categories(): JSX.Element {
             {categories.map((c) => (
               <tr key={c.id}>
                 <td>{c.name}</td>
-                <td>{c.type}</td>
+                <td>
+                  <Trans i18nKey={c.type}>{c.type}</Trans>
+                </td>
                 <td style={{ textAlign: 'center' }}>
                   <EditButton onClick={() => handleShowEditModal(c)} />
                   <DeleteButton onClick={() => handleShowDeleteModal(c)} />
