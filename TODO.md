@@ -45,6 +45,9 @@
 - [ ] Add Category and Account Colors
 - [ ] Add Ability to traverse previous years in the home
 - [ ] Add Transfers
+- [ ] Focus Input when Modals are opened
+- [ ] Order accounts by balance
 - [ ] Generate Transaction when account balance is updated
 - [ ] Add ability to update the account of a transaction
 - [ ] Frontend validation
+- [ ] Export data as csv
