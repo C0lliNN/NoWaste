@@ -1,5 +1,7 @@
 import { uuidv4 } from '@firebase/util';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import persistReducer from 'redux-persist/es/persistReducer';
+import storage from 'redux-persist/lib/storage';
 import { Account } from '../models/account';
 import {
   createNewAccount,
@@ -113,4 +115,6 @@ const accountSlice = createSlice({
   }
 });
 
-export default accountSlice.reducer;
+const persistConfig = { key: 'accounts', storage, whitelist: ['accounts'] };
+
+export default persistReducer(persistConfig, accountSlice.reducer);

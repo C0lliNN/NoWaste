@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import User from '../models/user';
+import persistReducer from 'redux-persist/es/persistReducer';
+import storage from 'redux-persist/lib/storage';
 import { handleFirebaseGithubLogin, handleFirebaseGoogleLogin } from '../services/firebase';
 
 interface Auth {
@@ -54,6 +56,8 @@ const authSlice = createSlice({
   }
 });
 
-export default authSlice.reducer;
+const persistConfig = { key: 'auth', storage, whitelist: ['user', 'authenticated'] };
+
+export default persistReducer(persistConfig, authSlice.reducer);
 
 export const { logout } = authSlice.actions;

@@ -1,5 +1,7 @@
 import { uuidv4 } from '@firebase/util';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import persistReducer from 'redux-persist/es/persistReducer';
+import storage from 'redux-persist/lib/storage';
 import Category from '../models/category';
 import {
   createNewCategory,
@@ -119,4 +121,10 @@ const categorySlice = createSlice({
   }
 });
 
-export default categorySlice.reducer;
+const persistConfig = {
+  key: 'categories',
+  storage,
+  whitelist: ['categories']
+};
+
+export default persistReducer(persistConfig, categorySlice.reducer);
