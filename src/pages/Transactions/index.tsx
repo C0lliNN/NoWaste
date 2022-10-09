@@ -37,7 +37,7 @@ export default function Transactions(): JSX.Element {
   const [endDate, setEndDate] = useState<Dayjs>(now);
   const theme: any = useTheme();
 
-  const [showCreateModal, setShowCreateModal] = useState((state as any)?.showCreateModal);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
   const [transaction, setTransaction] = useState<Transaction | null>(null);
@@ -115,6 +115,12 @@ export default function Transactions(): JSX.Element {
   useEffect(() => {
     void fetchTransactions();
   }, [startDate, endDate]);
+
+  useEffect(() => {
+    if ((state as any)?.showCreateModal) {
+      setShowCreateModal(true);
+    }
+  }, [state]);
 
   if (loading) {
     return (

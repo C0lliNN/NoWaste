@@ -1,24 +1,24 @@
-import {
-  Container,
-  LogoContainer,
-  Link,
-  LinkContainer,
-  NewTransactionButton,
-  LogoutContainer
-} from './styles';
-import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
-import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg';
-import { ReactComponent as TransactionsIcon } from '../../assets/icons/transactions.svg';
-import { ReactComponent as CategoriesIcon } from '../../assets/icons/categories.svg';
-import { ReactComponent as AccountsIcon } from '../../assets/icons/accounts.svg';
-import { ReactComponent as LogoutIcon } from '../../assets/icons/logout.svg';
-import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
-import profilePictureIcon from '../../assets/icons/profile_picture.svg';
 import { Trans } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as AccountsIcon } from '../../assets/icons/accounts.svg';
+import { ReactComponent as CategoriesIcon } from '../../assets/icons/categories.svg';
+import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg';
+import { ReactComponent as Logo } from '../../assets/icons/icon.svg';
+import { ReactComponent as LogoutIcon } from '../../assets/icons/logout.svg';
+import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
+import profilePictureIcon from '../../assets/icons/profile_picture.svg';
+import { ReactComponent as TransactionsIcon } from '../../assets/icons/transactions.svg';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { logout } from '../../store/auth';
-import useAppDispatch from '../../hooks/useAppDispatch';
+import {
+  Container,
+  Link,
+  LinkContainer,
+  LogoContainer,
+  LogoutContainer,
+  NewTransactionButton
+} from './styles';
 
 export default function Navigation(): JSX.Element {
   const navigate = useNavigate();
@@ -27,6 +27,10 @@ export default function Navigation(): JSX.Element {
 
   function handleLogout(): void {
     dispatch(logout());
+  }
+
+  function handleCreateTransaction(): void {
+    navigate('/transactions', { state: { showCreateModal: true } });
   }
 
   return (
@@ -46,8 +50,7 @@ export default function Navigation(): JSX.Element {
           <TransactionsIcon />
           <Trans i18nKey="transactions">Transactions</Trans>
         </Link>
-        <NewTransactionButton
-          onClick={() => navigate('/transactions', { state: { showCreateModal: true } })}>
+        <NewTransactionButton onClick={handleCreateTransaction}>
           <Plus />
           <span>
             <Trans i18nKey="transaction">Transaction</Trans>
