@@ -40,7 +40,7 @@ export default function ExpensesByCategoryChart(props: Props): JSX.Element {
     const filtered = data.slice(0, 3);
     filtered.push({
       name: t('Others'),
-      value: data.slice(4).reduce((prev, curr) => prev + curr.value, 0)
+      value: data.slice(4).reduce((prev: number, curr: { value: number }) => prev + curr.value, 0)
     });
 
     return filtered;
