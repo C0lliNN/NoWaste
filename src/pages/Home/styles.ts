@@ -56,22 +56,14 @@ export const SpinnerContainer = styled.div`
 export const StatsContainer = styled.div`
   width: 100%;
   max-width: 1000px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-rows: 1fr;
   margin: 30px auto;
   gap: 20px;
 
   @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: center;
-    flex-wrap: wrap;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 2fr;
     margin: 30px 0;
-  }
-
-  & > div {
-    @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
-      width: 45%;
-    }
   }
 `;

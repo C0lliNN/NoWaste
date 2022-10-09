@@ -41,16 +41,10 @@
 - [x] Handle Currency Amounts
 - [x] Filter out categories by type in the Create Transaction Form
 - [x] Add Logout for Mobile
+- [ ] Reduce Model Duplication
 - [ ] Add Category and Account Colors
+- [ ] Add Ability to traverse previous years in the home
 - [ ] Add Transfers
-
-# Nice to Have
-
-- [ ] Frontend validation
 - [ ] Generate Transaction when account balance is updated
 - [ ] Add ability to update the account of a transaction
-- [ ] Make GetUserStatusReport be able to traverse previous years
-- [ ] Add ability to traverse previous years in the UI
-- [ ] Reduce Model Duplication
-- [ ] Consider using Grid in the dashboard
-- [ ] Improve Home Design, make all cards the same size
+- [ ] Frontend validation
