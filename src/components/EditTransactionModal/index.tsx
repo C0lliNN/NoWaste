@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 import { SyntheticEvent, useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import useFilteredCategories from '../../hooks/useFilteredCategories';
+import { Transaction } from '../../models/transaction';
+import { UpdateTransactionRequest } from '../../services/api';
 import Button from '../UI/Button';
 import FormGroup from '../UI/FormGroup';
 import Modal from '../UI/Modal';
 import Spinner from '../UI/Spinner';
-import useAppSelector from '../../hooks/useAppSelector';
-import { Transaction } from '../../models/transaction';
-import { UpdateTransactionRequest } from '../../services/api';
 import { ButtonContainer, SpinnerContainer } from './styles';
 
 interface Props {
@@ -22,7 +22,8 @@ export default function EditTransactionModal(props: Props): JSX.Element {
   const categoryRef = useRef<HTMLSelectElement>(null);
   const amountRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
-  const categories = useAppSelector((state) => state.categories.categories);
+  const filteredCategories = useFilteredCategories(props.transaction?.type);
+
   const { t } = useTranslation();
 
   function handleSubmit(e: SyntheticEvent): void {
@@ -95,7 +96,7 @@ export default function EditTransactionModal(props: Props): JSX.Element {
               ref={categoryRef}
               id="transactionCategory"
               defaultValue={props.transaction?.category.id}>
-              {categories.map((c) => (
+              {filteredCategories.map((c) => (
                 <option value={c.id} key={c.id}>
                   {c.name}
                 </option>

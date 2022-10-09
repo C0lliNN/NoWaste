@@ -39,9 +39,10 @@
 - [x] Generate Translation (finish it)
 - [x] Investigate Reloading Problem
 - [x] Handle Currency Amounts
-- [ ] Filter out categories by type in the Create Transaction Form
+- [x] Filter out categories by type in the Create Transaction Form
 - [ ] Add Logout for Mobile
 - [ ] Add Category and Account Colors
+- [ ] Add Transfers
 
 # Nice to Have
 

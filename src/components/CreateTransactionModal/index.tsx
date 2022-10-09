@@ -1,13 +1,15 @@
 import { uuidv4 } from '@firebase/util';
 import dayjs from 'dayjs';
-import { SyntheticEvent, useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import useAppSelector from '../../hooks/useAppSelector';
+import useFilteredCategories from '../../hooks/useFilteredCategories';
+import { TransactionType } from '../../models/transaction';
+import { CreateTransactionRequest } from '../../services/api';
 import Button from '../UI/Button';
 import FormGroup from '../UI/FormGroup';
 import Modal from '../UI/Modal';
 import Spinner from '../UI/Spinner';
-import useAppSelector from '../../hooks/useAppSelector';
-import { CreateTransactionRequest } from '../../services/api';
 import { ButtonContainer, SpinnerContainer } from './styles';
 
 interface Props {
@@ -18,22 +20,22 @@ interface Props {
 }
 
 export default function CreateTransactionModal(props: Props): JSX.Element {
-  const typeRef = useRef<HTMLSelectElement>(null);
+  const [type, setType] = useState<TransactionType>('EXPENSE');
   const recurrenceRef = useRef<HTMLSelectElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
   const accountRef = useRef<HTMLSelectElement>(null);
   const amountRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const categories = useAppSelector((state) => state.categories.categories);
   const accounts = useAppSelector((state) => state.accounts.accounts);
+
+  const filteredCategories = useFilteredCategories(type);
 
   const { t } = useTranslation();
 
   function handleSubmit(e: SyntheticEvent): void {
     e.preventDefault();
 
-    const type = typeRef.current?.value as string;
     const recurrence = recurrenceRef.current?.value as string;
     const categoryId = categoryRef.current?.value as string;
     const accountId = accountRef.current?.value as string;
@@ -92,7 +94,10 @@ export default function CreateTransactionModal(props: Props): JSX.Element {
             <FormGroup.Label htmlFor="transactionType">
               <Trans i18nKey="type">Type</Trans>
             </FormGroup.Label>
-            <FormGroup.Select ref={typeRef} id="transactionType">
+            <FormGroup.Select
+              value={type}
+              onChange={(e) => setType(e.target.value as TransactionType)}
+              id="transactionType">
               <option value="EXPENSE">
                 <Trans i18nKey="expense">Expense</Trans>
               </option>
@@ -118,7 +123,7 @@ export default function CreateTransactionModal(props: Props): JSX.Element {
               <Trans i18nKey="category">Category</Trans>
             </FormGroup.Label>
             <FormGroup.Select ref={categoryRef} id="transactionCategory">
-              {categories.map((c) => (
+              {filteredCategories.map((c) => (
                 <option value={c.id} key={c.id}>
                   {c.name}
                 </option>

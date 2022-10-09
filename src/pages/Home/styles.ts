@@ -46,7 +46,8 @@ export const MonthSelect = styled.select`
 
 export const SpinnerContainer = styled.div`
   width: 100%;
-  margin: 20px auto;
+  max-width: 1000px;
+  margin: 40px 0;
   display: flex;
   align-items: center;
   justify-content: center;
