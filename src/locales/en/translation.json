@@ -68,5 +68,6 @@
   "notFound": "The page you trying to access was not found",
   "startDate": "Start Date",
   "endDate": "End Date",
-  "noTransactions": "No transactions registered"
+  "noTransactions": "No transactions registered",
+  "Profile Picture": "Profile Picture"
 }

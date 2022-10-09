@@ -40,7 +40,7 @@
 - [x] Investigate Reloading Problem
 - [x] Handle Currency Amounts
 - [x] Filter out categories by type in the Create Transaction Form
-- [ ] Add Logout for Mobile
+- [x] Add Logout for Mobile
 - [ ] Add Category and Account Colors
 - [ ] Add Transfers
 

@@ -68,5 +68,6 @@
   "notFound": "A página que você está tentado acessar não foi encontrada",
   "startDate": "Data de Início",
   "endDate": "Data de Término",
-  "noTransactions": "Nenhuma transação cadastrada"
+  "noTransactions": "Nenhuma transação cadastrada",
+  "Profile Picture": "Imagem de Perfil"
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import AccountBalances from '../../components/AccountBalances';
 import ExpensesByCategoryChart from '../../components/ExpensesByCategoryChart';
+import MobileUserDropdown from '../../components/MobileUserDropdown';
 import MonthBalanceChart from '../../components/MonthBalanceChart';
 import MonthBalanceStats from '../../components/MonthBalanceStats';
 import ErrorMessage from '../../components/UI/ErrorMessage';
@@ -109,6 +110,7 @@ export default function Home(): JSX.Element {
           <AccountBalances accounts={status.balancesByAccount} />
         </StatsContainer>
       )}
+      <MobileUserDropdown />
     </Container>
   );
 }

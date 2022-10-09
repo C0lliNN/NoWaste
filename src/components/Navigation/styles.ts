@@ -118,7 +118,7 @@ export const Link = styled(NavLink)`
   }
 `;
 
-export const LogoutContainer = styled.button`
+export const LogoutDesktopContainer = styled.button`
   display: none;
   background-color: transparent;
   border: none;
