@@ -4,12 +4,13 @@ import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recha
 import { useTheme } from 'styled-components';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 import useMediaQuery from '../../hooks/useMediaQuery';
+import { ExpensesByCategory } from '../../models/status';
 import NoDataCard from '../NoDataCard';
 import Card from '../UI/Card';
 import Modal from '../UI/Modal';
 
 interface Props {
-  expensesByCategory: Array<{ categoryName: string; expense: number }>;
+  expensesByCategory: ExpensesByCategory[];
 }
 
 const colors = ['#EF476F', '#06D6A0', '#FFD166', '#6694FF', '#118AB2'];

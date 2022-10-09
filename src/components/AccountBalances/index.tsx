@@ -1,11 +1,12 @@
 import { Trans } from 'react-i18next';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
+import { BalancesByAccount } from '../../models/status';
 import NoDataCard from '../NoDataCard';
 import Card from '../UI/Card';
 import { Container, Item, List, Title } from './styles';
 
 interface Props {
-  accounts: Array<{ accountName: string; balance: number }>;
+  accounts: BalancesByAccount[];
 }
 
 export default function AccountBalances(props: Props): JSX.Element {

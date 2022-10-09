@@ -1,8 +1,18 @@
+export interface ExpensesByCategory {
+  categoryName: string;
+  expense: number;
+}
+
+export interface BalancesByAccount {
+  accountName: string;
+  balance: number;
+}
+
 export interface Status {
   monthIncome: number;
   monthExpense: number;
   monthBalance: number;
   totalBalance: number;
-  expensesByCategory: Array<{ categoryName: string; expense: number }>;
-  balancesByAccount: Array<{ accountName: string; balance: number }>;
+  expensesByCategory: ExpensesByCategory[];
+  balancesByAccount: BalancesByAccount[];
 }

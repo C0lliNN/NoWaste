@@ -41,7 +41,7 @@
 - [x] Handle Currency Amounts
 - [x] Filter out categories by type in the Create Transaction Form
 - [x] Add Logout for Mobile
-- [ ] Reduce Model Duplication
+- [x] Reduce Model Duplication
 - [ ] Add Category and Account Colors
 - [ ] Add Ability to traverse previous years in the home
 - [ ] Add Transfers
