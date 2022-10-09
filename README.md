@@ -5,6 +5,7 @@ An Open-Source SaaS Progressive Web App created to manage personal budget and tr
 Live app: https://nowaste-7acdd.web.app/
 
 ![NoWaste Screenshot](./docs/screenshots/readme_screenshot.JPG)
+
 [See more screenshots](./docs/screenshots/)
 
 ## Features
