@@ -95,7 +95,7 @@ export const Link = styled(NavLink)`
   height: 100%;
   box-sizing: border-box;
   padding: 10px 0;
-  font-size: 0.8em;
+  font-size: 0.7em;
   font-weight: 500;
   color: #fff;
   text-decoration: none;
