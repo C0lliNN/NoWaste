@@ -23,6 +23,7 @@ const controlProperties = `
   outline: none;
   border: none;
   background: #fff;
+  font-family: 'Open Sans', sans-serif;
   border-radius: 4px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
   font-size: 1em;
