@@ -12,7 +12,7 @@ import { fetchCategories } from '../../store/categories';
 import CreateCategoryModal from '../../components/CreateCategoryModal';
 import DeleteCategoryModal from '../../components/DeleteCategoryModal';
 import EditCategoryModal from '../../components/EditCategoryModal';
-import { Container, Header, Title } from './styles';
+import { Container, Header, NameCell, Title } from './styles';
 import useAppDispatch from '../../hooks/useAppDispatch';
 
 export default function Categories(): JSX.Element {
@@ -88,7 +88,12 @@ export default function Categories(): JSX.Element {
           <Table.Body>
             {categories.map((c) => (
               <tr key={c.id}>
-                <td>{c.name}</td>
+                <NameCell>
+                  <div>
+                    <span>{c.name}</span>
+                    <div style={{ backgroundColor: c.color }} className="color"></div>
+                  </div>
+                </NameCell>
                 <td>
                   <Trans i18nKey={c.type}>{c.type}</Trans>
                 </td>

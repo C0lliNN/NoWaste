@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import Button from '../UI/Button';
 import FormGroup from '../UI/FormGroup';
@@ -10,6 +10,7 @@ import { updateCategory } from '../../store/categories';
 import { fireError } from '../../utils/customAlert';
 import { ButtonContainer, SpinnerContainer } from './styles';
 import useAppDispatch from '../../hooks/useAppDispatch';
+import ColorPicker from '../UI/ColorPicker';
 
 interface Props {
   show: boolean;
@@ -20,6 +21,7 @@ interface Props {
 export default function EditCategoryModal(props: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const nameRef = useRef<HTMLInputElement>(null);
+  const [color, setColor] = useState('');
   const { loading } = useAppSelector((state) => state.categories);
   const { t } = useTranslation();
 
@@ -31,7 +33,8 @@ export default function EditCategoryModal(props: Props): JSX.Element {
     const category: Category = {
       id: props.category?.id as string,
       name,
-      type: props.category?.type as CategoryType
+      type: props.category?.type as CategoryType,
+      color
     };
 
     dispatch(updateCategory(category))
@@ -40,8 +43,12 @@ export default function EditCategoryModal(props: Props): JSX.Element {
   }
 
   useEffect(() => {
-    if (nameRef.current && props.category) {
-      nameRef.current.value = props.category.name;
+    if (props.category) {
+      if (nameRef.current) {
+        nameRef.current.value = props.category.name;
+      }
+
+      setColor(props.category.color);
     }
   }, [props.category]);
 
@@ -74,6 +81,10 @@ export default function EditCategoryModal(props: Props): JSX.Element {
                 <Trans i18nKey="income">Income</Trans>
               </option>
             </FormGroup.Select>
+          </FormGroup>
+          <FormGroup>
+            <FormGroup.Label>Color</FormGroup.Label>
+            <ColorPicker color={color} setColor={setColor} />
           </FormGroup>
           <ButtonContainer>
             <Button variant="secondary" type="submit">

@@ -26,7 +26,12 @@ describe('CategoryService', () => {
       repoMock.findAllByUserId.mockReturnValue(Promise.resolve(categories));
 
       const service = new CategoryService(repoMock);
-      const expectedCategories = categories.map((c) => ({ id: c.id, name: c.name, type: c.type }));
+      const expectedCategories = categories.map((c) => ({
+        id: c.id,
+        name: c.name,
+        type: c.type,
+        color: c.color
+      }));
 
       expect(service.getCategories({ userId: 'user-id' })).resolves.toStrictEqual(
         expectedCategories
@@ -84,6 +89,7 @@ describe('CategoryService', () => {
         id: 'some-di',
         name: 'Food',
         type: '',
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -97,6 +103,7 @@ describe('CategoryService', () => {
         id: '',
         name: 'Food',
         type: 'EXPENSE',
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -110,6 +117,7 @@ describe('CategoryService', () => {
         id: 'some-id',
         name: 'Food',
         type: 'EXPENSE',
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -125,6 +133,7 @@ describe('CategoryService', () => {
         id: 'some-id',
         name: 'Food',
         type: 'EXPENSE',
+        color: '#000000',
         userId: 'user-id'
       };
       const service = new CategoryService(newRepositoryMock());
@@ -138,6 +147,7 @@ describe('CategoryService', () => {
         id: 'some-id',
         name: 'Food',
         type: 'EXPENSE',
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -156,6 +166,7 @@ describe('CategoryService', () => {
         id: 'some-di',
         name: 'Food',
         type: '',
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -175,6 +186,7 @@ describe('CategoryService', () => {
         id: 'some-id',
         name: '',
         type: 'EXPENSE',
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -194,6 +206,7 @@ describe('CategoryService', () => {
         id: 'some-id',
         name: 'new name',
         type: 'EXPENSE',
+        color: '#000000',
         userId: 'user-id'
       };
 

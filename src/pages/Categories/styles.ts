@@ -26,3 +26,21 @@ export const Title = styled.h2`
     font-size: 2em;
   }
 `;
+
+export const NameCell = styled.td`
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .color {
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+`;

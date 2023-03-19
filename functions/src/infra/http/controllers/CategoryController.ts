@@ -29,6 +29,7 @@ export class CategoryController {
       id: req.body.id,
       name: req.body.name,
       type: req.body.type,
+      color: req.body.color,
       userId: req.userId
     });
 
@@ -40,6 +41,7 @@ export class CategoryController {
       id: req.params.id,
       name: req.body.name,
       type: req.body.type,
+      color: req.body.color,
       userId: req.userId
     });
 

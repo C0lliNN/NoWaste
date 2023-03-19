@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -6,6 +6,7 @@ import { CategoryType } from '../../models/category';
 import { createCategory } from '../../store/categories';
 import { fireError } from '../../utils/customAlert';
 import Button from '../UI/Button';
+import ColorPicker from '../UI/ColorPicker';
 import FormGroup from '../UI/FormGroup';
 import Modal from '../UI/Modal';
 import Spinner from '../UI/Spinner';
@@ -20,6 +21,7 @@ export default function CreateCategoryModal(props: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const nameRef = useRef<HTMLInputElement>(null);
   const typeRef = useRef<HTMLSelectElement>(null);
+  const [color, setColor] = useState('');
   const { loading } = useAppSelector((state) => state.categories);
   const { t } = useTranslation();
 
@@ -29,7 +31,7 @@ export default function CreateCategoryModal(props: Props): JSX.Element {
     const name = nameRef.current?.value as string;
     const type = typeRef.current?.value as CategoryType;
 
-    dispatch(createCategory({ name, type }))
+    dispatch(createCategory({ name, type, color }))
       .then(props.onClose)
       .catch((err: Error) => fireError(err.message));
   }
@@ -66,6 +68,10 @@ export default function CreateCategoryModal(props: Props): JSX.Element {
                 <Trans i18nKey="income">Income</Trans>
               </option>
             </FormGroup.Select>
+          </FormGroup>
+          <FormGroup>
+            <FormGroup.Label>Color</FormGroup.Label>
+            <ColorPicker color={color} setColor={setColor} />
           </FormGroup>
           <ButtonContainer>
             <Button variant="primary" type="submit">

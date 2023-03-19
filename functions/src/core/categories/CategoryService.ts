@@ -23,7 +23,8 @@ export class CategoryService {
     return categories.map((c) => ({
       id: c.id,
       name: c.name,
-      type: c.type
+      type: c.type,
+      color: c.color
     }));
   }
 
@@ -36,14 +37,21 @@ export class CategoryService {
     return {
       id: category.id,
       name: category.name,
-      type: category.type
+      type: category.type,
+      color: category.color
     };
   }
 
   public async createCategory(req: CreateCategoryRequest): Promise<void> {
     this.validateType(req.type);
 
-    const category = new Category(req.id, req.name, req.type as CategoryType, req.userId);
+    const category = new Category(
+      req.id,
+      req.name,
+      req.type as CategoryType,
+      req.color,
+      req.userId
+    );
     category.validate();
 
     return await this.categoryRepository.save(category);
@@ -59,6 +67,7 @@ export class CategoryService {
 
     category.name = req.name;
     category.type = req.type as CategoryType;
+    category.color = req.color;
 
     category.validate();
 

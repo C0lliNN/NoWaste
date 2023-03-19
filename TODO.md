@@ -43,7 +43,8 @@
 - [x] Add Logout for Mobile
 - [x] Reduce Model Duplication
 - [x] Focus Input when Modals are opened
-- [ ] Add Category and Account Colors
+- [x] Add Category Colors
+- [ ] Add Account Colors
 - [ ] Order accounts by balance
 - [ ] Order Categories by Most Used
 - [ ] Order Account by Most Used
