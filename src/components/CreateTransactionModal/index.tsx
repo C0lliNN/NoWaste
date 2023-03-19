@@ -66,6 +66,7 @@ export default function CreateTransactionModal(props: Props): JSX.Element {
     }
     if (props.show && dateRef.current) {
       dateRef.current.value = dayjs().format('YYYY-MM-DD');
+      dateRef.current.focus();
     }
     if (props.show && descriptionRef.current) {
       descriptionRef.current.value = '';

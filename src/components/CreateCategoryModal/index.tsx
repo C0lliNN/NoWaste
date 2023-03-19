@@ -1,15 +1,15 @@
 import { SyntheticEvent, useEffect, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import Button from '../UI/Button';
-import FormGroup from '../UI/FormGroup';
-import Modal from '../UI/Modal';
-import Spinner from '../UI/Spinner';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { CategoryType } from '../../models/category';
 import { createCategory } from '../../store/categories';
 import { fireError } from '../../utils/customAlert';
+import Button from '../UI/Button';
+import FormGroup from '../UI/FormGroup';
+import Modal from '../UI/Modal';
+import Spinner from '../UI/Spinner';
 import { ButtonContainer, SpinnerContainer } from './styles';
-import useAppDispatch from '../../hooks/useAppDispatch';
 
 interface Props {
   show: boolean;
@@ -37,6 +37,7 @@ export default function CreateCategoryModal(props: Props): JSX.Element {
   useEffect(() => {
     if (props.show && nameRef.current) {
       nameRef.current.value = '';
+      nameRef.current.focus();
     }
   }, [props.show]);
 
@@ -48,16 +49,16 @@ export default function CreateCategoryModal(props: Props): JSX.Element {
       <Modal.Body>
         <form onSubmit={handleSubmit}>
           <FormGroup>
-            <FormGroup.Label>
+            <FormGroup.Label htmlFor="categoryName">
               <Trans i18nKey="name">Name</Trans>
             </FormGroup.Label>
-            <FormGroup.Input placeholder={t('Category Name')} ref={nameRef} />
+            <FormGroup.Input placeholder={t('Category Name')} ref={nameRef} id="categoryName" />
           </FormGroup>
           <FormGroup>
-            <FormGroup.Label>
+            <FormGroup.Label htmlFor="categoryType">
               <Trans i18nKey="type">Type</Trans>
             </FormGroup.Label>
-            <FormGroup.Select ref={typeRef}>
+            <FormGroup.Select ref={typeRef} id="categoryType">
               <option value="EXPENSE">
                 <Trans i18nKey="expense">Expense</Trans>
               </option>

@@ -42,11 +42,13 @@
 - [x] Filter out categories by type in the Create Transaction Form
 - [x] Add Logout for Mobile
 - [x] Reduce Model Duplication
+- [ ] Focus Input when Modals are opened
 - [ ] Add Category and Account Colors
+- [ ] Order accounts by balance
+- [ ] Order Categories by Most Used
+- [ ] Order Account by Most Used
 - [ ] Add Ability to traverse previous years in the home
 - [ ] Add Transfers
-- [ ] Focus Input when Modals are opened
-- [ ] Order accounts by balance
 - [ ] Generate Transaction when account balance is updated
 - [ ] Add ability to update the account of a transaction
 - [ ] Frontend validation

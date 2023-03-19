@@ -51,7 +51,7 @@ export const ModalContainer = styled.div<ModalProps>`
     }
   }}
   max-height: 80vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-radius: 12px;
   transition: all 0.2s ease-in-out;
   transform: translateY(${(props) => (props.show ? '0' : '-100vh')});

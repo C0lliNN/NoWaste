@@ -36,6 +36,7 @@ export default function CreateAccountModal(props: Props): JSX.Element {
   useEffect(() => {
     if (props.show && nameRef.current) {
       nameRef.current.value = '';
+      nameRef.current.focus();
     }
     if (props.show && balanceRef.current) {
       balanceRef.current.value = '';
@@ -50,13 +51,13 @@ export default function CreateAccountModal(props: Props): JSX.Element {
       <Modal.Body>
         <form onSubmit={handleSubmit}>
           <FormGroup>
-            <FormGroup.Label>
+            <FormGroup.Label htmlFor="accountName">
               <Trans i18nKey="name">Name</Trans>
             </FormGroup.Label>
-            <FormGroup.Input placeholder={t('Account Name')} ref={nameRef} />
+            <FormGroup.Input placeholder={t('Account Name')} ref={nameRef} id="accountName" />
           </FormGroup>
           <FormGroup>
-            <FormGroup.Label>
+            <FormGroup.Label htmlFor="accountBalance">
               <Trans i18nKey="balance">Balance</Trans>
             </FormGroup.Label>
             <FormGroup.Input
@@ -64,6 +65,7 @@ export default function CreateAccountModal(props: Props): JSX.Element {
               step="0.01"
               placeholder={t('Account Balance')}
               ref={balanceRef}
+              id="accountBalance"
             />
           </FormGroup>
           <ButtonContainer>
