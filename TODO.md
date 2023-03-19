@@ -47,6 +47,7 @@
 - [x] Add Account Colors
 - [x] Change Input Font
 - [ ] Order accounts by balance
+- [ ] Tackle Security Issues
 - [ ] Order Categories by Most Used
 - [ ] Order Account by Most Used
 - [ ] Add Ability to traverse previous years in the home

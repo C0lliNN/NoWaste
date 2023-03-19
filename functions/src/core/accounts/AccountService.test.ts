@@ -26,10 +26,11 @@ describe('AccountService', () => {
       repoMock.findAllByUserId.mockReturnValue(Promise.resolve(accounts));
 
       const service = new AccountService(repoMock);
-      const expectedAccounts = accounts.map((c) => ({
-        id: c.id,
-        name: c.name,
-        balance: c.balance
+      const expectedAccounts = accounts.map((account) => ({
+        id: account.id,
+        name: account.name,
+        balance: account.balance,
+        color: account.color
       }));
 
       expect(service.getAccounts({ userId: 'user-id' })).resolves.toStrictEqual(expectedAccounts);
