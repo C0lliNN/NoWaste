@@ -86,6 +86,7 @@ describe('AccountService', () => {
         id: 'some-id',
         name: '',
         balance: 14,
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -99,6 +100,7 @@ describe('AccountService', () => {
         id: 'some-id',
         name: 'Nubank',
         balance: 14,
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -114,6 +116,7 @@ describe('AccountService', () => {
         id: 'some-id',
         name: 'NuBank',
         balance: 14,
+        color: '#000000',
         userId: 'user-id'
       };
       const service = new AccountService(newRepositoryMock());
@@ -127,6 +130,7 @@ describe('AccountService', () => {
         id: 'some-id',
         name: 'Nubank',
         balance: 14,
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -145,6 +149,7 @@ describe('AccountService', () => {
         id: 'some-id',
         name: '',
         balance: 14,
+        color: '#000000',
         userId: 'user-id'
       };
 
@@ -164,6 +169,7 @@ describe('AccountService', () => {
         id: 'some-id',
         name: 'new name',
         balance: 14,
+        color: '#000000',
         userId: 'user-id'
       };
 

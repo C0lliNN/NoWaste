@@ -19,10 +19,11 @@ export class AccountService {
   public async getAccounts(req: GetAccountsRequest): Promise<AccountResponse[]> {
     const accounts = await this.accountRepository.findAllByUserId(req.userId);
 
-    return accounts.map((c) => ({
-      id: c.id,
-      name: c.name,
-      balance: c.balance
+    return accounts.map((account) => ({
+      id: account.id,
+      name: account.name,
+      balance: account.balance,
+      color: account.color
     }));
   }
 
@@ -35,12 +36,13 @@ export class AccountService {
     return {
       id: account.id,
       name: account.name,
-      balance: account.balance
+      balance: account.balance,
+      color: account.color
     };
   }
 
   public async createAccount(req: CreateAccountRequest): Promise<void> {
-    const account = new Account(req.id, req.name, req.balance, req.userId);
+    const account = new Account(req.id, req.name, req.balance, req.color, req.userId);
     account.validate();
 
     return await this.accountRepository.save(account);
@@ -54,6 +56,7 @@ export class AccountService {
 
     account.name = req.name;
     account.balance = req.balance;
+    account.color = req.color;
     account.validate();
 
     return await this.accountRepository.save(account);

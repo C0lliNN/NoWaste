@@ -1,15 +1,16 @@
-import { SyntheticEvent, useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import Button from '../UI/Button';
-import FormGroup from '../UI/FormGroup';
-import Modal from '../UI/Modal';
-import Spinner from '../UI/Spinner';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { Account } from '../../models/account';
 import { updateAccount } from '../../store/accounts';
 import { fireError } from '../../utils/customAlert';
+import Button from '../UI/Button';
+import ColorPicker from '../UI/ColorPicker';
+import FormGroup from '../UI/FormGroup';
+import Modal from '../UI/Modal';
+import Spinner from '../UI/Spinner';
 import { ButtonContainer, SpinnerContainer } from './styles';
-import useAppDispatch from '../../hooks/useAppDispatch';
 
 interface Props {
   show: boolean;
@@ -21,6 +22,7 @@ export default function EditAccountModal(props: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const nameRef = useRef<HTMLInputElement>(null);
   const balanceRef = useRef<HTMLInputElement>(null);
+  const [color, setColor] = useState('');
   const { loading } = useAppSelector((state) => state.accounts);
   const { t } = useTranslation();
 
@@ -33,7 +35,8 @@ export default function EditAccountModal(props: Props): JSX.Element {
     const account: Account = {
       id: props.account?.id as string,
       name,
-      balance
+      balance,
+      color
     };
 
     dispatch(updateAccount(account))
@@ -42,11 +45,16 @@ export default function EditAccountModal(props: Props): JSX.Element {
   }
 
   useEffect(() => {
-    if (nameRef.current && props.account) {
-      nameRef.current.value = props.account.name;
-    }
-    if (balanceRef.current && props.account) {
-      balanceRef.current.value = props.account.balance.toString();
+    if (props.account) {
+      if (nameRef.current) {
+        nameRef.current.value = props.account.name;
+      }
+
+      if (balanceRef.current) {
+        balanceRef.current.value = props.account.balance.toString();
+      }
+
+      setColor(props.account.color);
     }
   }, [props.account]);
 
@@ -77,6 +85,12 @@ export default function EditAccountModal(props: Props): JSX.Element {
               placeholder={t('Account Balance')}
               ref={balanceRef}
             />
+          </FormGroup>
+          <FormGroup>
+            <FormGroup.Label>
+              <Trans i18nKey="color">Color</Trans>
+            </FormGroup.Label>
+            <ColorPicker color={color} setColor={setColor} />
           </FormGroup>
           <ButtonContainer>
             <Button variant="secondary" type="submit">

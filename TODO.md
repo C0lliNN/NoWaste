@@ -44,7 +44,7 @@
 - [x] Reduce Model Duplication
 - [x] Focus Input when Modals are opened
 - [x] Add Category Colors
-- [ ] Add Account Colors
+- [x] Add Account Colors
 - [ ] Change Input Font
 - [ ] Order accounts by balance
 - [ ] Order Categories by Most Used

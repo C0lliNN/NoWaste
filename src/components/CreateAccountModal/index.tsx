@@ -1,10 +1,11 @@
-import { SyntheticEvent, useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { createAccount } from '../../store/accounts';
 import { fireError } from '../../utils/customAlert';
 import Button from '../UI/Button';
+import ColorPicker from '../UI/ColorPicker';
 import FormGroup from '../UI/FormGroup';
 import Modal from '../UI/Modal';
 import Spinner from '../UI/Spinner';
@@ -19,6 +20,7 @@ export default function CreateAccountModal(props: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const nameRef = useRef<HTMLInputElement>(null);
   const balanceRef = useRef<HTMLInputElement>(null);
+  const [color, setColor] = useState('');
   const { loading } = useAppSelector((state) => state.accounts);
   const { t } = useTranslation();
 
@@ -28,7 +30,7 @@ export default function CreateAccountModal(props: Props): JSX.Element {
     const name = nameRef.current?.value as string;
     const balance = parseFloat(balanceRef.current?.value as string);
 
-    dispatch(createAccount({ name, balance }))
+    dispatch(createAccount({ name, balance, color }))
       .then(props.onClose)
       .catch((err: Error) => fireError(err.message));
   }
@@ -67,6 +69,12 @@ export default function CreateAccountModal(props: Props): JSX.Element {
               ref={balanceRef}
               id="accountBalance"
             />
+          </FormGroup>
+          <FormGroup>
+            <FormGroup.Label>
+              <Trans i18nKey="color">Color</Trans>
+            </FormGroup.Label>
+            <ColorPicker color={color} setColor={setColor} />
           </FormGroup>
           <ButtonContainer>
             <Button variant="primary" type="submit">

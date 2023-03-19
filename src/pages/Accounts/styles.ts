@@ -33,3 +33,20 @@ export const DeleteButton = styled.button`
   background: transparent;
   cursor: pointer;
 `;
+
+export const NameCell = styled.td`
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .color {
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    @media (min-width: ${(props) => props.theme.lgBreakpoint}) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+`;

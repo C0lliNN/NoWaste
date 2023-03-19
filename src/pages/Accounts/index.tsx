@@ -12,7 +12,7 @@ import { fetchAccounts } from '../../store/accounts';
 import CreateAccountModal from '../../components/CreateAccountModal';
 import DeleteAccountModal from '../../components/DeleteAccountModal';
 import EditAccountModal from '../../components/EditAccountModal';
-import { Container, Header, Title } from './styles';
+import { Container, Header, NameCell, Title } from './styles';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useFormatCurrency from '../../hooks/useFormatCurrency';
 
@@ -91,7 +91,12 @@ export default function Accounts(): JSX.Element {
           <Table.Body>
             {accounts.map((account) => (
               <tr key={account.id}>
-                <td>{account.name}</td>
+                <NameCell>
+                  <div>
+                    <span>{account.name}</span>
+                    <div style={{ backgroundColor: account.color }} className="color"></div>
+                  </div>
+                </NameCell>
                 <td>{formatCurrency(account.balance)}</td>
                 <td style={{ textAlign: 'center' }}>
                   <EditButton onClick={() => handleShowEditModal(account)} />

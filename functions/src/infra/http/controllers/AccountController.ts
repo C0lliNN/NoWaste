@@ -29,6 +29,7 @@ export class AccountController {
       id: req.body.id,
       name: req.body.name,
       balance: req.body.balance,
+      color: req.body.color,
       userId: req.userId
     });
 
@@ -40,6 +41,7 @@ export class AccountController {
       id: req.params.id,
       name: req.body.name,
       balance: req.body.balance,
+      color: req.body.color,
       userId: req.userId
     });
 

@@ -43,6 +43,12 @@ export class AccountRepository implements Repository {
   }
 
   private mapDocumentToAccount(doc: firestore.DocumentSnapshot): Account {
-    return new Account(doc.id, doc.data()?.name, doc.data()?.balance, doc.data()?.userId);
+    return new Account(
+      doc.id,
+      doc.data()?.name,
+      doc.data()?.balance,
+      doc.data()?.color,
+      doc.data()?.userId
+    );
   }
 }

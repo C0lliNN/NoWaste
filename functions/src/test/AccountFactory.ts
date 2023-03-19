@@ -6,6 +6,7 @@ export function newAccount(): Account {
     faker.datatype.uuid(),
     faker.finance.accountName(),
     faker.datatype.number(100),
+    '#000000',
     faker.datatype.uuid()
   );
 }
