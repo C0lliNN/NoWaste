@@ -37,6 +37,12 @@ Live app: https://nowaste-7acdd.web.app/
 
 **_NOTE:_** This command should start both the backend (Firebase Functions) and the frontend (React App). Since the local environment is using the Firebase emulator, it might take a few seconds until all the services (Auth, Firestore and Functions) are ready to use. It might be necessary to refresh the page a couple of times in order to be able to use the whole app normally.
 
+## How to run migrations
+
+```shell
+GOOGLE_APPLICATION_CREDENTIALS="path/to/firestore-service-account.json"" npm run migrate
+```
+
 ## Contributions
 
 Any contribution is more than welcome! Feel free to open an issue or a PR.
