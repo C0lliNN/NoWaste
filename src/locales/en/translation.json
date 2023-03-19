@@ -69,5 +69,6 @@
   "startDate": "Start Date",
   "endDate": "End Date",
   "noTransactions": "No transactions registered",
-  "Profile Picture": "Profile Picture"
+  "Profile Picture": "Profile Picture",
+  "color": "Color"
 }

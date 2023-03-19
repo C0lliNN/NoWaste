@@ -83,7 +83,9 @@ export default function EditCategoryModal(props: Props): JSX.Element {
             </FormGroup.Select>
           </FormGroup>
           <FormGroup>
-            <FormGroup.Label>Color</FormGroup.Label>
+            <FormGroup.Label>
+              <Trans i18nKey="color">Color</Trans>
+            </FormGroup.Label>
             <ColorPicker color={color} setColor={setColor} />
           </FormGroup>
           <ButtonContainer>

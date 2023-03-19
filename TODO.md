@@ -45,6 +45,7 @@
 - [x] Focus Input when Modals are opened
 - [x] Add Category Colors
 - [ ] Add Account Colors
+- [ ] Change Input Font
 - [ ] Order accounts by balance
 - [ ] Order Categories by Most Used
 - [ ] Order Account by Most Used
