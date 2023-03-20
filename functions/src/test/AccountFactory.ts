@@ -10,3 +10,11 @@ export function newAccount(): Account {
     faker.datatype.uuid()
   );
 }
+
+export function newQuery(): AccountQuery {
+  return {
+    userId: faker.datatype.uuid(),
+    sortBy: 'name',
+    sortDirection: 'asc'
+  };
+}

@@ -1,5 +1,7 @@
 interface GetAccountsRequest {
   userId: string;
+  sortBy: string;
+  sortDirection: string;
 }
 
 export interface AccountResponse {

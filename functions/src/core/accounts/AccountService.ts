@@ -17,7 +17,13 @@ export class AccountService {
   }
 
   public async getAccounts(req: GetAccountsRequest): Promise<AccountResponse[]> {
-    const accounts = await this.accountRepository.findAllByUserId(req.userId);
+    const query: AccountQuery = {
+      userId: req.userId,
+      sortBy: (req.sortBy as AvailableSortField) ?? 'name',
+      sortDirection: (req.sortDirection as SortDirection) ?? 'asc'
+    };
+
+    const accounts = await this.accountRepository.findByQuery(query);
 
     return accounts.map((account) => ({
       id: account.id,

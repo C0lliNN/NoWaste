@@ -20,7 +20,12 @@ export class AccountController {
   }
 
   private async getAccounts(req: express.Request, resp: express.Response) {
-    const accounts = await this.accountService.getAccounts({ userId: req.userId });
+    const accounts = await this.accountService.getAccounts({
+      userId: req.userId,
+      sortBy: req.query.sortBy as string,
+      sortDirection: req.query.sortDirection as string
+    });
+
     resp.send(accounts);
   }
 

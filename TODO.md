@@ -46,7 +46,7 @@
 - [x] Add Category Colors
 - [x] Add Account Colors
 - [x] Change Input Font
-- [ ] Order accounts by balance
+- [x] Order accounts by balance
 - [ ] Tackle Security Issues
 - [ ] Order Categories by Most Used
 - [ ] Order Account by Most Used

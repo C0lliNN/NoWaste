@@ -15,7 +15,9 @@ function newTransactionServiceMock() {
 
 function newAccountServiceMock() {
   return {
-    getAccounts: jest.fn(async ({ userId: string }) => [] as AccountResponse[])
+    getAccounts: jest.fn(
+      async ({ userId, sortBy, sortDirection: string }) => [] as AccountResponse[]
+    )
   };
 }
 

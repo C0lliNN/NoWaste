@@ -21,7 +21,11 @@ export class ReportService {
   async getUserStatus(req: GetUserStatusRequest): Promise<UserStatusResponse> {
     this.validateGetUserStatusRequest(req);
 
-    const accounts = await this.accountService.getAccounts({ userId: req.userId });
+    const accounts = await this.accountService.getAccounts({
+      userId: req.userId,
+      sortBy: 'balance',
+      sortDirection: 'desc'
+    });
     const transactions = await this.getTransactions(req);
 
     const monthIncome = this.getMonthIncome(transactions);

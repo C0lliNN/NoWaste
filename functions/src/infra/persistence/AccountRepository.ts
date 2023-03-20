@@ -12,11 +12,11 @@ export class AccountRepository implements Repository {
     this.db = db;
   }
 
-  async findAllByUserId(userId: string): Promise<Account[]> {
+  async findByQuery(query: AccountQuery): Promise<Account[]> {
     const accounts = await this.db
       .collection(collection)
-      .where('userId', '==', userId)
-      .orderBy('name')
+      .where('userId', '==', query.userId)
+      .orderBy(query.sortBy, query.sortDirection)
       .get();
 
     return accounts.docs.map(this.mapDocumentToAccount);

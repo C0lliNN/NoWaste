@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import { newAccount } from '../../test/AccountFactory';
+import { newAccount, newQuery } from '../../test/AccountFactory';
 import { AuthorizationError } from '../errors/AuthorizationError';
 import { ValidationError } from '../errors/ValidationError';
 import { Account } from './Account';
@@ -10,7 +10,7 @@ import { UpdateAccountRequest } from './UpdateAccountRequest';
 
 function newRepositoryMock() {
   return {
-    findAllByUserId: jest.fn(async (userId: string) => [] as Account[]),
+    findByQuery: jest.fn(async (query: AccountQuery) => [] as Account[]),
     findById: jest.fn(async (id: string) => ({} as Account)),
     save: jest.fn(async (account: Account) => {}),
     delete: jest.fn(async (userId: string) => {})
@@ -23,27 +23,62 @@ describe('AccountService', () => {
       const accounts: Account[] = [newAccount(), newAccount()];
 
       const repoMock = newRepositoryMock();
-      repoMock.findAllByUserId.mockReturnValue(Promise.resolve(accounts));
+      repoMock.findByQuery.mockReturnValue(Promise.resolve(accounts));
 
       const service = new AccountService(repoMock);
+<<<<<<< HEAD
       const expectedAccounts = accounts.map((account) => ({
         id: account.id,
         name: account.name,
         balance: account.balance,
         color: account.color
+=======
+      const expectedAccounts = accounts.map((c) => ({
+        id: c.id,
+        name: c.name,
+        balance: c.balance,
+        color: c.color
+      }));
+
+      expect(
+        service.getAccounts({ userId: 'some id', sortBy: 'balance', sortDirection: 'desc' })
+      ).resolves.toStrictEqual(expectedAccounts);
+      expect(repoMock.findByQuery).toHaveBeenCalledWith({
+        userId: 'some id',
+        sortBy: 'balance',
+        sortDirection: 'desc'
+      });
+    });
+
+    it('should create a default sortBy and sortDirection when the request does not contain these values', () => {
+      const accounts: Account[] = [newAccount(), newAccount()];
+
+      const repoMock = newRepositoryMock();
+      repoMock.findByQuery.mockReturnValue(Promise.resolve(accounts));
+
+      const service = new AccountService(repoMock);
+      const expectedAccounts = accounts.map((c) => ({
+        id: c.id,
+        name: c.name,
+        balance: c.balance,
+        color: c.color
+>>>>>>> 88d1347 (Sort Accounts by Balances in the UserStatus view)
       }));
 
       expect(service.getAccounts({ userId: 'user-id' })).resolves.toStrictEqual(expectedAccounts);
+      expect(repoMock.findByQuery).toHaveBeenCalledWith({
+        userId: 'user-id',
+        sortBy: 'name',
+        sortDirection: 'asc'
+      });
     });
 
     it('should throw an error when the repository is successful', async () => {
       const repoMock = newRepositoryMock();
-      repoMock.findAllByUserId.mockReturnValue(Promise.reject(new Error('some error')));
+      repoMock.findByQuery.mockReturnValue(Promise.reject(new Error('some error')));
 
       const service = new AccountService(repoMock);
-      expect(service.getAccounts({ userId: 'user-id' })).rejects.toStrictEqual(
-        new Error('some error')
-      );
+      expect(service.getAccounts(newQuery())).rejects.toStrictEqual(new Error('some error'));
     });
   });
 
@@ -125,6 +160,7 @@ describe('AccountService', () => {
       expect(service.createAccount(req)).resolves.not.toThrow();
     });
   });
+
   describe('updateAccount', () => {
     it('should throw an AuthorizationError error if the user is not the owner of the account', () => {
       const req: UpdateAccountRequest = {
