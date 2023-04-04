@@ -48,6 +48,7 @@ export class AccountRepository implements Repository {
       doc.data()?.name,
       doc.data()?.balance,
       doc.data()?.color,
+      doc.data()?.useCount,
       doc.data()?.userId
     );
   }

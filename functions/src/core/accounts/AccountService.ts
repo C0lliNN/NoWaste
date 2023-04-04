@@ -29,7 +29,8 @@ export class AccountService {
       id: account.id,
       name: account.name,
       balance: account.balance,
-      color: account.color
+      color: account.color,
+      useCount: account.useCount
     }));
   }
 
@@ -43,12 +44,13 @@ export class AccountService {
       id: account.id,
       name: account.name,
       balance: account.balance,
-      color: account.color
+      color: account.color,
+      useCount: account.useCount
     };
   }
 
   public async createAccount(req: CreateAccountRequest): Promise<void> {
-    const account = new Account(req.id, req.name, req.balance, req.color, req.userId);
+    const account = new Account(req.id, req.name, req.balance, req.color, 0, req.userId);
     account.validate();
 
     return await this.accountRepository.save(account);
@@ -75,6 +77,14 @@ export class AccountService {
     }
 
     account.balance += req.amountToBeUpdated;
+    await this.accountRepository.save(account);
+  }
+
+  public async incrementUseCount(accountId: string): Promise<void> {
+    const account = await this.accountRepository.findById(accountId);
+
+    account.incrementUseCount();
+
     await this.accountRepository.save(account);
   }
 

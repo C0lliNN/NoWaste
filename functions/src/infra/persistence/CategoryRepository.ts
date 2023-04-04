@@ -49,6 +49,7 @@ export class CategoryRepository implements Repository {
       doc.data()?.name,
       doc.data()?.type as CategoryType,
       doc.data()?.color as string,
+      doc.data()?.useCount as number,
       doc.data()?.userId
     );
   }

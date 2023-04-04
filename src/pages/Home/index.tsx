@@ -20,6 +20,9 @@ import {
   StatsContainer,
   Title
 } from './styles';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import { fetchCategories } from '../../store/categories';
+import { fetchAccounts } from '../../store/accounts';
 
 const months = [
   { text: 'Jan', value: 'JANUARY' },
@@ -52,6 +55,7 @@ export default function Home(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   async function fetchStatus(): Promise<void> {
     setLoading(true);
@@ -72,6 +76,11 @@ export default function Home(): JSX.Element {
   useEffect(() => {
     void fetchStatus();
   }, [month]);
+
+  useEffect(() => {
+    void dispatch(fetchCategories());
+    void dispatch(fetchAccounts());
+  });
 
   return (
     <Container>

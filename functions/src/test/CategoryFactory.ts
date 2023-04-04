@@ -7,6 +7,7 @@ export function newCategory(): Category {
     faker.commerce.department(),
     faker.helpers.arrayElement(['EXPENSE', 'INCOME']),
     '#000000',
+    faker.datatype.number(100),
     faker.datatype.uuid()
   );
 }

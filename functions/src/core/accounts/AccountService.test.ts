@@ -37,7 +37,8 @@ describe('AccountService', () => {
         id: c.id,
         name: c.name,
         balance: c.balance,
-        color: c.color
+        color: c.color,
+        useCount: c.useCount
       }));
 
       expect(
@@ -61,8 +62,13 @@ describe('AccountService', () => {
         id: c.id,
         name: c.name,
         balance: c.balance,
+<<<<<<< HEAD
         color: c.color
 >>>>>>> 88d1347 (Sort Accounts by Balances in the UserStatus view)
+=======
+        color: c.color,
+        useCount: c.useCount
+>>>>>>> ec69ca4 (Add Use Count to Categories and Accounts)
       }));
 
       expect(service.getAccounts({ userId: 'user-id' })).resolves.toStrictEqual(expectedAccounts);
@@ -259,6 +265,25 @@ describe('AccountService', () => {
           amountToBeUpdated: 2
         })
       ).resolves.not.toThrowError();
+    });
+  });
+
+  describe('incrementUseCount', () => {
+    it('should throw an error if account is not found', () => {
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const service = new AccountService(repoMock);
+      expect(service.incrementUseCount('id')).rejects.toThrowError();
+    });
+
+    it('should not throw any error if user is the owner account', () => {
+      const account = newAccount();
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.resolve(account));
+
+      const service = new AccountService(repoMock);
+      expect(service.incrementUseCount('id')).resolves.not.toThrowError();
     });
   });
 

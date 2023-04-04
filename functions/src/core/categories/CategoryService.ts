@@ -24,7 +24,8 @@ export class CategoryService {
       id: c.id,
       name: c.name,
       type: c.type,
-      color: c.color
+      color: c.color,
+      useCount: c.useCount
     }));
   }
 
@@ -38,7 +39,8 @@ export class CategoryService {
       id: category.id,
       name: category.name,
       type: category.type,
-      color: category.color
+      color: category.color,
+      useCount: category.useCount
     };
   }
 
@@ -50,6 +52,7 @@ export class CategoryService {
       req.name,
       req.type as CategoryType,
       req.color,
+      0,
       req.userId
     );
     category.validate();
@@ -72,6 +75,14 @@ export class CategoryService {
     category.validate();
 
     return await this.categoryRepository.save(category);
+  }
+
+  public async incrementUseCount(categoryId: string): Promise<void> {
+    const category = await this.categoryRepository.findById(categoryId);
+
+    category.incrementUseCount();
+
+    await this.categoryRepository.save(category);
   }
 
   public async deleteCategory(req: DeleteCategoryRequest): Promise<void> {

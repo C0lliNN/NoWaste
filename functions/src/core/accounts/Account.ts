@@ -1,17 +1,19 @@
 import { FieldError, ValidationError } from '../errors/ValidationError';
 
 export class Account {
-  id: string;
-  name: string;
-  balance: number;
-  color: string;
-  userId: string;
-
-  constructor(id: string, name: string, balance: number, color: string, userId: string) {
+  constructor(
+    public id: string,
+    public name: string,
+    public balance: number,
+    public color: string,
+    public useCount: number,
+    public userId: string
+  ) {
     this.id = id;
     this.name = name;
     this.balance = balance;
     this.color = color;
+    this.useCount = useCount;
     this.userId = userId;
   }
 
@@ -37,5 +39,9 @@ export class Account {
     if (errors.length) {
       throw new ValidationError(...errors);
     }
+  }
+
+  incrementUseCount() {
+    this.useCount++;
   }
 }

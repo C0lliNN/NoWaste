@@ -7,6 +7,7 @@ import { Transaction, Category, Account } from './Transaction';
 import { TransactionQuery } from './TransactionQuery';
 import { TransactionService } from './TransactionService';
 import { UpdateTransactionRequest } from './UpdateTransactionRequest';
+import { UpdateAmountRequest } from '../accounts/UpdateAmountRequest';
 
 function newTransactionRepositoryMock() {
   return {
@@ -18,16 +19,16 @@ function newTransactionRepositoryMock() {
 
 function newCategoryServiceMock() {
   return {
-    getCategory: jest.fn(async ({ categoryId, userId: string }) => ({} as Category))
+    getCategory: jest.fn(async ({ categoryId, userId: string }) => ({} as Category)),
+    incrementUseCount: jest.fn(async (categoryId: string) => {})
   };
 }
 
 function newAccountServiceMock() {
   return {
     getAccount: jest.fn(async ({ accountId, userId: string }) => ({} as Account)),
-    updateAmount: jest.fn(
-      async ({ userId, accountId: string, amountToBeIncremented: number }) => {}
-    )
+    updateAmount: jest.fn(async (req: UpdateAmountRequest) => {}),
+    incrementUseCount: jest.fn(async (accountId: string) => {})
   };
 }
 

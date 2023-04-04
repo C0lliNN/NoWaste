@@ -19,6 +19,14 @@ interface Props {
   onClose: () => void;
 }
 
+interface Model {
+  useCount?: number;
+}
+
+function sortByUseCount(a: Model, b: Model): number {
+  return (b.useCount ?? 0) - (a.useCount ?? 0);
+}
+
 export default function CreateTransactionModal(props: Props): JSX.Element {
   const [type, setType] = useState<TransactionType>('EXPENSE');
   const recurrenceRef = useRef<HTMLSelectElement>(null);
@@ -28,8 +36,12 @@ export default function CreateTransactionModal(props: Props): JSX.Element {
   const dateRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const accounts = useAppSelector((state) => state.accounts.accounts);
+  const sortedAccounts = accounts.sort(sortByUseCount);
 
   const filteredCategories = useFilteredCategories(type);
+  const sortedCategories = filteredCategories.sort(sortByUseCount);
+
+  console.log(filteredCategories);
 
   const { t } = useTranslation();
 
@@ -124,7 +136,7 @@ export default function CreateTransactionModal(props: Props): JSX.Element {
               <Trans i18nKey="category">Category</Trans>
             </FormGroup.Label>
             <FormGroup.Select ref={categoryRef} id="transactionCategory">
-              {filteredCategories.map((c) => (
+              {sortedCategories.map((c) => (
                 <option value={c.id} key={c.id}>
                   {c.name}
                 </option>
@@ -136,7 +148,7 @@ export default function CreateTransactionModal(props: Props): JSX.Element {
               <Trans i18nKey="account">Account</Trans>
             </FormGroup.Label>
             <FormGroup.Select ref={accountRef} id="transactionAccount">
-              {accounts.map((a) => (
+              {sortedAccounts.map((a) => (
                 <option value={a.id} key={a.id}>
                   {a.name}
                 </option>

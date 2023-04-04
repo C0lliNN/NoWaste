@@ -3,6 +3,7 @@ interface Category {
   name: string;
   type: CategoryType;
   color: string;
+  useCount?: number;
 }
 
 export type CategoryType = 'INCOME' | 'EXPENSE';

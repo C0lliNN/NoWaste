@@ -23,6 +23,7 @@ interface GetCategoryRequest {
 
 interface CategoryService {
   getCategory(req: GetCategoryRequest): Promise<Category>;
+  incrementUseCount(categoryId: string): Promise<void>;
 }
 
 interface GetAccountRequest {
@@ -39,6 +40,7 @@ interface UpdateAmountRequest {
 interface AccountService {
   getAccount(req: GetAccountRequest): Promise<Account>;
   updateAmount(req: UpdateAmountRequest): Promise<void>;
+  incrementUseCount(accountId: string): Promise<void>;
 }
 
 interface Clock {
@@ -117,6 +119,8 @@ export class TransactionService {
     });
 
     await this.transactionRepository.save(transaction);
+    await this.accountService.incrementUseCount(account.id);
+    await this.categoryService.incrementUseCount(category.id);
   }
 
   private validateCreateRequest(req: CreateTransactionRequest) {

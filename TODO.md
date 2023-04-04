@@ -47,9 +47,9 @@
 - [x] Add Account Colors
 - [x] Change Input Font
 - [x] Order accounts by balance
+- [x] Order Categories by Most Used
+- [x] Order Account by Most Used
 - [ ] Tackle Security Issues
-- [ ] Order Categories by Most Used
-- [ ] Order Account by Most Used
 - [ ] Add Ability to traverse previous years in the home
 - [ ] Add Transfers
 - [ ] Generate Transaction when account balance is updated

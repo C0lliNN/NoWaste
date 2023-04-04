@@ -30,7 +30,8 @@ describe('CategoryService', () => {
         id: c.id,
         name: c.name,
         type: c.type,
-        color: c.color
+        color: c.color,
+        useCount: c.useCount
       }));
 
       expect(service.getCategories({ userId: 'user-id' })).resolves.toStrictEqual(
@@ -220,6 +221,25 @@ describe('CategoryService', () => {
       const service = new CategoryService(mockRepo);
       expect(service.updateCategory(req)).resolves.not.toThrow();
       expect(mockRepo.findById).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('incrementUseCount', () => {
+    it('should throw an error if account is not found', () => {
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.reject(new Error('some error')));
+
+      const service = new CategoryService(repoMock);
+      expect(service.incrementUseCount('id')).rejects.toThrowError();
+    });
+
+    it('should not throw any error if user is the owner account', () => {
+      const category = newCategory();
+      const repoMock = newRepositoryMock();
+      repoMock.findById.mockReturnValue(Promise.resolve(category));
+
+      const service = new CategoryService(repoMock);
+      expect(service.incrementUseCount('id')).resolves.not.toThrowError();
     });
   });
 

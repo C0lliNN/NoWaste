@@ -5,4 +5,5 @@ export interface CategoryResponse {
   name: string;
   type: CategoryType;
   color: string;
+  useCount: number;
 }

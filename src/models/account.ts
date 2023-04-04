@@ -3,4 +3,5 @@ export interface Account {
   name: string;
   balance: number;
   color: string;
+  useCount?: number;
 }
