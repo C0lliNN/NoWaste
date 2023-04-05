@@ -26,19 +26,12 @@ describe('AccountService', () => {
       repoMock.findByQuery.mockReturnValue(Promise.resolve(accounts));
 
       const service = new AccountService(repoMock);
-<<<<<<< HEAD
       const expectedAccounts = accounts.map((account) => ({
         id: account.id,
         name: account.name,
         balance: account.balance,
-        color: account.color
-=======
-      const expectedAccounts = accounts.map((c) => ({
-        id: c.id,
-        name: c.name,
-        balance: c.balance,
-        color: c.color,
-        useCount: c.useCount
+        color: account.color,
+        useCount: account.useCount
       }));
 
       expect(
@@ -58,17 +51,12 @@ describe('AccountService', () => {
       repoMock.findByQuery.mockReturnValue(Promise.resolve(accounts));
 
       const service = new AccountService(repoMock);
-      const expectedAccounts = accounts.map((c) => ({
-        id: c.id,
-        name: c.name,
-        balance: c.balance,
-<<<<<<< HEAD
-        color: c.color
->>>>>>> 88d1347 (Sort Accounts by Balances in the UserStatus view)
-=======
-        color: c.color,
-        useCount: c.useCount
->>>>>>> ec69ca4 (Add Use Count to Categories and Accounts)
+      const expectedAccounts = accounts.map((account) => ({
+        id: account.id,
+        name: account.name,
+        balance: account.balance,
+        color: account.color,
+        useCount: account.useCount
       }));
 
       expect(service.getAccounts({ userId: 'user-id' })).resolves.toStrictEqual(expectedAccounts);
