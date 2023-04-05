@@ -50,6 +50,7 @@
 - [x] Order Categories by Most Used
 - [x] Order Account by Most Used
 - [x] Add Ability to traverse previous years in the home
+- [ ] Fix Deploy to Firebase Functions
 - [ ] Tackle Security Issues
 - [ ] Add Transfers
 - [ ] Generate Transaction when account balance is updated
