@@ -19,7 +19,8 @@ export class ReportController {
   async getUserStatus(req: express.Request, res: express.Response) {
     const userStatusResponse = await this.service.getUserStatus({
       userId: req.userId,
-      month: req.query.month as string
+      month: req.query.month as string,
+      year: parseInt(req.query.year as string)
     });
 
     res.send(userStatusResponse);

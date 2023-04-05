@@ -38,7 +38,8 @@ describe('ReportService', () => {
     it('should throw an error when the month is not valid', () => {
       const req: GetUserStatusRequest = {
         userId: 'some-id',
-        month: 'jan'
+        month: 'jan',
+        year: 2023
       };
 
       const service = newReportServiceMock();
@@ -49,7 +50,8 @@ describe('ReportService', () => {
     it('should throw an error when the userId is not valid', () => {
       const req: GetUserStatusRequest = {
         userId: '',
-        month: 'MARCH'
+        month: 'MARCH',
+        year: 2023
       };
 
       const service = newReportServiceMock();
@@ -60,7 +62,8 @@ describe('ReportService', () => {
     it('should throw an error when the accountService not successful', () => {
       const req: GetUserStatusRequest = {
         userId: 'some-id',
-        month: 'MARCH'
+        month: 'MARCH',
+        year: 2023
       };
 
       const accountServiceMock = newAccountServiceMock();
@@ -74,7 +77,8 @@ describe('ReportService', () => {
     it('should throw an error when the transactionService not successful', () => {
       const req: GetUserStatusRequest = {
         userId: 'some-id',
-        month: 'MARCH'
+        month: 'MARCH',
+        year: 2023
       };
 
       const transactionServiceMock = newTransactionServiceMock();
@@ -90,7 +94,8 @@ describe('ReportService', () => {
     it('should return the correct mapped data when the data is fetched successfully', () => {
       const req: GetUserStatusRequest = {
         userId: 'some-id',
-        month: 'MARCH'
+        month: 'MARCH',
+        year: 2023
       };
 
       const accounts: AccountResponse[] = [

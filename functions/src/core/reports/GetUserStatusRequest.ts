@@ -37,5 +37,6 @@ export function getMonthNumber(month: Month): number {
 
 export interface GetUserStatusRequest {
   month: string;
+  year: number;
   userId: string;
 }

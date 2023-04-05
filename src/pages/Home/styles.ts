@@ -28,13 +28,13 @@ export const Title = styled.h2`
   }
 `;
 
-export const MonthContainer = styled.div`
+export const DateFilterContainer = styled.div`
   width: 100%;
   max-width: 1000px;
   text-align: center;
 `;
 
-export const MonthSelect = styled.select`
+export const Select = styled.select`
   font-family: 'Open Sans', sans-serif;
   font-size: 1.2em;
   font-weight: 500;

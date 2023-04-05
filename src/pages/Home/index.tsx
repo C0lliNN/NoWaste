@@ -9,20 +9,20 @@ import MonthBalanceChart from '../../components/MonthBalanceChart';
 import MonthBalanceStats from '../../components/MonthBalanceStats';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import Spinner from '../../components/UI/Spinner';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import { Status } from '../../models/status';
-import { getStatus, Month } from '../../services/api';
+import { Month, getStatus } from '../../services/api';
+import { fetchAccounts } from '../../store/accounts';
+import { fetchCategories } from '../../store/categories';
 import {
   Container,
+  DateFilterContainer,
   Header,
-  MonthContainer,
-  MonthSelect,
+  Select,
   SpinnerContainer,
   StatsContainer,
   Title
 } from './styles';
-import useAppDispatch from '../../hooks/useAppDispatch';
-import { fetchCategories } from '../../store/categories';
-import { fetchAccounts } from '../../store/accounts';
 
 const months = [
   { text: 'Jan', value: 'JANUARY' },
@@ -48,9 +48,17 @@ const initialStatus: Status = {
   balancesByAccount: []
 };
 
+function range(start: number, stop: number, step: number): number[] {
+  return Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
+}
+
+// The years available for searching will be in the range (currentYear - 5 until currentYear + 1)
+const years = range(dayjs().year() - 5, dayjs().year() + 1, 1);
+
 export default function Home(): JSX.Element {
   const currentDate = dayjs();
   const [month, setMonth] = useState<Month>(months[currentDate.month()].value as Month);
+  const [year, setYear] = useState<number>(currentDate.year());
   const [status, setStatus] = useState<Status>(initialStatus);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,7 +68,7 @@ export default function Home(): JSX.Element {
   async function fetchStatus(): Promise<void> {
     setLoading(true);
     try {
-      const response = await getStatus(month);
+      const response = await getStatus(year, month);
       setStatus(response);
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -75,7 +83,7 @@ export default function Home(): JSX.Element {
 
   useEffect(() => {
     void fetchStatus();
-  }, [month]);
+  }, [month, year]);
 
   useEffect(() => {
     void dispatch(fetchCategories());
@@ -89,15 +97,22 @@ export default function Home(): JSX.Element {
           <Trans i18nKey="home">Home</Trans>
         </Title>
       </Header>
-      <MonthContainer>
-        <MonthSelect value={month} onChange={(e) => setMonth(e.target.value as Month)}>
+      <DateFilterContainer>
+        <Select value={year} onChange={(e) => setYear(parseInt(e.target.value))}>
+          {years.map((year) => (
+            <option value={year} key={year}>
+              {year}
+            </option>
+          ))}
+        </Select>
+        <Select value={month} onChange={(e) => setMonth(e.target.value as Month)}>
           {months.map((month) => (
             <option value={month.value} key={month.value}>
               <Trans i18nKey={month.text}>{month.text}</Trans>
             </option>
           ))}
-        </MonthSelect>
-      </MonthContainer>
+        </Select>
+      </DateFilterContainer>
       {error && <ErrorMessage message={error} />}
       {loading ? (
         <SpinnerContainer>

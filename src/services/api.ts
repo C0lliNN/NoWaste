@@ -113,7 +113,7 @@ export type Month =
   | 'NOVEMBER'
   | 'DECEMBER';
 
-export async function getStatus(month: Month): Promise<Status> {
-  const response = await api.get('/status', { params: { month } });
+export async function getStatus(year: number, month: Month): Promise<Status> {
+  const response = await api.get('/status', { params: { year, month } });
   return response.data as Status;
 }

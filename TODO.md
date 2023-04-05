@@ -49,8 +49,8 @@
 - [x] Order accounts by balance
 - [x] Order Categories by Most Used
 - [x] Order Account by Most Used
+- [x] Add Ability to traverse previous years in the home
 - [ ] Tackle Security Issues
-- [ ] Add Ability to traverse previous years in the home
 - [ ] Add Transfers
 - [ ] Generate Transaction when account balance is updated
 - [ ] Add ability to update the account of a transaction

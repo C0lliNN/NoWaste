@@ -78,7 +78,7 @@ export class ReportService {
 
   private async getTransactions(req: GetUserStatusRequest) {
     const month = req.month as Month;
-    const date = dayjs().month(getMonthNumber(month));
+    const date = dayjs().year(req.year).month(getMonthNumber(month));
 
     return await this.transactionService.getTransactions({
       userId: req.userId,
