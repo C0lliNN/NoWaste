@@ -36,12 +36,10 @@ export default function CreateTransactionModal(props: Props): JSX.Element {
   const dateRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const accounts = useAppSelector((state) => state.accounts.accounts);
-  const sortedAccounts = accounts.sort(sortByUseCount);
+  const sortedAccounts = accounts.slice().sort(sortByUseCount);
 
   const filteredCategories = useFilteredCategories(type);
-  const sortedCategories = filteredCategories.sort(sortByUseCount);
-
-  console.log(filteredCategories);
+  const sortedCategories = filteredCategories.slice().sort(sortByUseCount);
 
   const { t } = useTranslation();
 
